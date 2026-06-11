@@ -1,0 +1,3126 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>自在空间 | Being Art Space — 用科技赋能善因传播</title>
+<link rel="icon" type="image/png" href="img/自在logo.png">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:; frame-src https://www.720yun.com https:; img-src 'self' data: blob: https:">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;350;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================
+   CSS Custom Properties — Monochrome + Liquid Glass
+   ============================================ */
+:root {
+  /* Warm-tinted grayscale */
+  --warm-hue: 60;
+
+  --surface-0: oklch(98% 0.002 var(--warm-hue));
+  --surface-1: oklch(95% 0.003 var(--warm-hue));
+  --surface-2: oklch(90% 0.004 var(--warm-hue));
+  --surface-3: oklch(82% 0.005 var(--warm-hue));
+  --surface-dark: oklch(12% 0.003 var(--warm-hue));
+  --surface-dark-2: oklch(18% 0.003 var(--warm-hue));
+
+  --text-primary: oklch(12% 0.003 var(--warm-hue));
+  --text-secondary: oklch(35% 0.003 var(--warm-hue));
+  --text-tertiary: oklch(52% 0.003 var(--warm-hue));
+  --text-inverse: oklch(94% 0.002 var(--warm-hue));
+  --text-inverse-secondary: oklch(72% 0.002 var(--warm-hue));
+
+  --border-subtle: oklch(88% 0.004 var(--warm-hue) / 0.6);
+  --border-glass: oklch(100% 0 0 / 0.2);
+  --border-glass-dark: oklch(100% 0 0 / 0.08);
+
+  /* Liquid Glass */
+  --glass-bg: oklch(98% 0.002 var(--warm-hue) / 0.55);
+  --glass-bg-strong: oklch(98% 0.002 var(--warm-hue) / 0.72);
+  --glass-bg-dark: oklch(12% 0.003 var(--warm-hue) / 0.45);
+  --glass-bg-dark-strong: oklch(12% 0.003 var(--warm-hue) / 0.65);
+  --glass-blur: saturate(180%) blur(30px);
+  --glass-blur-light: saturate(160%) blur(16px);
+  --glass-blur-heavy: saturate(200%) blur(48px);
+
+  /* Shadows — refined for glass */
+  --shadow-glass-sm:
+    0 1px 3px oklch(0% 0 0 / 0.04),
+    0 1px 2px oklch(0% 0 0 / 0.03),
+    inset 0 1px 0 oklch(100% 0 0 / 0.4);
+  --shadow-glass-md:
+    0 4px 12px oklch(0% 0 0 / 0.05),
+    0 2px 4px oklch(0% 0 0 / 0.03),
+    inset 0 1px 0 oklch(100% 0 0 / 0.5);
+  --shadow-glass-lg:
+    0 8px 30px oklch(0% 0 0 / 0.07),
+    0 4px 8px oklch(0% 0 0 / 0.04),
+    inset 0 1px 0 oklch(100% 0 0 / 0.5);
+  --shadow-glass-dark-sm:
+    0 1px 3px oklch(0% 0 0 / 0.2),
+    inset 0 1px 0 oklch(100% 0 0 / 0.06);
+  --shadow-glass-dark-md:
+    0 4px 12px oklch(0% 0 0 / 0.3),
+    inset 0 1px 0 oklch(100% 0 0 / 0.08);
+
+  /* Typography */
+  --font-display: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+  --font-body: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+
+  --text-xs: clamp(0.7rem, 0.8vw, 0.75rem);
+  --text-sm: clamp(0.8rem, 0.9vw, 0.875rem);
+  --text-base: clamp(0.95rem, 1.1vw, 1rem);
+  --text-md: clamp(1rem, 1.3vw, 1.125rem);
+  --text-lg: clamp(1.15rem, 1.8vw, 1.35rem);
+  --text-xl: clamp(1.35rem, 2.4vw, 1.75rem);
+  --text-2xl: clamp(1.75rem, 3.2vw, 2.25rem);
+  --text-3xl: clamp(2.25rem, 4.5vw, 3.5rem);
+  --text-4xl: clamp(3rem, 6vw, 5rem);
+
+  --space-xs: clamp(0.25rem, 0.5vw, 0.5rem);
+  --space-sm: clamp(0.5rem, 1vw, 0.75rem);
+  --space-md: clamp(1rem, 2vw, 1.5rem);
+  --space-lg: clamp(2rem, 4vw, 3rem);
+  --space-xl: clamp(3rem, 6vw, 5rem);
+  --space-2xl: clamp(5rem, 10vw, 8rem);
+
+  --max-width: 1200px;
+  --content-width: 780px;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out-quart: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-apple: cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  /* Accent — muted warm charcoal for CTA/emphasis */
+  --accent: oklch(18% 0.01 var(--warm-hue));
+  --accent-light: oklch(32% 0.01 var(--warm-hue));
+}
+
+/* ============================================
+   Reset & Base
+   ============================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 350;
+  line-height: 1.7;
+  color: var(--text-primary);
+  background: var(--surface-0);
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+
+::selection {
+  background: oklch(18% 0.01 var(--warm-hue) / 0.12);
+}
+
+:focus-visible {
+  outline: 2px solid var(--text-secondary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+:focus:not(:focus-visible) { outline: none; }
+
+/* ============================================
+   Typography
+   ============================================ */
+.serif { font-family: var(--font-display); font-weight: 600; letter-spacing: 0.02em; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+}
+
+.section-label {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-sm);
+}
+
+.section-title {
+  font-size: var(--text-2xl);
+  color: var(--text-primary);
+  margin-bottom: var(--space-md);
+}
+
+.section-subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  font-weight: 350;
+  color: var(--text-secondary);
+  max-width: 540px;
+}
+
+/* ============================================
+   Scroll Reveal
+   ============================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 700ms var(--ease-out-expo),
+              transform 700ms var(--ease-out-expo);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 80ms; }
+.reveal-delay-2 { transition-delay: 160ms; }
+.reveal-delay-3 { transition-delay: 240ms; }
+.reveal-delay-4 { transition-delay: 320ms; }
+.reveal-delay-5 { transition-delay: 400ms; }
+
+/* ============================================
+   Navigation — Liquid Glass
+   ============================================ */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: var(--space-sm) var(--space-lg);
+  transition: background 500ms var(--ease-out-expo),
+              backdrop-filter 500ms var(--ease-out-expo),
+              box-shadow 500ms var(--ease-out-expo),
+              color 500ms var(--ease-out-expo);
+}
+.nav-hero { color: #fff; }
+.nav-hero .nav-link { color: oklch(88% 0.002 var(--warm-hue)); }
+.nav-hero .nav-link::after { background: #fff; }
+.nav-hero .nav-link:hover,
+.nav-hero .nav-link.active { color: #fff; }
+.nav-hero .nav-logo { color: #fff; }
+.nav-hero .nav-toggle span { background: rgb(251,251,251); }
+
+.nav.scrolled {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow-glass-sm);
+}
+
+.nav-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.nav-logo img { height: 32px; width: auto; }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.nav-link {
+  font-size: var(--text-sm);
+  font-weight: 400;
+  color: var(--text-secondary);
+  transition: color 200ms var(--ease-out-quart);
+  position: relative;
+  padding: 4px 0;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--text-primary);
+  transition: width 350ms var(--ease-out-expo);
+}
+.nav-link:hover,
+.nav-link.active { color: var(--text-primary); }
+.nav-link:hover::after,
+.nav-link.active::after { width: 100%; }
+
+/* CTA button — solid pill */
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 22px;
+  background: var(--accent);
+  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  border-radius: 100px;
+  transition: background 200ms var(--ease-out-quart),
+              transform 150ms var(--ease-out-quart),
+              box-shadow 200ms var(--ease-out-quart);
+}
+.nav-cta:hover {
+  background: var(--accent-light);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px oklch(0% 0 0 / 0.12);
+}
+.nav-cta:active { transform: translateY(0); }
+
+/* Standalone Login Button — fixed top-right */
+.login-btn-fixed {
+  position: fixed;
+  top: var(--space-sm);
+  right: var(--space-lg);
+  z-index: 1001;
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 22px;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 0.5px solid var(--border-glass);
+  border-radius: 100px;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  box-shadow: var(--shadow-glass-sm);
+  transition: background 300ms var(--ease-out-expo),
+              color 300ms var(--ease-out-expo),
+              box-shadow 300ms var(--ease-out-expo),
+              transform 200ms var(--ease-out-quart);
+  text-decoration: none;
+}
+.login-btn-fixed:hover {
+  background: var(--glass-bg-strong);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-glass-md);
+  transform: translateY(-1px);
+}
+.login-btn-fixed:active { transform: translateY(0); }
+
+/* Hero state: white text, translucent */
+body:has(.nav.nav-hero) .login-btn-fixed {
+  color: #fff;
+  border-color: oklch(100% 0 0 / 0.25);
+  background: oklch(100% 0 0 / 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: none;
+}
+body:has(.nav.nav-hero) .login-btn-fixed:hover {
+  background: oklch(100% 0 0 / 0.15);
+  border-color: oklch(100% 0 0 / 0.4);
+}
+
+/* Mobile toggle */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 8px;
+  background: none;
+  border: none;
+}
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--text-primary);
+  transition: transform 300ms var(--ease-out-expo),
+              opacity 300ms var(--ease-out-expo);
+}
+.nav-toggle.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-toggle.active span:nth-child(2) { opacity: 0; }
+.nav-toggle.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ============================================
+   Hero
+   ============================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--surface-1);
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+}
+.hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) brightness(0.55) contrast(1.05);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    oklch(8% 0.003 var(--warm-hue) / 0.5) 0%,
+    oklch(8% 0.003 var(--warm-hue) / 0.2) 50%,
+    oklch(8% 0.003 var(--warm-hue) / 0.45) 100%
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: var(--content-width);
+  padding: 0 var(--space-lg);
+  color: #fff;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 800ms var(--ease-out-expo) 200ms forwards;
+  color: oklch(88% 0.002 var(--warm-hue));
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0.03em;
+  margin: var(--space-md) 0;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 800ms var(--ease-out-expo) 400ms forwards;
+}
+
+.hero-title em {
+  font-style: normal;
+  color: oklch(92% 0.002 var(--warm-hue));
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 8px;
+  text-decoration-color: oklch(100% 0 0 / 0.25);
+}
+
+.hero-desc {
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  font-weight: 300;
+  line-height: 1.8;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 800ms var(--ease-out-expo) 600ms forwards;
+  max-width: 520px;
+  margin: 0 auto;
+  color: oklch(82% 0.002 var(--warm-hue));
+}
+
+/* zh-CN: allow hero subtitle to fit on one line */
+:lang(zh-CN) .hero-desc {
+  max-width: 780px;
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: var(--space-lg);
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  animation: fadeUp 800ms var(--ease-out-expo) 1s forwards;
+}
+
+.hero-scroll-indicator {
+  width: 24px;
+  height: 40px;
+  border: 1.5px solid oklch(100% 0 0 / 0.35);
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  display: block;
+}
+.hero-scroll-indicator::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 8px;
+  background: oklch(100% 0 0 / 0.6);
+  border-radius: 2px;
+  animation: scrollDot 2s var(--ease-in-out-quart) infinite;
+}
+
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+@keyframes scrollDot {
+  0%, 100% { top: 6px; opacity: 0.6; }
+  50% { top: 20px; opacity: 1; }
+}
+
+/* ============================================
+   Section Layout
+   ============================================ */
+.section { padding: var(--space-2xl) var(--space-lg); }
+.section-inner { max-width: var(--max-width); margin: 0 auto; }
+.section-header { margin-bottom: var(--space-xl); }
+.section-header.center { text-align: center; }
+.section-header.center .section-subtitle { margin: 0 auto; }
+
+/* ============================================
+   Brand Story
+   ============================================ */
+.brand-story { background: var(--surface-0); }
+
+.story-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2xl);
+  align-items: center;
+}
+
+.story-image {
+  position: relative;
+  aspect-ratio: 4/5;
+}
+.story-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(1.05);
+  transition: transform 6s var(--ease-out-expo);
+}
+.story-image:hover img { transform: scale(1.05); }
+
+.story-text .section-title {
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-md);
+  line-height: 1.4;
+}
+.story-text p {
+  color: var(--text-secondary);
+  line-height: 1.85;
+  margin-bottom: var(--space-md);
+}
+
+.story-quote {
+  border-left: 2px solid var(--text-tertiary);
+  padding-left: var(--space-md);
+  margin: var(--space-lg) 0;
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+/* ============================================
+   Business Units — Liquid Glass Cards
+   ============================================ */
+.business {
+  background: var(--surface-1);
+  position: relative;
+}
+.business::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 25% 20%, oklch(0% 0 0 / 0.015) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 80% 70%, oklch(0% 0 0 / 0.02) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.business-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-md);
+}
+
+.business-card {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  border: 0.5px solid var(--border-glass);
+  box-shadow: var(--shadow-glass-sm);
+  transition: transform 400ms var(--ease-out-expo),
+              box-shadow 400ms var(--ease-out-expo),
+              background 400ms var(--ease-out-expo);
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+.business-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, oklch(0% 0 0 / 0.15), transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 500ms var(--ease-out-expo);
+}
+.business-card:hover {
+  transform: translateY(-4px);
+  background: var(--glass-bg-strong);
+  box-shadow: var(--shadow-glass-lg);
+}
+.business-card:hover::before { transform: scaleX(1); }
+
+.business-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-md);
+  font-size: 1.25rem;
+}
+
+.business-card h3 {
+  font-size: var(--text-md);
+  margin-bottom: var(--space-xs);
+}
+.business-card p {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  line-height: 1.6;
+}
+
+/* ============================================
+   VR Highlight — Dark + Liquid Glass
+   ============================================ */
+.vr-highlight {
+  background: var(--surface-dark);
+  color: var(--text-inverse);
+  position: relative;
+  overflow: hidden;
+}
+.vr-highlight .section-label { color: var(--text-inverse-secondary); }
+.vr-highlight .section-title { color: var(--text-inverse); }
+.vr-highlight .section-subtitle { color: var(--text-inverse-secondary); }
+
+.vr-highlight-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+}
+.vr-highlight-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%);
+}
+
+.vr-features {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+  position: relative;
+  z-index: 1;
+}
+
+.vr-feature-item {
+  text-align: center;
+  padding: var(--space-lg) var(--space-md);
+  background: var(--glass-bg-dark);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-radius: var(--radius-lg);
+  border: 0.5px solid var(--border-glass-dark);
+  box-shadow: var(--shadow-glass-dark-sm);
+  transition: transform 350ms var(--ease-out-expo),
+              box-shadow 350ms var(--ease-out-expo);
+}
+.vr-feature-item:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-glass-dark-md);
+}
+
+.vr-feature-value {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  color: var(--text-inverse);
+  margin-bottom: var(--space-xs);
+}
+.vr-feature-label {
+  font-size: var(--text-sm);
+  color: var(--text-inverse-secondary);
+}
+
+/* ============================================
+   Impact Numbers
+   ============================================ */
+.impact { background: var(--surface-0); }
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-md);
+  text-align: center;
+}
+
+.impact-item {
+  padding: var(--space-lg) var(--space-sm);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur-light);
+  -webkit-backdrop-filter: var(--glass-blur-light);
+  border-radius: var(--radius-lg);
+  border: 0.5px solid var(--border-glass);
+  box-shadow: var(--shadow-glass-sm);
+  transition: transform 350ms var(--ease-out-expo),
+              box-shadow 350ms var(--ease-out-expo);
+}
+.impact-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glass-md);
+}
+
+.impact-number {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+  margin-bottom: var(--space-xs);
+}
+.impact-number sup { font-size: 0.5em; font-weight: 600; }
+.impact-label { font-size: var(--text-sm); color: var(--text-tertiary); }
+
+/* ============================================
+   VR Cases — Liquid Glass Cards
+   ============================================ */
+.cases { background: var(--surface-1); }
+
+.cases-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+.case-card {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 0.5px solid var(--border-glass);
+  box-shadow: var(--shadow-glass-sm);
+  transition: transform 400ms var(--ease-out-expo),
+              box-shadow 400ms var(--ease-out-expo);
+  cursor: default;
+}
+.case-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-glass-lg);
+}
+
+.case-card-image {
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  background: var(--surface-2);
+}
+.case-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 5s var(--ease-out-expo);
+}
+.case-card:hover .case-card-image img { transform: scale(1.08); }
+
+.case-card-body { padding: var(--space-md); }
+
+.case-card-tag {
+  display: inline-block;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  padding: 3px 12px;
+  border-radius: 100px;
+  margin-bottom: var(--space-xs);
+  background: var(--surface-2);
+  color: var(--text-secondary);
+  backdrop-filter: var(--glass-blur-light);
+  -webkit-backdrop-filter: var(--glass-blur-light);
+}
+
+.case-card h4 {
+  font-size: var(--text-base);
+  margin-bottom: 4px;
+}
+.case-card p {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  line-height: 1.5;
+}
+
+/* ============================================
+   Media Mentions
+   ============================================ */
+.media { background: var(--surface-0); }
+.media-wall {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-md);
+  align-items: center;
+  padding: var(--space-lg) var(--space-md);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur-light);
+  -webkit-backdrop-filter: var(--glass-blur-light);
+  border-radius: var(--radius-xl);
+  border: 0.5px solid var(--border-glass);
+  box-shadow: var(--shadow-glass-sm);
+}
+
+.media-item {
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: 500;
+  color: var(--text-tertiary);
+  padding: var(--space-xs) var(--space-sm);
+  white-space: nowrap;
+  transition: color 300ms var(--ease-out-quart),
+              opacity 300ms var(--ease-out-quart);
+  cursor: default;
+}
+.media-item:hover { color: var(--text-primary); }
+
+/* ============================================
+   720 VR Experience — 720yun iFrames
+   ============================================ */
+.vr360 { background: var(--surface-1); }
+.vr360-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-xs);
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.vr360-card {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 0.5px solid var(--border-glass);
+  box-shadow: var(--shadow-glass-sm);
+  transition: transform 400ms var(--ease-out-expo),
+              box-shadow 400ms var(--ease-out-expo);
+}
+.vr360-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glass-lg);
+}
+
+.vr360-frame-wrap {
+  aspect-ratio: 16/9;
+  width: 100%;
+  min-height: 420px;
+  background: var(--surface-2);
+}
+.vr360-frame-wrap iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.vr360-card-body { padding: var(--space-md); }
+.vr360-card-body h4 {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  margin-bottom: 4px;
+}
+.vr360-card-body p {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  line-height: 1.5;
+}
+
+/* ============================================
+   Project Gallery — Image Showcase
+   ============================================ */
+.gallery { background: var(--surface-0); }
+
+.gallery-filters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-xl);
+}
+
+.filter-btn {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 450;
+  padding: 8px 20px;
+  border-radius: 100px;
+  border: 0.5px solid var(--border-subtle);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur-light);
+  -webkit-backdrop-filter: var(--glass-blur-light);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 300ms var(--ease-out-quart);
+}
+.filter-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--text-tertiary);
+}
+.filter-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-sm);
+}
+
+.gallery-item {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  cursor: pointer;
+  background: var(--surface-2);
+  box-shadow: var(--shadow-glass-sm);
+  transition: transform 350ms var(--ease-out-expo),
+              box-shadow 350ms var(--ease-out-expo);
+}
+.gallery-item:hover {
+  transform: scale(1.008) translateY(-3px);
+  box-shadow: var(--shadow-glass-lg);
+}
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 5s var(--ease-out-expo);
+}
+.gallery-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.gallery-item:hover img {
+  transform: scale(1.08);
+}
+
+.gallery-item-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--space-sm) var(--space-md);
+  background: linear-gradient(transparent, oklch(0% 0 0 / 0.6));
+  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: 450;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms var(--ease-out-quart),
+              transform 300ms var(--ease-out-quart);
+}
+
+/* Gallery caption dual-line */
+.gallery-caption-title {
+  display: block;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.gallery-caption-subtitle {
+  display: block;
+  font-size: 0.8em;
+  color: #fff;
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+/* Gallery lightbox */
+.gallery-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: oklch(0% 0 0 / 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 350ms var(--ease-out-expo);
+}
+.gallery-lightbox.active {
+  opacity: 1;
+  pointer-events: all;
+}
+.gallery-lightbox img {
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  box-shadow: 0 20px 60px oklch(0% 0 0 / 0.5);
+  transform: scale(0.92);
+  transition: transform 400ms var(--ease-out-expo);
+}
+.gallery-lightbox.active img { transform: scale(1); }
+
+.lightbox-close {
+  position: absolute;
+  top: var(--space-lg);
+  right: var(--space-lg);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 0.5px solid oklch(100% 0 0 / 0.2);
+  background: oklch(100% 0 0 / 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #fff;
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 200ms var(--ease-out-quart);
+}
+.lightbox-close:hover { background: oklch(100% 0 0 / 0.18); }
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: oklch(100% 0 0 / 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 0.5px solid oklch(100% 0 0 / 0.2);
+  color: #fff;
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 200ms var(--ease-out-quart);
+}
+.lightbox-nav:hover { background: oklch(100% 0 0 / 0.18); }
+.lightbox-prev { left: var(--space-lg); }
+.lightbox-next { right: var(--space-lg); }
+
+/* ============================================
+   Honors & Awards
+   ============================================ */
+.honors { background: var(--surface-1); }
+
+.honors-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+}
+
+.honor-card {
+  background: #ffffff;
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 2px 12px rgba(0,0,0,0.04);
+  cursor: pointer;
+  transition: transform 400ms var(--ease-out-expo),
+              box-shadow 400ms var(--ease-out-expo);
+  position: relative;
+  border-left: 3px solid #c9a84c;
+}
+
+.honor-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08), 0 8px 28px rgba(0,0,0,0.06);
+  border-left-color: #b8942e;
+}
+
+/* Golden corner star accent */
+.honor-card::after {
+  content: '\2726';
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-size: 14px;
+  color: #d4b86a;
+  opacity: 0.5;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.honor-year {
+  display: inline-block;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: #c9a84c;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-xs);
+  background: #fdf8ed;
+  padding: 1px 8px;
+  border-radius: 3px;
+}
+
+.honor-work {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: #111;
+  line-height: 1.35;
+  margin-bottom: 6px;
+}
+
+.honor-award-name {
+  font-size: var(--text-sm);
+  color: #555;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.honor-festival {
+  font-size: var(--text-xs);
+  color: #777;
+  line-height: 1.45;
+}
+
+/* Honors Modal */
+.honor-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.honor-modal.active { display: flex; }
+
+.honor-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.honor-modal-content {
+  position: relative;
+  z-index: 1;
+  width: min(720px, 92vw);
+  max-height: 85vh;
+  background: var(--surface-0);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-glass-lg);
+  border: 0.5px solid var(--border-glass);
+  overflow-y: auto;
+  animation: honorModalIn 300ms var(--ease-out-expo);
+}
+
+@keyframes honorModalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.honor-modal-close {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: var(--surface-2);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 200ms, color 200ms;
+}
+
+.honor-modal-close:hover {
+  background: var(--surface-3);
+  color: var(--text-primary);
+}
+
+.honor-modal-body {
+  display: flex;
+  gap: var(--space-lg);
+  padding: var(--space-xl);
+}
+
+.honor-modal-cert {
+  flex: 0 0 280px;
+  max-width: 280px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface-1);
+  border: 0.5px solid var(--border-subtle);
+  position: relative;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.honor-modal-cert img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.honor-modal-cert-placeholder {
+  display: none;
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+  font-size: var(--text-sm);
+  text-align: center;
+  padding: var(--space-md);
+}
+
+.honor-modal-cert.no-cert .honor-modal-cert-placeholder { display: flex; }
+.honor-modal-cert.no-cert img { display: none; }
+
+.honor-modal-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.honor-modal-award {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: oklch(35% 0.05 80);
+  line-height: 1.3;
+}
+
+.honor-modal-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.honor-modal-year {
+  display: inline-block;
+  background: oklch(90% 0.03 85);
+  color: oklch(50% 0.12 80);
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+
+.honor-modal-festival {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.honor-modal-work {
+  font-size: var(--text-base);
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.honor-modal-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding-top: var(--space-sm);
+  border-top: 0.5px solid var(--border-subtle);
+}
+
+.honor-modal-detail {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: baseline;
+}
+
+.honor-modal-detail-label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+  min-width: 60px;
+}
+
+.honor-modal-detail-value {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+/* ============================================
+   Cooperative Partners
+   ============================================ */
+.partners { background: var(--surface-1); }
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--space-sm);
+}
+
+.partner-item {
+  background: rgb(251,251,251);
+  border-radius: var(--radius-md);
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  border: 0.5px solid var(--border-subtle);
+  box-shadow: var(--shadow-glass-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  transition: transform 300ms var(--ease-out-expo),
+              box-shadow 300ms var(--ease-out-expo),
+              background 300ms var(--ease-out-expo);
+}
+.partner-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glass-md);
+  background: rgb(251,251,251);
+}
+.partner-item img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: grayscale(100%) opacity(0.6);
+  transition: filter 350ms var(--ease-out-expo);
+}
+.partner-item:hover img {
+  filter: grayscale(0%) opacity(1);
+}
+
+/* ============================================
+   Contact
+   ============================================ */
+.contact { background: var(--surface-1); }
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2xl);
+}
+
+.contact-info { padding-right: var(--space-xl); }
+.contact-info p {
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: var(--space-lg);
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+  padding: var(--space-sm) 0;
+}
+
+.contact-item-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  backdrop-filter: var(--glass-blur-light);
+  -webkit-backdrop-filter: var(--glass-blur-light);
+}
+
+.contact-item-text strong {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+.contact-item-text span {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+}
+
+.contact-qr {
+  display: flex;
+  justify-content: flex-start;
+  gap: var(--space-lg);
+  margin-top: var(--space-lg);
+}
+.contact-qr-item { text-align: center; }
+.contact-qr-item img {
+  width: 180px;
+  height: 180px;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-xs);
+  filter: none;
+}
+.contact-qr-item span { font-size: var(--text-sm); color: var(--text-secondary); font-weight: 500; }
+
+/* ============================================
+   Footer
+   ============================================ */
+.footer {
+  background: var(--surface-dark);
+  color: var(--text-inverse-secondary);
+  padding: var(--space-lg);
+  font-size: var(--text-xs);
+}
+.footer-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-brand {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-inverse);
+}
+
+/* ============================================
+   Ambient background dots (decorative)
+   ============================================ */
+.ambient-dots {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.03;
+  background-image: radial-gradient(circle, oklch(0% 0 0) 0.8px, transparent 0.8px);
+  background-size: 32px 32px;
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media (max-width: 1024px) {
+  .story-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+  .story-image { max-width: 480px; margin: 0 auto; aspect-ratio: 16/10; }
+  .business-grid { grid-template-columns: repeat(2, 1fr); }
+  .vr-features { grid-template-columns: repeat(2, 1fr); }
+  .impact-grid { grid-template-columns: repeat(3, 1fr); }
+  .cases-grid { grid-template-columns: repeat(2, 1fr); }
+  .contact-grid { grid-template-columns: 1fr; gap: var(--space-xl); }
+  .contact-info { padding-right: 0; }
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+  .partners-grid { grid-template-columns: repeat(4, 1fr); }
+  .honors-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: var(--glass-bg-strong);
+    backdrop-filter: var(--glass-blur-heavy);
+    -webkit-backdrop-filter: var(--glass-blur-heavy);
+    flex-direction: column;
+    padding: 80px var(--space-lg) var(--space-lg);
+    gap: var(--space-md);
+    transition: right 400ms var(--ease-out-expo);
+    box-shadow: var(--shadow-glass-lg);
+    border-left: 0.5px solid var(--border-glass);
+  }
+  .nav-links.open { right: 0; }
+  .nav-toggle { display: flex; z-index: 1001; }
+  .business-grid { grid-template-columns: 1fr; }
+  .vr-features { grid-template-columns: 1fr 1fr; }
+  .impact-grid { grid-template-columns: repeat(2, 1fr); }
+  .impact-item:last-child { grid-column: 1 / -1; }
+  .cases-grid { grid-template-columns: 1fr; }
+  .media-wall { gap: var(--space-sm); }
+  .media-item { font-size: var(--text-sm); padding: var(--space-xs) var(--space-sm); }
+  .contact-qr { flex-direction: column; align-items: flex-start; }
+  .footer-inner { flex-direction: column; gap: var(--space-sm); text-align: center; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .partners-grid { grid-template-columns: repeat(3, 1fr); }
+  .honors-grid { grid-template-columns: repeat(2, 1fr); }
+  .lightbox-nav { display: none; }
+
+  .honor-modal-body { flex-direction: column; }
+  .honor-modal-cert { flex: 0 0 auto; max-width: 100%; }
+  .honor-modal-content { max-height: 90vh; }
+}
+
+@media (max-width: 480px) {
+  .hero-title { font-size: clamp(1.75rem, 8vw, 2.5rem); }
+  .vr-features { grid-template-columns: 1fr; }
+  .impact-grid { grid-template-columns: 1fr 1fr; }
+  .gallery-grid { grid-template-columns: 1fr; }
+  .partners-grid { grid-template-columns: repeat(2, 1fr); }
+  .honors-grid { grid-template-columns: repeat(1, 1fr); }
+}
+
+/* ============================================
+   Reduced motion
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; }
+}
+
+/* ============================================
+   Image fallback placeholders
+   ============================================ */
+.img-fallback {
+  background: var(--surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+}
+
+/* ============================================
+   Language Switcher
+   ============================================ */
+.lang-switcher { position: relative; }
+.lang-dropdown.show { display: block !important; }
+.lang-dropdown a { display: flex; align-items: center; gap: 10px; padding: 12px 18px; text-decoration: none; color: var(--text-primary); font-size: 15px; line-height: 1.4; white-space: nowrap; transition: background 150ms, border-radius 150ms; cursor: pointer; min-height: 44px; border-radius: 10px; margin: 2px 4px; }
+.lang-dropdown a + a { border-top: none; }
+.lang-dropdown a:hover { background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.lang-dropdown a.active { font-weight: 600; color: oklch(30% 0.003 60); background: rgba(255,255,255,0.3); }
+
+/* Nav hero state — white text for lang switcher & logo */
+.nav-hero .lang-btn { color: #fff; border-color: rgba(255,255,255,0.3); }
+.nav-hero .lang-btn:hover { border-color: rgba(255,255,255,0.6); }
+.nav-hero #langBtnText { color: #fff; }
+.nav-hero .lang-btn svg path { stroke: #fff; }
+.nav-hero .nav-logo img { filter: grayscale(100%) brightness(0) invert(1); }
+
+
+</style>
+
+
+
+<!-- i18n multilingual support -->
+<script src="i18n.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var dd = document.getElementById('langDropdown');
+  var items = dd ? dd.querySelectorAll('a') : [];
+  console.log('[i18n-diag] dropdown found:', !!dd, 'items:', items.length);
+  items.forEach(function(a,i){
+    console.log('[i18n-diag] item'+i, a.getAttribute('data-lang'), a.textContent);
+  });
+  if (items.length === 0) {
+    console.warn('[i18n-diag] DROPDOWN IS EMPTY — initI18N may not have run!');
+  }
+});
+</script>
+</head>
+<body>
+
+<div class="ambient-dots" aria-hidden="true"></div>
+
+<!-- Standalone Login Button -->
+<a href="user-system/login.html" class="login-btn-fixed" data-i18n="nav_login">登录</a>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">
+      <img id="navLogo" src="img/img-header-logo.png" alt="自在空间" data-i18n-title="nav_logo_alt" data-original-src="img/img-header-logo.png" data-white-src="img/img-header-logo-w.png" style="filter:grayscale(100%)" onerror="this.style.display='none'">
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="#about" class="nav-link" data-i18n="nav_about">关于我们</a>
+      <a href="#business" class="nav-link" data-i18n="nav_business">业务版图</a>
+      <a href="#vr" class="nav-link" data-i18n="nav_vr">另一个视界</a>
+
+      <a href="#vr360" class="nav-link" data-i18n="nav_vr360">720 VR</a>
+      <a href="#honors" class="nav-link" data-i18n="nav_honors">荣誉奖项</a>
+      <a href="#gallery" class="nav-link" data-i18n="nav_gallery">作品画廊</a>
+      <a href="#partners" class="nav-link" data-i18n="nav_partners">合作伙伴</a>
+      <a href="#contact" class="nav-cta" data-i18n="nav_cta">联系我们</a>
+    </div>
+    <div class="lang-switcher" style="margin-left:var(--space-md);">
+      <button class="lang-btn" id="langBtn" onclick="document.getElementById('langDropdown').classList.toggle('show')" aria-label="切换语言" style="background:transparent;border:0.5px solid var(--border-subtle);border-radius:var(--radius-sm);padding:8px 14px;cursor:pointer;font-size:16px;display:flex;align-items:center;gap:6px;">
+        <span id="langBtnText">中文</span>
+        <svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 3l3 4 3-4" stroke="currentColor" fill="none" stroke-width="1.2"/></svg>
+      </button>
+      <div class="lang-dropdown" id="langDropdown" style="display:none;position:absolute;top:100%;right:0;margin-top:12px;background:rgba(255,255,255,0.42);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:1px solid rgba(255,255,255,0.35);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.12);z-index:1001;min-width:220px;padding:4px;">
+        <a href="javascript:void(0)" data-lang="zh" onclick="applyLanguage('zh');document.getElementById('langDropdown').classList.remove('show');return false;">🇨🇳 中文</a>
+        <a href="javascript:void(0)" data-lang="en" onclick="applyLanguage('en');document.getElementById('langDropdown').classList.remove('show');return false;">🇺🇸 English</a>
+        <a href="javascript:void(0)" data-lang="ja" onclick="applyLanguage('ja');document.getElementById('langDropdown').classList.remove('show');return false;">🇯🇵 日本語</a>
+        <a href="javascript:void(0)" data-lang="fr" onclick="applyLanguage('fr');document.getElementById('langDropdown').classList.remove('show');return false;">🇫🇷 Français</a>
+        <a href="javascript:void(0)" data-lang="ru" onclick="applyLanguage('ru');document.getElementById('langDropdown').classList.remove('show');return false;">🇷🇺 Русский</a>
+        <a href="javascript:void(0)" data-lang="he" onclick="applyLanguage('he');document.getElementById('langDropdown').classList.remove('show');return false;">🇮🇱 עברית</a>
+        <a href="javascript:void(0)" data-lang="ar" onclick="applyLanguage('ar');document.getElementById('langDropdown').classList.remove('show');return false;">🇸🇦 العربية</a>
+        <a href="javascript:void(0)" data-lang="es" onclick="applyLanguage('es');document.getElementById('langDropdown').classList.remove('show');return false;">🇪🇸 Español</a>
+        <a href="javascript:void(0)" data-lang="de" onclick="applyLanguage('de');document.getElementById('langDropdown').classList.remove('show');return false;">🇩🇪 Deutsch</a>
+        <a href="javascript:void(0)" data-lang="ko" onclick="applyLanguage('ko');document.getElementById('langDropdown').classList.remove('show');return false;">🇰🇷 한국어</a>
+        <a href="javascript:void(0)" data-lang="pt" onclick="applyLanguage('pt');document.getElementById('langDropdown').classList.remove('show');return false;">🇧🇷 Português</a>
+        <a href="javascript:void(0)" data-lang="bo" onclick="applyLanguage('bo');document.getElementById('langDropdown').classList.remove('show');return false;">བོད་སྐད།</a>
+        <a href="javascript:void(0)" data-lang="ug" onclick="applyLanguage('ug');document.getElementById('langDropdown').classList.remove('show');return false;">ئۇيغۇرچە</a>
+      </div>
+    </div>
+
+    <button class="nav-toggle" id="navToggle" data-i18n-aria="nav_toggle_aria" aria-label="菜单">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <img src="img/banner_01.jpg" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg, oklch(15% 0.005 60), oklch(25% 0.005 60))'">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow" data-i18n="hero_eyebrow">Being Art Space · Since 2014</p>
+    <h1 class="hero-title"><span data-i18n="hero_title_line1">记录美好故事</span><br><span data-i18n="hero_title_line2">凝聚<em>向善力量</em></span></h1>
+    <p class="hero-desc" data-i18n="hero_desc">用VR、3D等科技赋能善因传播——让每一次看见，都成为改变的开始。</p>
+  </div>
+  <div class="hero-scroll">
+    <a href="#about" class="hero-scroll-indicator" data-i18n-aria="hero_scroll_aria" aria-label="向下滚动"></a>
+  </div>
+</section>
+
+<!-- Brand Story -->
+<section class="section brand-story" id="about">
+  <div class="section-inner">
+    <div class="story-grid reveal">
+      <div style="display:flex;align-items:flex-start;gap:var(--space-xl);">
+        <img src="img/marvis_9aed1523-fc6d-41cd-8e79-afd74d71a51a.png" alt="苏家铭" data-i18n-title="brand_founder_photo_alt" style="width:280px;flex-shrink:0;border-radius:var(--radius-lg);box-shadow:0 4px 24px rgba(0,0,0,.2);" onerror="this.style.display='none'" loading="lazy">
+        <div>
+          <p class="section-label" data-i18n="brand_label">About Us</p>
+          <h2 class="section-title" data-i18n="brand_title">自在，即是存在。</h2>
+          <p data-i18n="brand_p1">杭州自在空间文化艺术有限公司成立于2014年，是大陆第24家B Corp共益企业。从专业影视制作起步，深耕内容创作十余年，基于对传播生态的深刻洞察，现已发展为"商业向善"整合型品牌营销传播伙伴。</p>
+          <p data-i18n="brand_p2">公司致力于通过"内容+传播+运营"的一站式闭环服务，提供从品牌全案策划、影视广告/短视频制作、VR/AI数字内容开发，到全媒体矩阵运营、精准投放及效果优化的全链路服务，帮助品牌实现商业与社会价值的双重提升。</p>
+          <blockquote class="story-quote" style="margin-top:var(--space-sm);"><span data-i18n="brand_quote">"自在代表着真实。存在即是意义，真实自有万钧之力。"</span></blockquote>
+          <p style="color:var(--text-primary);font-size:var(--text-sm);font-weight:600;font-family:var(--font-display);" data-i18n="brand_founder">—— 苏家铭，自在空间创始人</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Business Units -->
+<section class="section business" id="business">
+  <div class="section-inner" style="position:relative;z-index:1;">
+    <div class="section-header center reveal">
+      <p class="section-label" data-i18n="business_label">Our Ecosystem</p>
+      <h2 class="section-title" data-i18n="business_title">业务板块</h2>
+      <p class="section-subtitle" data-i18n="business_subtitle">从公益影像到VR科技，从商业影视到MCN传播，构建完整的善因传播生态</p>
+    </div>
+    <div class="business-grid">
+      <div class="business-card reveal reveal-delay-1">
+        <div class="business-card-icon">&#9825;</div>
+        <h3 data-i18n="business_card1_title">自在公益影像</h3>
+        <p data-i18n="business_card1_desc">公益项目纪录片、纪实短片。用镜头记录真实，以故事传递温暖，让每一份善意被世界看见。</p>
+      </div>
+      <div class="business-card reveal reveal-delay-2">
+        <div class="business-card-icon">&#9654;</div>
+        <h3 data-i18n="business_card2_title">好自在影视</h3>
+        <p data-i18n="business_card2_desc">商业TVC、宣传片、品牌故事。以电影级制作水准为品牌注入灵魂，让商业传播更有温度。</p>
+      </div>
+      <div class="business-card reveal reveal-delay-3">
+        <div class="business-card-icon">&#9642;</div>
+        <h3 data-i18n="business_card3_title">另一个视界</h3>
+        <p data-i18n="business_card3_desc">VR赋能科技板块。360°全景、交互体验、沉浸叙事，用前沿科技打开善因传播的无限可能。</p>
+      </div>
+      <div class="business-card reveal reveal-delay-4">
+        <div class="business-card-icon">●</div>
+        <h3 data-i18n="business_card4_title">自在MCN</h3>
+        <p data-i18n="business_card4_desc">全国首个公益MCN。垂直于公益项目的短视频运营制作，让善意在数字时代裂变式传播。</p>
+      </div>
+      <div class="business-card reveal reveal-delay-5">
+        <div class="business-card-icon">★</div>
+        <h3 data-i18n="business_card5_title">CLAP品牌营销</h3>
+        <p data-i18n="business_card5_desc">整案营销助力品牌传播。从品牌全案策划到精准投放，记录美好故事，凝聚向善力量。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Another Vision VR -->
+<section class="section vr-highlight" id="vr">
+  <div class="vr-highlight-bg">
+    <img src="img/vr_bg.jpg" alt="" onerror="this.parentElement.style.display='none'" loading="lazy">
+  </div>
+  <div class="section-inner" style="position:relative;z-index:1;">
+    <div class="section-header center reveal">
+      <p class="section-label" data-i18n="vr_label">Another Vision</p>
+      <h2 class="section-title" data-i18n="vr_title">另一个视界</h2>
+      <p class="section-subtitle" data-i18n="vr_subtitle">2019年初启动"科技向善"项目，将VR技术深度运用于公益领域，覆盖急救医疗、环保行动、特殊人群关爱等，用沉浸式体验唤醒社会共情</p>
+    </div>
+    <div class="vr-features reveal reveal-delay-1">
+      <div class="vr-feature-item">
+        <div class="vr-feature-value" data-i18n="vr_feature1_value">360°</div>
+        <div class="vr-feature-label" data-i18n="vr_feature1_label">全景沉浸播放</div>
+      </div>
+      <div class="vr-feature-item">
+        <div class="vr-feature-value" data-i18n="vr_feature2_value">14+</div>
+        <div class="vr-feature-label" data-i18n="vr_feature2_label">媒体报道覆盖</div>
+      </div>
+      <div class="vr-feature-item">
+        <div class="vr-feature-value" data-i18n="vr_feature3_value">100万+</div>
+        <div class="vr-feature-label" data-i18n="vr_feature3_label">影响人群</div>
+      </div>
+      <div class="vr-feature-item">
+        <div class="vr-feature-value">16</div>
+        <div class="vr-feature-label" data-i18n="vr_feature4_label">VR标杆案例</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Impact Numbers -->
+<section class="section impact">
+  <div class="section-inner">
+    <div class="section-header center reveal">
+      <p class="section-label" data-i18n="impact_label">Our Impact</p>
+      <h2 class="section-title" data-i18n="impact_title">影响力数据</h2>
+    </div>
+    <div class="impact-grid">
+      <div class="impact-item reveal reveal-delay-1">
+        <div class="impact-number" data-i18n="impact1_value">500<sup>+</sup></div>
+        <div class="impact-label" data-i18n="impact1_label">服务客户</div>
+      </div>
+      <div class="impact-item reveal reveal-delay-2">
+        <div class="impact-number" data-i18n="impact2_value">13亿<sup>+</sup></div>
+        <div class="impact-label" data-i18n="impact2_label">公益传播触达人次</div>
+      </div>
+      <div class="impact-item reveal reveal-delay-3">
+        <div class="impact-number" data-i18n="impact3_value">200<sup>+</sup></div>
+        <div class="impact-label" data-i18n="impact3_label">作品获奖</div>
+      </div>
+      <div class="impact-item reveal reveal-delay-4">
+        <div class="impact-number" data-i18n="impact4_value">200<sup>+</sup></div>
+        <div class="impact-label" data-i18n="impact4_label">国内外奖项</div>
+      </div>
+      <div class="impact-item reveal reveal-delay-5">
+        <div class="impact-number" data-i18n="impact5_value">4800<sup>+</sup></div>
+        <div class="impact-label" data-i18n="impact5_label">媒体资源</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 720 VR Immersive Experience -->
+<section class="section vr360" id="vr360">
+  <div class="section-inner">
+    <div class="section-header center reveal">
+      <p class="section-label" data-i18n="vr360_label">720 Panoramic Experience</p>
+      <h2 class="section-title" data-i18n="vr360_title">720 沉浸体验</h2>
+      <p class="section-subtitle" data-i18n="vr360_subtitle">指尖滑动，身临其境——在浏览器中探索自在空间的 VR 全景作品</p>
+    </div>
+    <div class="vr360-grid reveal reveal-delay-1">
+      <div class="vr360-card">
+        <div class="vr360-frame-wrap">
+          <iframe data-src="https://www.720yun.com/vr/5b2jedukeu7" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="vr360-card-body">
+          <h4 data-i18n="vr360_card1_title">VR杭州市养老地图</h4>
+          <p data-i18n="vr360_card1_desc">一键触达杭城养老服务资源</p>
+        </div>
+      </div>
+      <div class="vr360-card">
+        <div class="vr360-frame-wrap">
+          <iframe data-src="https://www.720yun.com/vr/e20jO7yavy0" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="vr360-card-body">
+          <h4 data-i18n="vr360_card2_title">VR南浔古镇</h4>
+          <p data-i18n="vr360_card2_desc">沉浸式漫游江南水乡古镇</p>
+        </div>
+      </div>
+      <div class="vr360-card">
+        <div class="vr360-frame-wrap">
+          <iframe data-src="https://www.720yun.com/vr/26829upfqtg" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="vr360-card-body">
+          <h4 data-i18n="vr360_card3_title">VR彩虹计划</h4>
+          <p data-i18n="vr360_card3_desc">关爱特殊儿童公益行动</p>
+        </div>
+      </div>
+		 <div class="vr360-card">
+        <div class="vr360-frame-wrap">
+         <iframe data-src="https://www.720yun.com/t/3evkbh2hs2y"  allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="vr360-card-body">
+          <h4 data-i18n="vr360_card4_title">VR最后一节课取景地</h4>
+          <p data-i18n="vr360_card4_desc">校园记忆的沉浸式重现</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Honors & Awards -->
+<section class="section honors" id="honors">
+  <div class="section-inner">
+    <div class="section-header center reveal">
+      <p class="section-label" data-i18n="honors_label">Honors &amp; Awards</p>
+      <h2 class="section-title" data-i18n="honors_title">公司荣誉与奖项</h2>
+      <p class="section-subtitle" data-i18n="honors_subtitle">从纪录片金奖到国际电影节评委会特别奖——自在空间历年荣誉精选</p>
+    </div>
+
+    <div class="honors-grid reveal reveal-delay-1" id="honorsGrid">
+            <div class="honor-card" data-honor-index="0">
+              <div class="honor-year">—</div>
+              <div class="honor-work">《花儿哪里去了》</div>
+              <div class="honor-award-name">评委会特别奖</div>
+              <div class="honor-festival">第18届北京大学生电影节短片竞赛单元</div>
+            </div>
+            <div class="honor-card" data-honor-index="1">
+              <div class="honor-year">—</div>
+              <div class="honor-work">《棋局》</div>
+              <div class="honor-award-name">一等奖</div>
+              <div class="honor-festival">2016国家网信办首届“益言益行”全国公益广告大赛</div>
+            </div>
+            <div class="honor-card" data-honor-index="2">
+              <div class="honor-year">2009年</div>
+              <div class="honor-work">《吃铁的人》</div>
+              <div class="honor-award-name">纪录片金奖</div>
+              <div class="honor-festival">南方多媒短片节纪录片单元</div>
+            </div>
+            <div class="honor-card" data-honor-index="3">
+              <div class="honor-year">2011年</div>
+              <div class="honor-work">《花儿哪里去了》</div>
+              <div class="honor-award-name">最佳短片, 最佳纪录片</div>
+              <div class="honor-festival">上海国际电影节 手机电影节</div>
+            </div>
+            <div class="honor-card" data-honor-index="4">
+              <div class="honor-year">2012年</div>
+              <div class="honor-work">《俺爸俺妈》</div>
+              <div class="honor-award-name">示范片</div>
+              <div class="honor-festival">壹基金公益影像节</div>
+            </div>
+            <div class="honor-card" data-honor-index="5">
+              <div class="honor-year">2017年</div>
+              <div class="honor-work">《甜》</div>
+              <div class="honor-award-name">入选首届西湖青年纪录片论坛作品展映单元</div>
+              <div class="honor-festival">首届西湖青年纪录片论坛</div>
+            </div>
+            <div class="honor-card" data-honor-index="6">
+              <div class="honor-year">2017年</div>
+              <div class="honor-work">《姐妹》</div>
+              <div class="honor-award-name">入围作品</div>
+              <div class="honor-festival">第七届 光影纪年-中国纪录片学院奖</div>
+            </div>
+            <div class="honor-card" data-honor-index="7">
+              <div class="honor-year">2017年</div>
+              <div class="honor-work">《甜》</div>
+              <div class="honor-award-name">二等奖</div>
+              <div class="honor-festival">首届公益视频短片大赛</div>
+            </div>
+            <div class="honor-card" data-honor-index="8">
+              <div class="honor-year">2017年</div>
+              <div class="honor-work">《棋局》</div>
+              <div class="honor-award-name">三等奖</div>
+              <div class="honor-festival">首届公益视频短片大赛</div>
+            </div>
+            <div class="honor-card" data-honor-index="9">
+              <div class="honor-year">2017年</div>
+              <div class="honor-work">《爱要好好说》</div>
+              <div class="honor-award-name">优秀展映影片</div>
+              <div class="honor-festival">2017中国公益映像节</div>
+            </div>
+            <div class="honor-card" data-honor-index="10">
+              <div class="honor-year">2017年</div>
+              <div class="honor-work">《爱要好好说》</div>
+              <div class="honor-award-name">二等奖</div>
+              <div class="honor-festival">浙江省公益短片大赛</div>
+            </div>
+            <div class="honor-card" data-honor-index="11">
+              <div class="honor-year">2018年</div>
+              <div class="honor-work">《暖城》</div>
+              <div class="honor-award-name">三等奖</div>
+              <div class="honor-festival">第二届公益视频短片大赛</div>
+            </div>
+            <div class="honor-card" data-honor-index="12">
+              <div class="honor-year">2018年</div>
+              <div class="honor-work">《亲情家书》</div>
+              <div class="honor-award-name">编入杭州文创产业发展报告</div>
+              <div class="honor-festival">文化精品工程</div>
+            </div>
+            <div class="honor-card" data-honor-index="13">
+              <div class="honor-year">2018年</div>
+              <div class="honor-work">《俺爸俺妈》</div>
+              <div class="honor-award-name">二等奖</div>
+              <div class="honor-festival">2018中国梦（浙江）网络视频大赛</div>
+            </div>
+            <div class="honor-card" data-honor-index="14">
+              <div class="honor-year">2018年</div>
+              <div class="honor-work">《创变者·魏文锋》</div>
+              <div class="honor-award-name">“最美浙江人”微纪录片三等奖</div>
+              <div class="honor-festival">2018中国梦（浙江）网络视频大赛</div>
+            </div>
+            <div class="honor-card" data-honor-index="15">
+              <div class="honor-year">2018年</div>
+              <div class="honor-work">《保护环境拒绝随手乱丢垃圾》</div>
+              <div class="honor-award-name">最佳手机短视频</div>
+              <div class="honor-festival">2018中国梦（浙江）网络视频大赛</div>
+            </div>
+            <div class="honor-card" data-honor-index="16">
+              <div class="honor-year">2018年</div>
+              <div class="honor-work">《姐妹》</div>
+              <div class="honor-award-name">最佳公益影片二等奖</div>
+              <div class="honor-festival">第四届上海公益微电影节</div>
+            </div>
+            <div class="honor-card" data-honor-index="17">
+              <div class="honor-year">2018年</div>
+              <div class="honor-work">《蒙古心弦》</div>
+              <div class="honor-award-name">最佳公益导演奖</div>
+              <div class="honor-festival">第四届上海公益微电影节</div>
+            </div>
+            <div class="honor-card" data-honor-index="18">
+              <div class="honor-year">2018年</div>
+              <div class="honor-work">《俺爸俺妈》</div>
+              <div class="honor-award-name">优秀公益作品奖</div>
+              <div class="honor-festival">第四届上海公益微电影节</div>
+            </div>
+            <div class="honor-card" data-honor-index="19">
+              <div class="honor-year">2018年</div>
+              <div class="honor-work">《THIS IS MOM》（春晖妈妈）</div>
+              <div class="honor-award-name">入围奖</div>
+              <div class="honor-festival">第四届上海公益微电影节</div>
+            </div>
+            <div class="honor-card" data-honor-index="20">
+              <div class="honor-year">2018年</div>
+              <div class="honor-work">《是光 大山的孩子会写诗》</div>
+              <div class="honor-award-name">入围奖</div>
+              <div class="honor-festival">第四届上海公益微电影节</div>
+            </div>
+            <div class="honor-card" data-honor-index="21">
+              <div class="honor-year">2019年</div>
+              <div class="honor-work">《移动光明行》（《再·见》）</div>
+              <div class="honor-award-name">入围奖</div>
+              <div class="honor-festival">2018年度公益映像奖暨第八届中国公益节</div>
+            </div>
+            <div class="honor-card" data-honor-index="22">
+              <div class="honor-year">2019年</div>
+              <div class="honor-work">《移动光明行》（《再·见》）</div>
+              <div class="honor-award-name">全国30强，并获入围奖</div>
+              <div class="honor-festival">#我的捐赠故事#</div>
+            </div>
+            <div class="honor-card" data-honor-index="23">
+              <div class="honor-year">2019年</div>
+              <div class="honor-work">《姐妹》</div>
+              <div class="honor-award-name">十佳作品</div>
+              <div class="honor-festival">乙亥年第五届“根亲中国”微电影大赛</div>
+            </div>
+            <div class="honor-card" data-honor-index="24">
+              <div class="honor-year">2019年</div>
+              <div class="honor-work">《大山里的心愿》</div>
+              <div class="honor-award-name">优秀奖</div>
+              <div class="honor-festival">人民日报举办的“我与中国”全球短视频大赛</div>
+            </div>
+            <div class="honor-card" data-honor-index="25">
+              <div class="honor-year">2019年</div>
+              <div class="honor-work">《另一个世界-VR+公益，科技向善》</div>
+              <div class="honor-award-name">潜力奖</div>
+              <div class="honor-festival">2019新创视界创新创业大赛</div>
+            </div>
+            <div class="honor-card" data-honor-index="26">
+              <div class="honor-year">2019年</div>
+              <div class="honor-work">《光明电池》</div>
+              <div class="honor-award-name">2019年度十佳公益故事</div>
+              <div class="honor-festival">公益之申</div>
+            </div>
+            <div class="honor-card" data-honor-index="27">
+              <div class="honor-year">2019年</div>
+              <div class="honor-work">《我不是药神，我是陆勇》</div>
+              <div class="honor-award-name">企业类入围作品奖</div>
+              <div class="honor-festival">中国公益映像节</div>
+            </div>
+            <div class="honor-card" data-honor-index="28">
+              <div class="honor-year">2019年</div>
+              <div class="honor-work">《大山里的心愿》</div>
+              <div class="honor-award-name">企业类入围作品奖</div>
+              <div class="honor-festival">中国公益映像节</div>
+            </div>
+            <div class="honor-card" data-honor-index="29">
+              <div class="honor-year">2019年</div>
+              <div class="honor-work">《光明电池》</div>
+              <div class="honor-award-name">优秀公益作品</div>
+              <div class="honor-festival">第五届上海公益微电影节</div>
+            </div>
+            <div class="honor-card" data-honor-index="30">
+              <div class="honor-year">2019年</div>
+              <div class="honor-work">《会飞的盒子》</div>
+              <div class="honor-award-name">最佳公益摄像奖</div>
+              <div class="honor-festival">第五届上海公益微电影节</div>
+            </div>
+            <div class="honor-card" data-honor-index="31">
+              <div class="honor-year">2019年</div>
+              <div class="honor-work">《心声》</div>
+              <div class="honor-award-name">优秀公益作品</div>
+              <div class="honor-festival">第五届上海公益微电影节</div>
+            </div>
+            <div class="honor-card" data-honor-index="32">
+              <div class="honor-year">2019年</div>
+              <div class="honor-work">《光明电池》</div>
+              <div class="honor-award-name">最佳短视频奖</div>
+              <div class="honor-festival">2019中国梦（浙江）网络视频大赛</div>
+            </div>
+            <div class="honor-card" data-honor-index="33">
+              <div class="honor-year">2019年</div>
+              <div class="honor-work">《光明电池》</div>
+              <div class="honor-award-name">一等奖</div>
+              <div class="honor-festival">慈善文化传播大赛</div>
+            </div>
+            <div class="honor-card" data-honor-index="34">
+              <div class="honor-year">2019年</div>
+              <div class="honor-work">《我和花儿的捐赠故事》</div>
+              <div class="honor-award-name">优秀奖</div>
+              <div class="honor-festival">慈善文化传播大赛</div>
+            </div>
+            <div class="honor-card" data-honor-index="35">
+              <div class="honor-year">2019年</div>
+              <div class="honor-work">《亲情家书》之吴彦杰篇</div>
+              <div class="honor-award-name">入围奖</div>
+              <div class="honor-festival">厦门Hishorts!短片大赛</div>
+            </div>
+            <div class="honor-card" data-honor-index="36">
+              <div class="honor-year">2020年</div>
+              <div class="honor-work">《光明电池》</div>
+              <div class="honor-award-name">2019年度公益映像奖</div>
+              <div class="honor-festival">第九届中国公益节</div>
+            </div>
+            <div class="honor-card" data-honor-index="37">
+              <div class="honor-year">2020年</div>
+              <div class="honor-work">《心声》</div>
+              <div class="honor-award-name">2019年度公益映像奖</div>
+              <div class="honor-festival">第九届中国公益节</div>
+            </div>
+            <div class="honor-card" data-honor-index="38">
+              <div class="honor-year">2020年</div>
+              <div class="honor-work">《传承》</div>
+              <div class="honor-award-name">2019年度公益映像奖</div>
+              <div class="honor-festival">第九届中国公益节</div>
+            </div>
+            <div class="honor-card" data-honor-index="39">
+              <div class="honor-year">2020年</div>
+              <div class="honor-work">《爱，未曾遗忘》（丁香医生）</div>
+              <div class="honor-award-name">优秀作品奖</div>
+              <div class="honor-festival">庚子年第六届“根亲中国”微电影网络大赛</div>
+            </div>
+            <div class="honor-card" data-honor-index="40">
+              <div class="honor-year">2020年</div>
+              <div class="honor-work">《我不是药神，我是陆勇》</div>
+              <div class="honor-award-name">二等奖</div>
+              <div class="honor-festival">第二届#我的捐赠故事#</div>
+            </div>
+            <div class="honor-card" data-honor-index="41">
+              <div class="honor-year">2020年</div>
+              <div class="honor-work">《俺爸俺妈》</div>
+              <div class="honor-award-name">入围奖</div>
+              <div class="honor-festival">第二届#我的捐赠故事#</div>
+            </div>
+            <div class="honor-card" data-honor-index="42">
+              <div class="honor-year">2020年</div>
+              <div class="honor-work">《会飞的盒子》</div>
+              <div class="honor-award-name">入围奖</div>
+              <div class="honor-festival">第二届#我的捐赠故事#</div>
+            </div>
+            <div class="honor-card" data-honor-index="43">
+              <div class="honor-year">2020年</div>
+              <div class="honor-work">《创变者·Mantra》</div>
+              <div class="honor-award-name">入围奖</div>
+              <div class="honor-festival">第二届#我的捐赠故事#</div>
+            </div>
+            <div class="honor-card" data-honor-index="44">
+              <div class="honor-year">2020年</div>
+              <div class="honor-work">《心声》</div>
+              <div class="honor-award-name">入围奖</div>
+              <div class="honor-festival">第二届#我的捐赠故事#</div>
+            </div>
+            <div class="honor-card" data-honor-index="45">
+              <div class="honor-year">2020年</div>
+              <div class="honor-work">《再见，老师》</div>
+              <div class="honor-award-name">入围奖</div>
+              <div class="honor-festival">第二届#我的捐赠故事#</div>
+            </div>
+            <div class="honor-card" data-honor-index="46">
+              <div class="honor-year">2020年</div>
+              <div class="honor-work">《爱，未曾遗忘》（丁香医生）</div>
+              <div class="honor-award-name">入围奖</div>
+              <div class="honor-festival">第二届#我的捐赠故事#</div>
+            </div>
+            <div class="honor-card" data-honor-index="47">
+              <div class="honor-year">2020年</div>
+              <div class="honor-work">《亲情家书》之吴晓彤篇</div>
+              <div class="honor-award-name">入围奖</div>
+              <div class="honor-festival">第二届#我的捐赠故事#</div>
+            </div>
+            <div class="honor-card" data-honor-index="48">
+              <div class="honor-year">2020年</div>
+              <div class="honor-work">《是光 大山的孩子会写诗》</div>
+              <div class="honor-award-name">入围奖</div>
+              <div class="honor-festival">第二届#我的捐赠故事#</div>
+            </div>
+            <div class="honor-card" data-honor-index="49">
+              <div class="honor-year">2020年</div>
+              <div class="honor-work">《明天的微笑》</div>
+              <div class="honor-award-name">入围奖</div>
+              <div class="honor-festival">第二届#我的捐赠故事#</div>
+            </div>
+            <div class="honor-card" data-honor-index="50">
+              <div class="honor-year">2020年</div>
+              <div class="honor-work">《92路》</div>
+              <div class="honor-award-name">入围奖</div>
+              <div class="honor-festival">第二届#我的捐赠故事#</div>
+            </div>
+            <div class="honor-card" data-honor-index="51">
+              <div class="honor-year">2020年</div>
+              <div class="honor-work">《我生命的60秒》VR纪录片《余生一日》</div>
+              <div class="honor-award-name">参与部分拍摄</div>
+              <div class="honor-festival">威尼斯国际电影节</div>
+            </div>
+            <div class="honor-card" data-honor-index="52">
+              <div class="honor-year">2020年</div>
+              <div class="honor-work">《光明电池》</div>
+              <div class="honor-award-name">入围证书</div>
+              <div class="honor-festival">We爱·两岸青年短片大赛</div>
+            </div>
+            <div class="honor-card" data-honor-index="53">
+              <div class="honor-year">2020年</div>
+              <div class="honor-work">《240秒》</div>
+              <div class="honor-award-name">原力组，创益突破奖</div>
+              <div class="honor-festival">腾讯“我是创益人”大赛</div>
+            </div>
+            <div class="honor-card" data-honor-index="54">
+              <div class="honor-year">2020年</div>
+              <div class="honor-work">《星空漫游者》</div>
+              <div class="honor-award-name">创意组，全国50强，最佳创意奖, 年度用户最喜爱公益项目奖</div>
+              <div class="honor-festival">腾讯“我是创益人”大赛</div>
+            </div>
+            <div class="honor-card" data-honor-index="55">
+              <div class="honor-year">2020年</div>
+              <div class="honor-work">《生物多样性》</div>
+              <div class="honor-award-name">50强</div>
+              <div class="honor-festival">“盛世钱塘，幸福杭州”短视频大赛</div>
+            </div>
+            <div class="honor-card" data-honor-index="56">
+              <div class="honor-year">2020年</div>
+              <div class="honor-work">《像你一样，不一样》</div>
+              <div class="honor-award-name">50强</div>
+              <div class="honor-festival">“盛世钱塘，幸福杭州”短视频大赛</div>
+            </div>
+            <div class="honor-card" data-honor-index="57">
+              <div class="honor-year">2020年</div>
+              <div class="honor-work">《像你一样，不一样》</div>
+              <div class="honor-award-name">最佳公益短视频一等奖</div>
+              <div class="honor-festival">第六届上海公益微电影节</div>
+            </div>
+            <div class="honor-card" data-honor-index="58">
+              <div class="honor-year">2020年</div>
+              <div class="honor-work">《梦守护》</div>
+              <div class="honor-award-name">最佳公益短视频二等奖</div>
+              <div class="honor-festival">第六届上海公益微电影节</div>
+            </div>
+            <div class="honor-card" data-honor-index="59">
+              <div class="honor-year">2020年</div>
+              <div class="honor-work">《亲亲禾苗，营养一餐》</div>
+              <div class="honor-award-name">最佳公益微电影二等奖</div>
+              <div class="honor-festival">第六届上海公益微电影节</div>
+            </div>
+    </div>
+  </div>
+</section>
+
+<!-- Honors Modal -->
+<div class="honor-modal" id="honorModal">
+  <div class="honor-modal-backdrop" id="honorModalBackdrop"></div>
+  <div class="honor-modal-content">
+    <button class="honor-modal-close" id="honorModalClose" data-i18n-aria="honors_modal_close" aria-label="关闭">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="honor-modal-body">
+      <div class="honor-modal-cert">
+        <img id="honorModalImg" src="" alt="" onerror="this.parentElement.classList.add('no-cert')">
+        <div class="honor-modal-cert-placeholder" data-i18n="honors_no_cert">奖状图片整理中</div>
+      </div>
+      <div class="honor-modal-info">
+        <h3 class="honor-modal-award" id="honorModalAward"></h3>
+        <div class="honor-modal-meta">
+          <span class="honor-modal-year" id="honorModalYear"></span>
+          <span class="honor-modal-festival" id="honorModalFestival"></span>
+        </div>
+        <p class="honor-modal-work" id="honorModalWork"></p>
+        <div class="honor-modal-details">
+          <div class="honor-modal-detail" id="honorModalAttributionWrap" style="display:none">
+            <span class="honor-modal-detail-label" data-i18n="honors_modal_awarded_to">获奖主体</span>
+            <span class="honor-modal-detail-value" id="honorModalAttribution"></span>
+          </div>
+          <div class="honor-modal-detail" id="honorModalOrgWrap" style="display:none">
+            <span class="honor-modal-detail-label" data-i18n="honors_modal_org">颁奖机构</span>
+            <span class="honor-modal-detail-value" id="honorModalOrg"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Project Gallery -->
+<section class="section gallery" id="gallery">
+  <div class="section-inner">
+    <div class="section-header center reveal">
+      <p class="section-label" data-i18n="gallery_label">Project Gallery</p>
+      <h2 class="section-title" data-i18n="gallery_title">作品画廊</h2>
+      <p class="section-subtitle" data-i18n="gallery_subtitle">从纪录片到VR全景，从商业TVC到公益影像——精选项目视觉档案</p>
+    </div>
+
+    <div class="gallery-filters reveal reveal-delay-1">
+      <button class="filter-btn active" data-filter="all" data-i18n="gallery_filter_all">全部</button>
+      <button class="filter-btn" data-filter="vr-case" data-i18n="gallery_filter_vr">VR 案例</button>
+      <button class="filter-btn" data-filter="documentary" data-i18n="gallery_filter_documentary">纪录片</button>
+      <button class="filter-btn" data-filter="photo" data-i18n="gallery_filter_photo">剧照</button>
+      <button class="filter-btn" data-filter="promo" data-i18n="gallery_filter_promo">宣传片</button>
+      <button class="filter-btn" data-filter="drama" data-i18n="gallery_filter_drama">剧情片</button>
+      <button class="filter-btn" data-filter="ai_short" data-i18n="gallery_filter_ai_short">AI短片</button>
+      <button class="filter-btn" data-filter="event" data-i18n="gallery_filter_event">活动策划</button>
+    </div>
+
+    <div class="gallery-grid reveal reveal-delay-2" id="galleryGrid">
+      <!-- VR Cases -->
+      <div class="gallery-item" data-cat="vr-case">
+        <img src="img/VR案例/VR大爱清尘首部尘肺病VR短片.png" alt="大爱清尘 · 尘肺病" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_vr_title_01">大爱清尘 · 尘肺病</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_vr_sub_01">尘肺病患者的真实困境直击人心</span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="vr-case">
+        <img src="img/VR案例/VR宋运稻香.png" alt="宋运稻香" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_vr_title_02">宋运稻香</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_vr_sub_02">沉浸式感受宋代农耕文化魅力</span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="vr-case">
+        <img src="img/VR案例/VR山谷音乐节.png" alt="山谷音乐节" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_vr_title_03">山谷音乐节</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_vr_sub_03">自然山谷中的音乐狂欢盛宴</span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="vr-case">
+        <img src="img/VR案例/VR戈壁亲子挑战营.png" alt="戈壁亲子挑战营" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_vr_title_04">戈壁亲子挑战营</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_vr_sub_04">戈壁滩上的亲子冒险成长之旅</span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="vr-case">
+        <img src="img/VR案例/VR教练来了.png" alt="教练来了" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_vr_title_05">教练来了</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_vr_sub_05">专业教练带你沉浸式运动燃脂</span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="vr-case">
+        <img src="img/VR案例/VR杭州市养老地图.png" alt="杭州市养老地图" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_vr_title_06">杭州市养老地图</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_vr_sub_06">一键触达杭城养老服务资源</span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="vr-case">
+        <img src="img/VR案例/VR气候印记皖南古镇.png" alt="气候印记 · 皖南古镇" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_vr_title_07">气候印记 · 皖南古镇</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_vr_sub_07">气候变化视角下的古镇文化巡礼</span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="vr-case">
+        <img src="img/VR案例/VR深圳观鸟.png" alt="深圳观鸟" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_vr_title_08">深圳观鸟</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_vr_sub_08">都市中的候鸟栖息地探索之旅</span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="vr-case">
+        <img src="img/VR案例/VR濒死体验.png" alt="濒死体验" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title">濒死体验</span>
+    <span class="gallery-caption-subtitle">生命边缘的真实VR沉浸体验</span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="vr-case">
+        <img src="img/VR案例/VR百岁老人图谱.png" alt="百岁老人图谱" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title">百岁老人图谱</span>
+    <span class="gallery-caption-subtitle">记录百岁长者的生命故事与智慧</span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="vr-case">
+        <img src="img/VR案例/VR直播浙江大学新年音乐会.png" alt="浙大新年音乐会" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title">浙大新年音乐会</span>
+    <span class="gallery-caption-subtitle">沉浸式直播浙大新年音乐盛典</span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="vr-case">
+        <img src="img/VR案例/VR短剧《穿书后霸道总裁宠我上瘾》.png" alt="VR短剧" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title">VR短剧</span>
+    <span class="gallery-caption-subtitle">穿书后霸道总裁宠我上瘾</span>
+  </div>
+      </div>
+
+      <!-- 宣传片 Promo -->
+      <div class="gallery-item" data-cat="promo">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%23e8e8e8' width='400' height='225'/%3E%3Ctext x='200' y='118' text-anchor='middle' fill='%23999' font-family='sans-serif' font-size='20'%3E宣传片%3C/text%3E%3C/svg%3E" alt="宣传片" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_promo_title_01">宣传片项目 01</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_promo_sub_01">敬请期待</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="promo">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%23e8e8e8' width='400' height='225'/%3E%3Ctext x='200' y='118' text-anchor='middle' fill='%23999' font-family='sans-serif' font-size='20'%3E宣传片%3C/text%3E%3C/svg%3E" alt="宣传片" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_promo_title_02">宣传片项目 02</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_promo_sub_02">敬请期待</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="promo">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%23e8e8e8' width='400' height='225'/%3E%3Ctext x='200' y='118' text-anchor='middle' fill='%23999' font-family='sans-serif' font-size='20'%3E宣传片%3C/text%3E%3C/svg%3E" alt="宣传片" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_promo_title_03">宣传片项目 03</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_promo_sub_03">敬请期待</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="promo">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%23e8e8e8' width='400' height='225'/%3E%3Ctext x='200' y='118' text-anchor='middle' fill='%23999' font-family='sans-serif' font-size='20'%3E宣传片%3C/text%3E%3C/svg%3E" alt="宣传片" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_promo_title_04">宣传片项目 04</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_promo_sub_04">敬请期待</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="promo">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%23e8e8e8' width='400' height='225'/%3E%3Ctext x='200' y='118' text-anchor='middle' fill='%23999' font-family='sans-serif' font-size='20'%3E宣传片%3C/text%3E%3C/svg%3E" alt="宣传片" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_promo_title_05">宣传片项目 05</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_promo_sub_05">敬请期待</span>
+        </div>
+      </div>
+      <!-- 剧情片 Drama -->
+      <div class="gallery-item" data-cat="drama">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%23e8e8e8' width='400' height='225'/%3E%3Ctext x='200' y='118' text-anchor='middle' fill='%23999' font-family='sans-serif' font-size='20'%3E剧情片%3C/text%3E%3C/svg%3E" alt="剧情片" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_drama_title_01">剧情片项目 01</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_drama_sub_01">敬请期待</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="drama">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%23e8e8e8' width='400' height='225'/%3E%3Ctext x='200' y='118' text-anchor='middle' fill='%23999' font-family='sans-serif' font-size='20'%3E剧情片%3C/text%3E%3C/svg%3E" alt="剧情片" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_drama_title_02">剧情片项目 02</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_drama_sub_02">敬请期待</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="drama">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%23e8e8e8' width='400' height='225'/%3E%3Ctext x='200' y='118' text-anchor='middle' fill='%23999' font-family='sans-serif' font-size='20'%3E剧情片%3C/text%3E%3C/svg%3E" alt="剧情片" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_drama_title_03">剧情片项目 03</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_drama_sub_03">敬请期待</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="drama">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%23e8e8e8' width='400' height='225'/%3E%3Ctext x='200' y='118' text-anchor='middle' fill='%23999' font-family='sans-serif' font-size='20'%3E剧情片%3C/text%3E%3C/svg%3E" alt="剧情片" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_drama_title_04">剧情片项目 04</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_drama_sub_04">敬请期待</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="drama">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%23e8e8e8' width='400' height='225'/%3E%3Ctext x='200' y='118' text-anchor='middle' fill='%23999' font-family='sans-serif' font-size='20'%3E剧情片%3C/text%3E%3C/svg%3E" alt="剧情片" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_drama_title_05">剧情片项目 05</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_drama_sub_05">敬请期待</span>
+        </div>
+      </div>
+      <!-- AI短片 AI Short -->
+      <div class="gallery-item" data-cat="ai_short">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%23e8e8e8' width='400' height='225'/%3E%3Ctext x='200' y='118' text-anchor='middle' fill='%23999' font-family='sans-serif' font-size='20'%3EAI短片%3C/text%3E%3C/svg%3E" alt="AI短片" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_ai_title_01">AI短片项目 01</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_ai_sub_01">敬请期待</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="ai_short">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%23e8e8e8' width='400' height='225'/%3E%3Ctext x='200' y='118' text-anchor='middle' fill='%23999' font-family='sans-serif' font-size='20'%3EAI短片%3C/text%3E%3C/svg%3E" alt="AI短片" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_ai_title_02">AI短片项目 02</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_ai_sub_02">敬请期待</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="ai_short">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%23e8e8e8' width='400' height='225'/%3E%3Ctext x='200' y='118' text-anchor='middle' fill='%23999' font-family='sans-serif' font-size='20'%3EAI短片%3C/text%3E%3C/svg%3E" alt="AI短片" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_ai_title_03">AI短片项目 03</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_ai_sub_03">敬请期待</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="ai_short">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%23e8e8e8' width='400' height='225'/%3E%3Ctext x='200' y='118' text-anchor='middle' fill='%23999' font-family='sans-serif' font-size='20'%3EAI短片%3C/text%3E%3C/svg%3E" alt="AI短片" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_ai_title_04">AI短片项目 04</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_ai_sub_04">敬请期待</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="ai_short">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%23e8e8e8' width='400' height='225'/%3E%3Ctext x='200' y='118' text-anchor='middle' fill='%23999' font-family='sans-serif' font-size='20'%3EAI短片%3C/text%3E%3C/svg%3E" alt="AI短片" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_ai_title_05">AI短片项目 05</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_ai_sub_05">敬请期待</span>
+        </div>
+      </div>
+      <!-- 活动策划 Event Planning -->
+      <div class="gallery-item" data-cat="event">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%23e8e8e8' width='400' height='225'/%3E%3Ctext x='200' y='118' text-anchor='middle' fill='%23999' font-family='sans-serif' font-size='20'%3E活动策划%3C/text%3E%3C/svg%3E" alt="活动策划" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_event_title_01">活动策划项目 01</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_event_sub_01">敬请期待</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="event">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%23e8e8e8' width='400' height='225'/%3E%3Ctext x='200' y='118' text-anchor='middle' fill='%23999' font-family='sans-serif' font-size='20'%3E活动策划%3C/text%3E%3C/svg%3E" alt="活动策划" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_event_title_02">活动策划项目 02</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_event_sub_02">敬请期待</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="event">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%23e8e8e8' width='400' height='225'/%3E%3Ctext x='200' y='118' text-anchor='middle' fill='%23999' font-family='sans-serif' font-size='20'%3E活动策划%3C/text%3E%3C/svg%3E" alt="活动策划" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_event_title_03">活动策划项目 03</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_event_sub_03">敬请期待</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="event">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%23e8e8e8' width='400' height='225'/%3E%3Ctext x='200' y='118' text-anchor='middle' fill='%23999' font-family='sans-serif' font-size='20'%3E活动策划%3C/text%3E%3C/svg%3E" alt="活动策划" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_event_title_04">活动策划项目 04</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_event_sub_04">敬请期待</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="event">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%23e8e8e8' width='400' height='225'/%3E%3Ctext x='200' y='118' text-anchor='middle' fill='%23999' font-family='sans-serif' font-size='20'%3E活动策划%3C/text%3E%3C/svg%3E" alt="活动策划" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_event_title_05">活动策划项目 05</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_event_sub_05">敬请期待</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="documentary">
+        <video data-src="img/纪录片/20230227_小胖威利纪录片 无水印版.mp4" poster="img/纪录片/20230227_小胖威利纪录片 无水印版_poster.jpg" controls preload="none" onerror="this.style.display='none'"></video>
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_doc_title_01">20230227_小胖威利纪录片 无水印版</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_doc_sub_01"></span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="documentary">
+        <video data-src="img/纪录片/20250318_上海散爆是周年纪录片 无水印.mp4" poster="img/纪录片/20250318_上海散爆是周年纪录片 无水印_poster.jpg" controls preload="none" onerror="this.style.display='none'"></video>
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_doc_title_02">20250318_上海散爆是周年纪录片 无水印</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_doc_sub_02"></span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="documentary">
+        <video data-src="img/纪录片/20250915福彩自闭症纪录片-定片包装版.mp4" poster="img/纪录片/20250915福彩自闭症纪录片-定片包装版_poster.jpg" controls preload="none" onerror="this.style.display='none'"></video>
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_doc_title_03">福彩自闭症纪录片</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_doc_sub_03"></span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="documentary">
+        <video data-src="img/纪录片/《花儿哪里去了》中英文 1920版 7.22.2.mp4" poster="img/纪录片/《花儿哪里去了》中英文 1920版 7.22.2_poster.jpg" controls preload="none" onerror="this.style.display='none'"></video>
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_doc_title_04">《花儿哪里去了》中英文 1920版 7.22.2</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_doc_sub_04"></span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="documentary">
+        <video data-src="img/纪录片/十方缘 20240315 无水印版.mp4" poster="img/纪录片/十方缘 20240315 无水印版_poster.jpg" controls preload="none" onerror="this.style.display='none'"></video>
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_doc_title_05">十方缘</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_doc_sub_05"></span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="documentary">
+        <video data-src="img/纪录片/春苗基金会守护早产微宝贝 无水印版.mp4" poster="img/纪录片/春苗基金会守护早产微宝贝 无水印版_poster.jpg" controls preload="none" onerror="this.style.display='none'"></video>
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_doc_title_06">春苗基金会守护早产微宝贝</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_doc_sub_06"></span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="documentary">
+        <video data-src="img/纪录片/直播经济0427 无水印版_小档.mp4" poster="img/纪录片/直播经济0427 无水印版_小档_poster.jpg" controls preload="none" onerror="this.style.display='none'"></video>
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_doc_title_07">直播经济</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_doc_sub_07"></span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="documentary">
+        <video data-src="img/纪录片/追觅的100个朋友-在下曼妥思_成片_20250516_1.mp4" poster="img/纪录片/追觅的100个朋友-在下曼妥思_成片_20250516_1_poster.jpg" controls preload="none" onerror="this.style.display='none'"></video>
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title" data-i18n="gallery_doc_title_08">追觅的100个朋友-在下曼妥思_成片_20250516_1</span>
+          <span class="gallery-caption-subtitle" data-i18n="gallery_doc_sub_08"></span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/01104874c66cf6f66231638e5bfeae5d_origin(1).jpg" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_01">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_01"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/1611ad532c61c69444bc7c53b5dbb465_origin(1).jpg" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_02">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_02"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/2d23df89c6ea07a1f75d0164e2428945_origin(1).jpg" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_03">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_03"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/34e934deaf0d96d3f7f0b56be5b716ab_origin(1).jpg" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_04">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_04"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/4035b63d-a69f-45ad-b64d-dd4e9404f94a.jpg" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_05">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_05"></span>
+  </div>
+      </div>
+
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/42c2ed1be3f49b4160d9a38396f3f3db_compress.jpg" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_06">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_06"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/50675c5b8ca2fbb81292f91e3297ccf1_origin(1).jpg" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_07">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_07"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/5a3aee5da9848a3b3002c68f1f36fbe2_origin(1).jpg" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_08">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_08"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/62b8baecde3c3912166dd844d7524c34_origin(1).jpg" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_09">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_09"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/692e824b-d87a-445d-bd6d-9330994cbbe4.jpg" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_10">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_10"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/69a963e78ef5823e1b1e0a94b03649ea_origin(1).jpg" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_11">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_11"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/6fa22682c9704f2ad36f12c65169530b_origin.jpg" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_12">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_12"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/7a0438ae44f64bcfaaaf106190848e11_origin(1).jpg" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_13">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_13"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/7c5381801f5a4a2c0c690891dc326c8a_origin(1).jpg" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_14">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_14"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/db3a8a1de5e205ee1ad8bce1a054d40a_origin(1).jpg" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_15">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_15"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/dd017392af2e5e828fbdb80b828062bb_origin.jpg" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_16">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_16"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/dff6b86d764ff7f6cfe4df87fd586f0d_origin(1).jpg" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_17">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_17"></span>
+  </div>
+      </div>
+
+      <!-- More Events (jlp, jr) -->
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="gallery-lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" data-i18n-aria="lightbox_close_aria" data-i18n-aria="lightbox_close_aria" aria-label="关闭">&#10005;</button>
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev" data-i18n-aria="lightbox_prev_aria" data-i18n-aria="lightbox_prev_aria" aria-label="上一张">&#8249;</button>
+  <button class="lightbox-nav lightbox-next" id="lightboxNext" data-i18n-aria="lightbox_next_aria" data-i18n-aria="lightbox_next_aria" aria-label="下一张">&#8250;</button>
+  <img src="" alt="" id="lightboxImg" loading="lazy">
+</div>
+
+<!-- Cooperative Partners -->
+<section class="section partners" id="partners">
+  <div class="section-inner">
+    <div class="section-header center reveal">
+      <p class="section-label" data-i18n="partners_label">Our Partners</p>
+      <h2 class="section-title" data-i18n="partners_title">合作伙伴</h2>
+      <p class="section-subtitle" data-i18n="partners_subtitle">携手 400+ 品牌与机构，共同用影像传递价值</p>
+    </div>
+    <div class="partners-grid reveal reveal-delay-1" id="partnersGrid">
+      <div class="partner-item"><img src="img/cooperative_01.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_02.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_03.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_04.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_05.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_06.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_07.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_08.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_09.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_10.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_11.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_12.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_13.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_14.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_15.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_16.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_17.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_18.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Media Mentions -->
+<section class="section media">
+  <div class="section-inner">
+    <div class="section-header center reveal">
+      <p class="section-label" data-i18n="media_label">Media Coverage</p>
+      <h2 class="section-title" data-i18n="media_title">媒体报道</h2>
+    </div>
+    <div class="media-wall reveal reveal-delay-1">
+      <span class="media-item" data-i18n="media_1">新华网</span>
+      <span class="media-item" data-i18n="media_2">人民日报</span>
+      <span class="media-item" data-i18n="media_3">浙江日报</span>
+      <span class="media-item" data-i18n="media_4">钱江晚报</span>
+      <span class="media-item" data-i18n="media_5">1818黄金眼</span>
+      <span class="media-item" data-i18n="media_6">杭州日报</span>
+      <span class="media-item" data-i18n="media_7">央视频</span>
+      <span class="media-item" data-i18n="media_8">浙江省民政厅</span>
+      <span class="media-item" data-i18n="media_9">新浪网</span>
+      <span class="media-item" data-i18n="media_10">腾讯新闻</span>
+      <span class="media-item" data-i18n="media_11">快手</span>
+      <span class="media-item" data-i18n="media_12">威尼斯电影节</span>
+      <span class="media-item" data-i18n="media_13">芝加哥善因营销大会</span>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="section contact" id="contact">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <p class="section-label" data-i18n="contact_label">Contact Us</p>
+      <h2 class="section-title" data-i18n="contact_title">联系我们</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal reveal-delay-1">
+        <p data-i18n="contact_desc">如果您有品牌传播、VR制作、公益影像或短视频运营的需求，欢迎随时与我们取得联系。我们期待与您一起，用影像让世界变得更美好一点点。</p>
+
+        <div class="contact-item">
+          <div class="contact-item-icon">&#9742;</div>
+          <div class="contact-item-text">
+            <strong data-i18n="contact_phone_label">电话</strong>
+            <span data-i18n="contact_phone_value">133 0652 0600 / 180 7277 8286 / 199 5782 2424</span>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-item-icon">&#9993;</div>
+          <div class="contact-item-text">
+            <strong data-i18n="contact_email_label">邮箱</strong>
+            <span data-i18n="contact_email_value">beingartspace1818@qq.com</span>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-item-icon">&#9906;</div>
+          <div class="contact-item-text">
+            <strong data-i18n="contact_address_label">地址</strong>
+            <span data-i18n="contact_address_value">浙江省杭州市拱墅区中凯弄49号-1（二层）</span>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-item-icon">&#9733;</div>
+          <div class="contact-item-text">
+            <strong data-i18n="contact_website_label">官网</strong>
+            <span data-i18n="contact_website_value">www.zizaimedia.com</span>
+          </div>
+        </div>
+
+        </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+      <div>
+        <span class="footer-brand" data-i18n="footer_brand">自在空间 · Being Art Space</span>
+        <span style="display: block; margin-top: 4px; font-size: var(--text-xs); color: var(--text-inverse-secondary);" data-i18n="footer_copyright">&copy; 2014-2026 杭州自在空间文化艺术有限公司</span>
+        <span style="display: block; margin-top: 4px; font-size: var(--text-xs); color: var(--text-inverse-secondary);" data-i18n="footer_icp">浙ICP备19024569号-1</span>
+      </div>
+      <div style="text-align: center;">
+        <img src="img/qr-space.jpg" alt="自在空间公众号" style="width: 120px; height: 120px; border-radius: var(--radius-sm); filter: none; display: block; margin: 0 auto 8px;" onerror="this.style.display='none'">
+        <span style="font-size: var(--text-xs); color: var(--text-inverse-secondary);" data-i18n="footer_qrcode_label">自在空间公众号</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="img/honors/honor_cert_map.js"></script>
+
+<script>
+(function() {
+  'use strict';
+
+  const nav = document.getElementById('nav');
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  const navLinkItems = navLinks.querySelectorAll('.nav-link');
+  const heroEl = document.getElementById('hero');
+
+  const logoImg = document.getElementById('navLogo');
+  const LOGO_ORIGINAL = logoImg ? logoImg.getAttribute('data-original-src') : '';
+  const LOGO_WHITE = logoImg ? logoImg.getAttribute('data-white-src') : '';
+
+  function updateLogo(isHero) {
+    if (!logoImg) return;
+    if (isHero) {
+      logoImg.src = LOGO_WHITE;
+      logoImg.style.filter = 'none';
+    } else {
+      logoImg.src = LOGO_ORIGINAL;
+      logoImg.style.filter = 'grayscale(100%)';
+    }
+  }
+
+  function updateNav() {
+    const heroBottom = heroEl ? heroEl.offsetTop + heroEl.offsetHeight : 600;
+    const isHero = window.scrollY < heroBottom - 80;
+    nav.classList.toggle('nav-hero', isHero);
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+    updateLogo(isHero);
+  }
+
+  const sections = [];
+  navLinkItems.forEach(link => {
+    const href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      const section = document.querySelector(href);
+      if (section) sections.push({ link, section });
+    }
+  });
+
+  function updateActiveLink() {
+    const scrollPos = window.scrollY + 120;
+    let currentId = '';
+    sections.forEach(({ link, section }) => {
+      if (section.offsetTop <= scrollPos) {
+        currentId = link.getAttribute('href');
+      }
+    });
+    navLinkItems.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === currentId);
+    });
+  }
+
+  window.addEventListener('scroll', () => { updateNav(); updateActiveLink(); }, { passive: true });
+
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('active');
+    navLinks.classList.toggle('open');
+  });
+
+  navLinkItems.forEach(link => {
+    link.addEventListener('click', () => {
+      navToggle.classList.remove('active');
+      navLinks.classList.remove('open');
+    });
+  });
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  revealEls.forEach(el => observer.observe(el));
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  updateNav();
+  updateActiveLink();
+
+  /* ============================================
+     Gallery Filters
+     ============================================ */
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const galleryItems = document.querySelectorAll('.gallery-item');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      galleryItems.forEach(item => {
+        if (filter === 'all' || item.dataset.cat === filter) {
+          item.style.display = '';
+          item.style.animation = 'fadeUp 400ms var(--ease-out-expo) forwards';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  /* ============================================
+     Lightbox
+     ============================================ */
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxClose = document.getElementById('lightboxClose');
+  const lightboxPrev = document.getElementById('lightboxPrev');
+  const lightboxNext = document.getElementById('lightboxNext');
+  let currentGalleryItems = [];
+  let currentLightboxIndex = -1;
+
+  function getVisibleGalleryItems() {
+    return Array.from(galleryItems).filter(item => item.style.display !== 'none');
+  }
+
+  document.getElementById('galleryGrid').addEventListener('click', (e) => {
+    const item = e.target.closest('.gallery-item');
+    if (!item) return;
+    const img = item.querySelector('img');
+    if (!img || !img.src) return;
+
+    currentGalleryItems = getVisibleGalleryItems();
+    currentLightboxIndex = currentGalleryItems.indexOf(item);
+
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+    lightbox.classList.add('active');
+  });
+
+  lightboxClose.addEventListener('click', () => {
+    lightbox.classList.remove('active');
+    setTimeout(() => { lightboxImg.src = ''; }, 350);
+  });
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+      lightbox.classList.remove('active');
+      setTimeout(() => { lightboxImg.src = ''; }, 350);
+    }
+  });
+
+  lightboxPrev.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (currentGalleryItems.length === 0) return;
+    currentLightboxIndex = (currentLightboxIndex - 1 + currentGalleryItems.length) % currentGalleryItems.length;
+    const img = currentGalleryItems[currentLightboxIndex].querySelector('img');
+    if (img) { lightboxImg.src = img.src; lightboxImg.alt = img.alt; }
+  });
+
+  lightboxNext.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (currentGalleryItems.length === 0) return;
+    currentLightboxIndex = (currentLightboxIndex + 1) % currentGalleryItems.length;
+    const img = currentGalleryItems[currentLightboxIndex].querySelector('img');
+    if (img) { lightboxImg.src = img.src; lightboxImg.alt = img.alt; }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('active')) return;
+    if (e.key === 'Escape') {
+      lightbox.classList.remove('active');
+      setTimeout(() => { lightboxImg.src = ''; }, 350);
+    } else if (e.key === 'ArrowLeft') lightboxPrev.click();
+    else if (e.key === 'ArrowRight') lightboxNext.click();
+  });
+
+  /* ============================================
+     Honors & Awards
+     ============================================ */
+  const honorsData = [{"year":"","festival":"第18届北京大学生电影节短片竞赛单元","work":"《花儿哪里去了》","award":"评委会特别奖","attribution":"苏家铭","org":""},{"year":"","festival":"2016国家网信办首届“益言益行”全国公益广告大赛","work":"《棋局》","award":"一等奖","attribution":"苏家铭","org":""},{"year":"2009年","festival":"南方多媒短片节纪录片单元","work":"《吃铁的人》","award":"纪录片金奖","attribution":"苏家铭","org":"广东南方广播影视传媒集团 / 广东南方电视台 / 南方多媒短片节执行委员会"},{"year":"2011年","festival":"上海国际电影节 手机电影节","work":"《花儿哪里去了》","award":"最佳短片, 最佳纪录片","attribution":"苏家铭, 苏家铭","org":""},{"year":"2012年","festival":"壹基金公益影像节","work":"《俺爸俺妈》","award":"示范片","attribution":"苏家铭","org":""},{"year":"2017年","festival":"首届西湖青年纪录片论坛","work":"《甜》","award":"入选首届西湖青年纪录片论坛作品展映单元","attribution":"苏家铭","org":"中国人类学民族学研究会民族影视与影视人类学专业委员会"},{"year":"2017年","festival":"第七届 光影纪年-中国纪录片学院奖","work":"《姐妹》","award":"入围作品","attribution":"杭州市西湖区自在公益影像传播发展中心","org":"中国传媒大学 / 中国纪录片研究中心"},{"year":"2017年","festival":"首届公益视频短片大赛","work":"《甜》","award":"二等奖","attribution":"苏家铭, 苏家铭","org":"中共浙江省委宣传部 / 浙江省文明办 / 浙江省新闻出版广电局 / 浙江广播电视集团"},{"year":"2017年","festival":"首届公益视频短片大赛","work":"《棋局》","award":"三等奖","attribution":"苏家铭","org":"中共浙江省委宣传部 / 浙江省文明办 / 浙江省新闻出版广电局 / 浙江广播电视集团"},{"year":"2017年","festival":"2017中国公益映像节","work":"《爱要好好说》","award":"优秀展映影片","attribution":"归属客户","org":""},{"year":"2017年","festival":"浙江省公益短片大赛","work":"《爱要好好说》","award":"二等奖","attribution":"杭州自在空间文化艺术有限公司","org":"浙江电视台教育科技频道 / 浙江新蓝网络传媒有限公司"},{"year":"2018年","festival":"第二届公益视频短片大赛","work":"《暖城》","award":"三等奖","attribution":"苏家铭","org":""},{"year":"2018年","festival":"文化精品工程","work":"《亲情家书》","award":"编入杭州文创产业发展报告","attribution":"","org":""},{"year":"2018年","festival":"2018中国梦（浙江）网络视频大赛","work":"《俺爸俺妈》","award":"二等奖","attribution":"杭州自在空间文化艺术有限公司, 杭州市西湖区自在公益影像传播发展中心","org":"中共浙江省委宣传部 / 浙江省广播电视局 / 浙江广播电视集团"},{"year":"2018年","festival":"2018中国梦（浙江）网络视频大赛","work":"《创变者·魏文锋》","award":"“最美浙江人”微纪录片三等奖","attribution":"杭州市西湖区自在公益影像传播发展中心, 杭州自在空间文化艺术有限公司","org":"中共浙江省委宣传部 / 浙江省广播电视局 / 浙江广播电视集团"},{"year":"2018年","festival":"2018中国梦（浙江）网络视频大赛","work":"《保护环境拒绝随手乱丢垃圾》","award":"最佳手机短视频","attribution":"杭州自在空间文化艺术有限公司","org":"中共浙江省委宣传部 / 浙江省广播电视局 / 浙江广播电视集团"},{"year":"2018年","festival":"第四届上海公益微电影节","work":"《姐妹》","award":"最佳公益影片二等奖","attribution":"杭州自在空间文化艺术有限公司, 杭州自在空间文化艺术有限公司","org":"上海市慈善基金会 / 上海电影(集团)有限公司 / 第一财经 / 第四届上海公益微电影节组委会"},{"year":"2018年","festival":"第四届上海公益微电影节","work":"《蒙古心弦》","award":"最佳公益导演奖","attribution":"杭州自在空间文化艺术有限公司, 杭州自在空间文化艺术有限公司","org":"上海市慈善基金会 / 上海电影(集团)有限公司 / 第一财经 / 第四届上海公益微电影节组委会"},{"year":"2018年","festival":"第四届上海公益微电影节","work":"《俺爸俺妈》","award":"优秀公益作品奖","attribution":"杭州自在空间文化艺术有限公司, 杭州自在空间文化艺术有限公司","org":"上海市慈善基金会 / 上海电影(集团)有限公司 / 第一财经 / 第四届上海公益微电影节组委会"},{"year":"2018年","festival":"第四届上海公益微电影节","work":"《THIS IS MOM》（春晖妈妈）","award":"入围奖","attribution":"杭州自在空间文化艺术有限公司, 杭州自在空间文化艺术有限公司","org":"上海市慈善基金会 / 上海电影(集团)有限公司 / 第一财经 / 第四届上海公益微电影节组委会"},{"year":"2018年","festival":"第四届上海公益微电影节","work":"《是光 大山的孩子会写诗》","award":"入围奖","attribution":"杭州自在空间文化艺术有限公司","org":"上海市慈善基金会 / 上海电影(集团)有限公司 / 第一财经 / 第四届上海公益微电影节组委会"},{"year":"2019年","festival":"2018年度公益映像奖暨第八届中国公益节","work":"《移动光明行》（《再·见》）","award":"入围奖","attribution":"归属客户","org":""},{"year":"2019年","festival":"#我的捐赠故事#","work":"《移动光明行》（《再·见》）","award":"全国30强，并获入围奖","attribution":"杭州自在空间文化艺术有限公司","org":"广州市同道公益发展中心 / 比尔及梅琳达.盖茨基金会"},{"year":"2019年","festival":"乙亥年第五届“根亲中国”微电影大赛","work":"《姐妹》","award":"十佳作品","attribution":"杭州自在空间文化艺术有限公司","org":"“根亲中国”微电影大赛组委会"},{"year":"2019年","festival":"人民日报举办的“我与中国”全球短视频大赛","work":"《大山里的心愿》","award":"优秀奖","attribution":"归属客户","org":""},{"year":"2019年","festival":"2019新创视界创新创业大赛","work":"《另一个世界-VR+公益，科技向善》","award":"潜力奖","attribution":"无明确归属","org":""},{"year":"2019年","festival":"公益之申","work":"《光明电池》","award":"2019年度十佳公益故事","attribution":"归属客户","org":""},{"year":"2019年","festival":"中国公益映像节","work":"《我不是药神，我是陆勇》","award":"企业类入围作品奖","attribution":"杭州自在空间文化艺术有限公司, 归属客户","org":"中国公益慈善项目交流展示会组委会办公室 / 深圳市关爱行动组委会办公室"},{"year":"2019年","festival":"中国公益映像节","work":"《大山里的心愿》","award":"企业类入围作品奖","attribution":"归属客户","org":"中国公益慈善项目交流展示会组委会办公室 / 深圳市关爱行动组委会办公室"},{"year":"2019年","festival":"第五届上海公益微电影节","work":"《光明电池》","award":"优秀公益作品","attribution":"杭州自在空间文化艺术有限公司, 杭州自在空间文化艺术有限公司","org":"上海市慈善基金会 / 上海电影(集团)有限公司 / 第一财经 / 第五届上海公益微电影节组委会"},{"year":"2019年","festival":"第五届上海公益微电影节","work":"《会飞的盒子》","award":"最佳公益摄像奖","attribution":"杭州自在空间文化艺术有限公司, 杭州自在空间文化艺术有限公司","org":"上海市慈善基金会 / 上海电影(集团)有限公司 / 第一财经 / 第五届上海公益微电影节组委会"},{"year":"2019年","festival":"第五届上海公益微电影节","work":"《心声》","award":"优秀公益作品","attribution":"杭州自在空间文化艺术有限公司","org":"上海市慈善基金会 / 上海电影(集团)有限公司 / 第一财经 / 第五届上海公益微电影节组委会"},{"year":"2019年","festival":"2019中国梦（浙江）网络视频大赛","work":"《光明电池》","award":"最佳短视频奖","attribution":"杭州自在空间文化艺术有限公司","org":"中共浙江省委宣传部 / 中共浙江省委网络安全和信息化委员会办公室 / 浙江省广播电视局 / 浙江广播电视集团"},{"year":"2019年","festival":"慈善文化传播大赛","work":"《光明电池》","award":"一等奖","attribution":"苏家铭, 苏家铭","org":"杭州市慈善传播作品征集暨 / 公益活动策册定获评审委员会"},{"year":"2019年","festival":"慈善文化传播大赛","work":"《我和花儿的捐赠故事》","award":"优秀奖","attribution":"苏家铭","org":"杭州市慈善传播作品征集暨 / 公益活动策册定获评审委员会"},{"year":"2019年","festival":"厦门Hishorts!短片大赛","work":"《亲情家书》之吴彦杰篇","award":"入围奖","attribution":"陈思雨","org":""},{"year":"2020年","festival":"第九届中国公益节","work":"《光明电池》","award":"2019年度公益映像奖","attribution":"无明确归属, 无明确归属","org":""},{"year":"2020年","festival":"第九届中国公益节","work":"《心声》","award":"2019年度公益映像奖","attribution":"无明确归属, 无明确归属","org":""},{"year":"2020年","festival":"第九届中国公益节","work":"《传承》","award":"2019年度公益映像奖","attribution":"无明确归属","org":""},{"year":"2020年","festival":"庚子年第六届“根亲中国”微电影网络大赛","work":"《爱，未曾遗忘》（丁香医生）","award":"优秀作品奖","attribution":"杭州市西湖区自在公益影像传播发展中心","org":"“根亲中国”微电影大赛组委会"},{"year":"2020年","festival":"第二届#我的捐赠故事#","work":"《我不是药神，我是陆勇》","award":"二等奖","attribution":"归属客户, 杭州市西湖区自在公益影像传播发展中心","org":"广州市同道公益发展中心 / 比尔及梅琳达.盖茨基金会"},{"year":"2020年","festival":"第二届#我的捐赠故事#","work":"《俺爸俺妈》","award":"入围奖","attribution":"杭州市西湖区自在公益影像传播发展中心, 杭州市西湖区自在公益影像传播发展中心","org":"广州市同道公益发展中心 / 比尔及梅琳达.盖茨基金会"},{"year":"2020年","festival":"第二届#我的捐赠故事#","work":"《会飞的盒子》","award":"入围奖","attribution":"杭州市西湖区自在公益影像传播发展中心, 杭州自在空间文化艺术有限公司","org":"广州市同道公益发展中心 / 比尔及梅琳达.盖茨基金会"},{"year":"2020年","festival":"第二届#我的捐赠故事#","work":"《创变者·Mantra》","award":"入围奖","attribution":"杭州自在空间文化艺术有限公司, 归属客户","org":"广州市同道公益发展中心 / 比尔及梅琳达.盖茨基金会"},{"year":"2020年","festival":"第二届#我的捐赠故事#","work":"《心声》","award":"入围奖","attribution":"归属客户, 归属客户","org":"广州市同道公益发展中心 / 比尔及梅琳达.盖茨基金会"},{"year":"2020年","festival":"第二届#我的捐赠故事#","work":"《再见，老师》","award":"入围奖","attribution":"归属客户, 归属客户","org":"广州市同道公益发展中心 / 比尔及梅琳达.盖茨基金会"},{"year":"2020年","festival":"第二届#我的捐赠故事#","work":"《爱，未曾遗忘》（丁香医生）","award":"入围奖","attribution":"归属客户, 归属客户","org":"广州市同道公益发展中心 / 比尔及梅琳达.盖茨基金会"},{"year":"2020年","festival":"第二届#我的捐赠故事#","work":"《亲情家书》之吴晓彤篇","award":"入围奖","attribution":"归属客户, 杭州市西湖区自在公益影像传播发展中心","org":"广州市同道公益发展中心 / 比尔及梅琳达.盖茨基金会"},{"year":"2020年","festival":"第二届#我的捐赠故事#","work":"《是光 大山的孩子会写诗》","award":"入围奖","attribution":"杭州市西湖区自在公益影像传播发展中心, 归属客户","org":"广州市同道公益发展中心 / 比尔及梅琳达.盖茨基金会"},{"year":"2020年","festival":"第二届#我的捐赠故事#","work":"《明天的微笑》","award":"入围奖","attribution":"归属客户, 归属客户","org":"广州市同道公益发展中心 / 比尔及梅琳达.盖茨基金会"},{"year":"2020年","festival":"第二届#我的捐赠故事#","work":"《92路》","award":"入围奖","attribution":"归属客户","org":"广州市同道公益发展中心 / 比尔及梅琳达.盖茨基金会"},{"year":"2020年","festival":"威尼斯国际电影节","work":"《我生命的60秒》VR纪录片《余生一日》","award":"参与部分拍摄","attribution":"无明确归属","org":""},{"year":"2020年","festival":"We爱·两岸青年短片大赛","work":"《光明电池》","award":"入围证书","attribution":"汤增辉","org":"We爱·第四届两岸青年短共大赛组委会"},{"year":"2020年","festival":"腾讯“我是创益人”大赛","work":"《240秒》","award":"原力组，创益突破奖","attribution":"归属客户, 杭州自在空间文化艺术有限公司","org":"腾讯基金会 / 腾讯广告"},{"year":"2020年","festival":"腾讯“我是创益人”大赛","work":"《星空漫游者》","award":"创意组，全国50强，最佳创意奖, 年度用户最喜爱公益项目奖","attribution":"杭州自在空间文化艺术有限公司, 杭州自在空间文化艺术有限公司","org":"腾讯基金会 / 腾讯广告"},{"year":"2020年","festival":"“盛世钱塘，幸福杭州”短视频大赛","work":"《生物多样性》","award":"50强","attribution":"无明确归属, 无明确归属","org":"杭州市电影电视家协会"},{"year":"2020年","festival":"“盛世钱塘，幸福杭州”短视频大赛","work":"《像你一样，不一样》","award":"50强","attribution":"无明确归属","org":"杭州市电影电视家协会"},{"year":"2020年","festival":"第六届上海公益微电影节","work":"《像你一样，不一样》","award":"最佳公益短视频一等奖","attribution":"杭州市西湖区自在公益影像传播发展中心, 杭州自在空间文化艺术有限公司","org":"上海市慈善基金会 / 上海电影(集团)有限公司 / 第一财经 / 第六届上海公益微电影节组委会"},{"year":"2020年","festival":"第六届上海公益微电影节","work":"《梦守护》","award":"最佳公益短视频二等奖","attribution":"杭州自在空间文化艺术有限公司, 杭州市西湖区自在公益影像传播发展中心","org":"上海市慈善基金会 / 上海电影(集团)有限公司 / 第一财经 / 第六届上海公益微电影节组委会"},{"year":"2020年","festival":"第六届上海公益微电影节","work":"《亲亲禾苗，营养一餐》","award":"最佳公益微电影二等奖","attribution":"杭州市西湖区自在公益影像传播发展中心, 杭州自在空间文化艺术有限公司","org":"上海市慈善基金会 / 上海电影(集团)有限公司 / 第一财经 / 第六届上海公益微电影节组委会"}];
+
+  const honorsGrid = document.getElementById('honorsGrid');
+  const honorModal = document.getElementById('honorModal');
+  const honorModalBackdrop = document.getElementById('honorModalBackdrop');
+  const honorModalClose = document.getElementById('honorModalClose');
+  const honorModalImg = document.getElementById('honorModalImg');
+  const honorModalAward = document.getElementById('honorModalAward');
+  const honorModalYear = document.getElementById('honorModalYear');
+  const honorModalFestival = document.getElementById('honorModalFestival');
+  const honorModalWork = document.getElementById('honorModalWork');
+  const honorModalAttribution = document.getElementById('honorModalAttribution');
+  const honorModalAttributionWrap = document.getElementById('honorModalAttributionWrap');
+  const honorModalOrg = document.getElementById('honorModalOrg');
+  const honorModalOrgWrap = document.getElementById('honorModalOrgWrap');
+
+  function renderHonors() {
+    if (!honorsGrid || !honorsData.length) return;
+    let html = '';
+    honorsData.forEach((h, i) => {
+      const year = h.year || '\u2014';
+      const award = h.award;
+      const work = h.work;
+      const festival = h.festival;
+      html += '<div class="honor-card" data-honor-index="' + i + '">' +
+        '<div class="honor-year">' + year + '</div>' +
+        '<div class="honor-work">' + work + '</div>' +
+        '<div class="honor-award-name">' + award + '</div>' +
+        '<div class="honor-festival">' + festival + '</div>' +
+      '</div>';
+    });
+    honorsGrid.innerHTML = html;
+
+    // Attach click handlers
+    honorsGrid.querySelectorAll('.honor-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const idx = parseInt(card.getAttribute('data-honor-index'));
+        openHonorModal(idx);
+      });
+    });
+  }
+
+  function openHonorModal(idx) {
+    if (idx < 0 || idx >= honorsData.length) return;
+    const h = honorsData[idx];
+
+    // Show certificate image if available from Excel extraction
+    const certPath = (typeof honorCertMap !== 'undefined') ? honorCertMap[idx] : undefined;
+    if (certPath) {
+      honorModalImg.src = certPath;
+      honorModalImg.onerror = function() { this.style.display = 'none'; };
+      honorModalImg.style.display = '';
+      document.querySelector('.honor-modal-cert').classList.remove('no-cert');
+    } else {
+      honorModalImg.src = '';
+      honorModalImg.style.display = 'none';
+      document.querySelector('.honor-modal-cert').classList.add('no-cert');
+    }
+
+    honorModalAward.textContent = h.award;
+    honorModalYear.textContent = h.year || '\u2014';
+    honorModalFestival.textContent = h.festival;
+    honorModalWork.textContent = h.work;
+
+    if (h.attribution) {
+      honorModalAttribution.textContent = h.attribution;
+      honorModalAttributionWrap.style.display = 'flex';
+    } else {
+      honorModalAttributionWrap.style.display = 'none';
+    }
+
+    if (h.org) {
+      honorModalOrg.textContent = h.org;
+      honorModalOrgWrap.style.display = 'flex';
+    } else {
+      honorModalOrgWrap.style.display = 'none';
+    }
+
+    // Force cert placeholder state if no cert
+    if (!certPath) {
+      document.querySelector('.honor-modal-cert').classList.add('no-cert');
+    }
+
+    honorModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeHonorModal() {
+    honorModal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  honorModalClose.addEventListener('click', closeHonorModal);
+  honorModalBackdrop.addEventListener('click', closeHonorModal);
+
+  document.addEventListener('keydown', (e) => {
+    if (!honorModal.classList.contains('active')) return;
+    if (e.key === 'Escape') closeHonorModal();
+  });
+
+  // Render honors on load
+  renderHonors();
+})();
+  /* ============================================
+     Lazy Load: video + iframe via Intersection Observer
+     ============================================ */
+  (function() {
+    var lazyVideos = document.querySelectorAll('video[data-src]');
+    var lazyIframes = document.querySelectorAll('iframe[data-src]');
+
+    if (lazyVideos.length === 0 && lazyIframes.length === 0) return;
+
+    var lazyObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        if (el.tagName === 'VIDEO') {
+          var src = el.getAttribute('data-src');
+          if (src) {
+            el.setAttribute('src', src);
+            el.removeAttribute('data-src');
+            el.load();
+          }
+        } else if (el.tagName === 'IFRAME') {
+          var src = el.getAttribute('data-src');
+          if (src) {
+            el.setAttribute('src', src);
+            el.removeAttribute('data-src');
+          }
+        }
+        lazyObserver.unobserve(el);
+      });
+    }, { rootMargin: '200px' });
+
+    lazyVideos.forEach(function(v) { lazyObserver.observe(v); });
+    lazyIframes.forEach(function(f) { lazyObserver.observe(f); });
+  })();
+</script>
+
+</body>
+</html>
