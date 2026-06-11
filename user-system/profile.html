@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人中心 - 自在空间</title>
+    <link rel="icon" type="image/png" href="../img/自在logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;350;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --warm-hue: 60;
+            --surface-0: oklch(98% 0.002 var(--warm-hue));
+            --surface-1: oklch(95% 0.003 var(--warm-hue));
+            --surface-2: oklch(90% 0.004 var(--warm-hue));
+            --surface-dark: oklch(12% 0.003 var(--warm-hue));
+            --text-primary: oklch(12% 0.003 var(--warm-hue));
+            --text-secondary: oklch(35% 0.003 var(--warm-hue));
+            --glass-bg: oklch(98% 0.002 var(--warm-hue) / 0.55);
+            --glass-blur: saturate(180%) blur(30px);
+            --accent: oklch(65% 0.15 260);
+            --accent-hover: oklch(60% 0.18 260);
+            --success: oklch(65% 0.2 140);
+            --warning: oklch(65% 0.2 80);
+            --error: oklch(65% 0.2 20);
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--surface-0);
+            color: var(--text-primary);
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 20% 80%, oklch(90% 0.01 var(--warm-hue) / 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, oklch(85% 0.01 var(--warm-hue) / 0.08) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: 16px;
+            padding: 16px 24px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 
+                0 4px 16px oklch(0% 0 0 / 0.06),
+                inset 0 1px 0 oklch(100% 0 0 / 0.4);
+            border: 1px solid oklch(100% 0 0 / 0.2);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .nav-brand img {
+            height: 32px;
+        }
+
+        .nav-brand h1 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            background: oklch(100% 0 0 / 0.1);
+        }
+
+        .nav-link.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .nav-link.btn-logout {
+            background: oklch(80% 0.1 20 / 0.1);
+            color: var(--error);
+        }
+
+        .nav-link.btn-logout:hover {
+            background: oklch(80% 0.1 20 / 0.2);
+        }
+
+        /* 主要内容区域 */
+        .profile-header {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            box-shadow: 
+                0 4px 16px oklch(0% 0 0 / 0.06),
+                inset 0 1px 0 oklch(100% 0 0 / 0.4);
+            border: 1px solid oklch(100% 0 0 / 0.2);
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--surface-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: var(--text-secondary);
+            overflow: hidden;
+            border: 4px solid var(--glass-bg);
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-name {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .user-username {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .user-stats {
+            display: flex;
+            gap: 24px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* 卡片布局 */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 
+                0 4px 16px oklch(0% 0 0 / 0.06),
+                inset 0 1px 0 oklch(100% 0 0 / 0.4);
+            border: 1px solid oklch(100% 0 0 / 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .card-action {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .card-action:hover {
+            text-decoration: underline;
+        }
+
+        /* 存储空间卡片 */
+        .storage-info {
+            margin-bottom: 20px;
+        }
+
+        .storage-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .storage-bar {
+            height: 8px;
+            background: var(--surface-2);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .storage-progress {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .storage-numbers {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* 最近活动 */
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-item {
+            padding: 12px 0;
+            border-bottom: 1px solid oklch(88% 0.004 var(--warm-hue) / 0.3);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--surface-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-text {
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .activity-time {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* 按钮样式 */
+        .btn {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--surface-2);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface-3);
+        }
+
+        /* 消息提示 */
+        .message {
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .error-message {
+            background: oklch(80% 0.1 20 / 0.1);
+            color: var(--error);
+            border: 1px solid oklch(80% 0.1 20 / 0.3);
+        }
+
+        .success-message {
+            background: oklch(85% 0.1 140 / 0.1);
+            color: var(--success);
+            border: 1px solid oklch(85% 0.1 140 / 0.3);
+        }
+
+        .warning-message {
+            background: oklch(85% 0.1 80 / 0.1);
+            color: var(--warning);
+            border: 1px solid oklch(85% 0.1 80 / 0.3);
+        }
+
+        /* 加载状态 */
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid oklch(90% 0.004 var(--warm-hue));
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 12px;
+            }
+            
+            .navbar {
+                flex-direction: column;
+                gap: 16px;
+                padding: 16px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px 20px;
+            }
+            
+            .user-stats {
+                justify-content: center;
+            }
+            
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links {
+                gap: 8px;
+            }
+            
+            .nav-link {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+            
+            .avatar {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .user-name {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 导航栏 -->
+        <nav class="navbar">
+            <a href="../index.html" class="nav-brand">
+                <img src="../img/自在logo.png" alt="自在空间">
+                <h1>自在空间</h1>
+            </a>
+            
+            <div class="nav-links">
+                <a href="../index.html" class="nav-link">首页</a>
+                <a href="gallery.html" class="nav-link">作品画廊</a>
+                <a href="cloud.html" class="nav-link">云盘存储</a>
+                <a href="profile.html" class="nav-link active">个人中心</a>
+                <a href="#" id="logoutBtn" class="nav-link btn-logout">退出登录</a>
+            </div>
+        </nav>
+
+        <!-- 消息提示 -->
+        <div id="errorMessage" class="message error-message"></div>
+        <div id="successMessage" class="message success-message"></div>
+        <div id="warningMessage" class="message warning-message"></div>
+
+        <!-- 加载状态 -->
+        <div id="loading" class="loading">
+            <div class="loading-spinner"></div>
+            <div style="margin-top: 16px; color: var(--text-secondary);">加载中...</div>
+        </div>
+
+        <!-- 个人资料头部 -->
+        <div id="profileHeader" class="profile-header" style="display: none;">
+            <div class="avatar">
+                <span id="avatarText">?</span>
+            </div>
+            
+            <div class="user-info">
+                <h1 class="user-name" id="displayName">加载中...</h1>
+                <div class="user-username" id="username">@username</div>
+                <div class="user-email" id="email" style="color: var(--text-secondary); margin-bottom: 8px;">加载中...</div>
+                <div id="userStatus" style="display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 500;"></div>
+                
+                <div class="user-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="galleryCount">0</div>
+                        <div class="stat-label">作品</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="cloudFilesCount">0</div>
+                        <div class="stat-label">文件</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="registrationDate">-</div>
+                        <div class="stat-label">加入时间</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 仪表板 -->
+        <div id="dashboard" class="dashboard" style="display: none;">
+            <!-- 存储空间卡片 -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">存储空间</h2>
+                    <a href="cloud.html" class="card-action">管理文件</a>
+                </div>
+                <div class="storage-info">
+                    <div class="storage-label">
+                        <span>已使用</span>
+                        <span id="storageUsed">0 GB</span>
+                    </div>
+                    <div class="storage-bar">
+                        <div id="storageProgress" class="storage-progress" style="width: 0%"></div>
+                    </div>
+                    <div class="storage-numbers">
+                        <span>0 GB</span>
+                        <span id="storageTotal">10 GB</span>
+                    </div>
+                </div>
+                <div style="margin-top: 16px;">
+                    <a href="cloud.html?action=upload" class="btn" style="width: 100%; text-align: center;">上传文件</a>
+                </div>
+            </div>
+
+            <!-- 最近活动卡片 -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">最近活动</h2>
+                    <a href="#" id="refreshActivities" class="card-action">刷新</a>
+                </div>
+                <ul class="activity-list" id="activityList">
+                    <li class="activity-item">
+                        <div class="activity-icon">📝</div>
+                        <div class="activity-content">
+                            <div class="activity-text">加载活动记录...</div>
+                            <div class="activity-time">--:--</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 账户设置卡片 -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">账户设置</h2>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <a href="edit-profile.html" class="btn btn-secondary">编辑个人资料</a>
+                    <a href="change-password.html" class="btn btn-secondary">修改密码</a>
+                    <a href="gallery.html?action=upload" class="btn btn-secondary">上传作品</a>
+                    <button id="refreshDataBtn" class="btn btn-secondary">刷新数据</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 管理员提示 -->
+        <div id="adminNotice" class="card" style="display: none; margin-top: 24px;">
+            <div class="card-header">
+                <h2 class="card-title" style="color: var(--accent);">👑 管理员面板</h2>
+            </div>
+            <p style="margin-bottom: 16px; color: var(--text-secondary);">您拥有管理员权限，可以访问以下功能：</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                <a href="admin.html" class="btn">管理员后台</a>
+                <a href="admin-users.html" class="btn btn-secondary">用户管理</a>
+                <a href="admin-registrations.html" class="btn btn-secondary">注册审核</a>
+                <a href="admin-gallery.html" class="btn btn-secondary">作品管理</a>
+                <a href="admin-cloud.html" class="btn btn-secondary">云盘管理</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API基础URL
+        const API_BASE_URL = 'http://localhost:5000/api';
+
+        // 页面元素
+        const loadingEl = document.getElementById('loading');
+        const profileHeaderEl = document.getElementById('profileHeader');
+        const dashboardEl = document.getElementById('dashboard');
+        const adminNoticeEl = document.getElementById('adminNotice');
+        const errorMessageEl = document.getElementById('errorMessage');
+        const successMessageEl = document.getElementById('successMessage');
+        const warningMessageEl = document.getElementById('warningMessage');
+
+        // 显示消息
+        function showMessage(type, message) {
+            const el = document.getElementById(`${type}Message`);
+            el.textContent = message;
+            el.style.display = 'block';
+            
+            // 隐藏其他消息
+            ['error', 'success', 'warning'].forEach(t => {
+                if (t !== type) {
+                    document.getElementById(`${t}Message`).style.display = 'none';
+                }
+            });
+            
+            // 自动隐藏成功消息
+            if (type === 'success') {
+                setTimeout(() => {
+                    el.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        function showError(message) {
+            showMessage('error', message);
+        }
+
+        function showSuccess(message) {
+            showMessage('success', message);
+        }
+
+        function showWarning(message) {
+            showMessage('warning', message);
+        }
+
+        // 获取当前用户ID
+        function getCurrentUserId() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            return user.id;
+        }
+
+        // 获取认证token
+        function getAuthToken() {
+            return localStorage.getItem('token');
+        }
+
+        // 检查登录状态
+        function checkLoginStatus() {
+            const token = getAuthToken();
+            if (!token) {
+                window.location.href = 'login.html';
+                return false;
+            }
+            return true;
+        }
+
+        // 加载用户数据
+        async function loadUserData() {
+            if (!checkLoginStatus()) return;
+            
+            const userId = getCurrentUserId();
+            const token = getAuthToken();
+            
+            try {
+                // 获取用户信息
+                const userResponse = await fetch(`${API_BASE_URL}/user/profile/${userId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!userResponse.ok) {
+                    if (userResponse.status === 401) {
+                        // Token过期
+                        localStorage.clear();
+                        window.location.href = 'login.html';
+                        return;
+                    }
+                    throw new Error('获取用户信息失败');
+                }
+                
+                const userData = await userResponse.json();
+                
+                if (userData.success) {
+                    const user = userData.data;
+                    
+                    // 更新用户信息显示
+                    document.getElementById('displayName').textContent = user.display_name || user.username;
+                    document.getElementById('username').textContent = `@${user.username}`;
+                    document.getElementById('email').textContent = user.email;
+                    
+                    // 设置头像
+                    const avatarText = document.getElementById('avatarText');
+                    if (user.avatar_url) {
+                        avatarText.style.display = 'none';
+                        const avatarImg = document.createElement('img');
+                        avatarImg.src = user.avatar_url;
+                        avatarImg.alt = user.display_name || user.username;
+                        document.querySelector('.avatar').appendChild(avatarImg);
+                    } else {
+                        avatarText.textContent = (user.display_name || user.username).charAt(0).toUpperCase();
+                    }
+                    
+                    // 更新用户状态
+                    const statusEl = document.getElementById('userStatus');
+                    if (!user.is_approved) {
+                        statusEl.textContent = '待审核';
+                        statusEl.style.background = 'var(--warning)';
+                        statusEl.style.color = 'white';
+                        showWarning('您的账户正在等待管理员审核，部分功能可能受限。');
+                    } else if (user.is_admin) {
+                        statusEl.textContent = '管理员';
+                        statusEl.style.background = 'var(--accent)';
+                        statusEl.style.color = 'white';
+                        adminNoticeEl.style.display = 'block';
+                    } else {
+                        statusEl.textContent = '已认证';
+                        statusEl.style.background = 'var(--success)';
+                        statusEl.style.color = 'white';
+                    }
+                    
+                    // 更新注册日期
+                    if (user.registration_date) {
+                        const date = new Date(user.registration_date);
+                        document.getElementById('registrationDate').textContent = 
+                            `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
+                    }
+                    
+                    // 加载存储信息
+                    await loadStorageInfo();
+                    
+                    // 加载活动记录
+                    await loadActivities();
+                    
+                    // 加载统计数据
+                    await loadStatistics();
+                    
+                    // 显示内容
+                    loadingEl.style.display = 'none';
+                    profileHeaderEl.style.display = 'flex';
+                    dashboardEl.style.display = 'grid';
+                    
+                } else {
+                    showError(userData.message || '获取用户信息失败');
+                }
+            } catch (error) {
+                console.error('加载用户数据错误:', error);
+                showError('加载用户数据失败，请刷新页面重试');
+            }
+        }
+
+        // 加载存储信息
+        async function loadStorageInfo() {
+            const token = getAuthToken();
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/cloud/storage-info`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        const storage = data.data;
+                        
+                        // 格式化存储大小
+                        const formatSize = (bytes) => {
+                            if (bytes < 1024) return bytes + ' B';
+                            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+                            if (bytes < 1024 * 1024 * 1024) return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+                            return (bytes / (1024 * 1024 * 1024)).toFixed(1) + ' GB';
+                        };
+                        
+                        const usedGB = (storage.used_storage / (1024 * 1024 * 1024)).toFixed(1);
+                        const totalGB = (storage.storage_limit / (1024 * 1024 * 1024)).toFixed(1);
+                        const percentage = storage.usage_percentage;
+                        
+                        document.getElementById('storageUsed').textContent = `${usedGB} GB`;
+                        document.getElementById('storageTotal').textContent = `${totalGB} GB`;
+                        document.getElementById('storageProgress').style.width = `${percentage}%`;
+                        
+                        // 根据使用率设置颜色
+                        const progressBar = document.getElementById('storageProgress');
+                        if (percentage > 90) {
+                            progressBar.style.background = 'var(--error)';
+                        } else if (percentage > 70) {
+                            progressBar.style.background = 'var(--warning)';
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('加载存储信息错误:', error);
+            }
+        }
+
+        // 加载活动记录
+        async function loadActivities() {
+            const token = getAuthToken();
+            const userId = getCurrentUserId();
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/user/activities/${userId}?limit=5`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const activityList = document.getElementById('activityList');
+                activityList.innerHTML = '';
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    if (data.success && data.data.length > 0) {
+                        data.data.forEach(activity => {
+                            const li = document.createElement('li');
+                            li.className = 'activity-item';
+                            
+                            // 根据活动类型设置图标
+                            let icon = '📝';
+                            if (activity.action_type.includes('upload')) icon = '📤';
+                            if (activity.action_type.includes('download')) icon = '📥';
+                            if (activity.action_type.includes('login')) icon = '🔐';
+                            if (activity.action_type.includes('view')) icon = '👁️';
+                            
+                            const time = new Date(activity.created_at).toLocaleString('zh-CN', {
+                                month: 'short',
+                                day: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            });
+                            
+                            li.innerHTML = `
+                                <div class="activity-icon">${icon}</div>
+                                <div class="activity-content">
+                                    <div class="activity-text">${activity.description || '用户操作'}</div>
+                                    <div class="activity-time">${time}</div>
+                                </div>
+                            `;
+                            
+                            activityList.appendChild(li);
+                        });
+                    } else {
+                        // 没有活动记录
+                        const li = document.createElement('li');
+                        li.className = 'activity-item';
+                        li.innerHTML = `
+                            <div class="activity-icon">📝</div>
+                            <div class="activity-content">
+                                <div class="activity-text">暂无活动记录</div>
+                                <div class="activity-time">开始使用系统吧</div>
+                            </div>
+                        `;
+                        activityList.appendChild(li);
+                    }
+                }
+            } catch (error) {
+                console.error('加载活动记录错误:', error);
+            }
+        }
+
+        // 加载统计数据
+        async function loadStatistics() {
+            const token = getAuthToken();
+            const userId = getCurrentUserId();
+            
+            try {
+                // 获取作品数量
+                const galleryResponse = await fetch(`${API_BASE_URL}/gallery?userId=${userId}&limit=1`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (galleryResponse.ok) {
+                    const galleryData = await galleryResponse.json();
+                    if (galleryData.success) {
+                        document.getElementById('galleryCount').textContent = galleryData.data.totalCount || 0;
+                    }
+                }
+                
+                // 获取文件数量
+                const cloudResponse = await fetch(`${API_BASE_URL}/cloud/files?userId=${userId}&limit=1`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (cloudResponse.ok) {
+                    const cloudData = await cloudResponse.json();
+                    if (cloudData.success) {
+                        document.getElementById('cloudFilesCount').textContent = cloudData.data.totalCount || 0;
+                    }
+                }
+            } catch (error) {
+                console.error('加载统计数据错误:', error);
+            }
+        }
+
+        // 退出登录
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            if (confirm('确定要退出登录吗？')) {
+                localStorage.clear();
+                window.location.href = 'login.html';
+            }
+        });
+
+        // 刷新活动记录
+        document.getElementById('refreshActivities').addEventListener('click', async function(e) {
+            e.preventDefault();
+            await loadActivities();
+            showSuccess('活动记录已刷新');
+        });
+
+        // 刷新数据
+        document.getElementById('refreshDataBtn').addEventListener('click', async function() {
+            loadingEl.style.display = 'block';
+            profileHeaderEl.style.display = 'none';
+            dashboardEl.style.display = 'none';
+            adminNoticeEl.style.display = 'none';
+            
+            await loadUserData();
+            showSuccess('数据已刷新');
+        });
+
+        // 页面加载
+        window.addEventListener('load', async function() {
+            if (checkLoginStatus()) {
+                await loadUserData();
+            }
+        });
+    </script>
+</body>
+</html>

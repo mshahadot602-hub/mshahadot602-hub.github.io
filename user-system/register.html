@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册 - 自在空间</title>
+    <link rel="icon" type="image/png" href="../img/自在logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;350;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --warm-hue: 60;
+            --surface-0: oklch(98% 0.002 var(--warm-hue));
+            --surface-1: oklch(95% 0.003 var(--warm-hue));
+            --surface-2: oklch(90% 0.004 var(--warm-hue));
+            --surface-dark: oklch(12% 0.003 var(--warm-hue));
+            --text-primary: oklch(12% 0.003 var(--warm-hue));
+            --text-secondary: oklch(35% 0.003 var(--warm-hue));
+            --glass-bg: oklch(98% 0.002 var(--warm-hue) / 0.55);
+            --glass-blur: saturate(180%) blur(30px);
+            --accent: oklch(65% 0.15 260);
+            --accent-hover: oklch(60% 0.18 260);
+            --success: oklch(65% 0.2 140);
+            --error: oklch(65% 0.2 20);
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--surface-0);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 20% 80%, oklch(90% 0.01 var(--warm-hue) / 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, oklch(85% 0.01 var(--warm-hue) / 0.08) 0%, transparent 50%);
+        }
+
+        .register-container {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .register-card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 
+                0 8px 32px oklch(0% 0 0 / 0.08),
+                0 2px 8px oklch(0% 0 0 / 0.04),
+                inset 0 1px 0 oklch(100% 0 0 / 0.4);
+            border: 1px solid oklch(100% 0 0 / 0.2);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .logo img {
+            height: 60px;
+            margin-bottom: 12px;
+        }
+
+        .logo h1 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .logo p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            opacity: 0.8;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .form-group .hint {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            opacity: 0.7;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 16px;
+            font-family: 'Noto Sans SC', sans-serif;
+            background: oklch(100% 0 0 / 0.4);
+            border: 1px solid oklch(88% 0.004 var(--warm-hue) / 0.6);
+            border-radius: 12px;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px oklch(65% 0.15 260 / 0.15);
+            background: oklch(100% 0 0 / 0.6);
+        }
+
+        .form-control.error {
+            border-color: var(--error);
+        }
+
+        .form-control.success {
+            border-color: var(--success);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 500;
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            background: var(--text-tertiary);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .links {
+            margin-top: 24px;
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .links a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .links a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .error-message {
+            background: oklch(80% 0.1 20 / 0.1);
+            color: var(--error);
+            border: 1px solid oklch(80% 0.1 20 / 0.3);
+        }
+
+        .success-message {
+            background: oklch(85% 0.1 140 / 0.1);
+            color: var(--success);
+            border: 1px solid oklch(85% 0.1 140 / 0.3);
+        }
+
+        .info-message {
+            background: oklch(85% 0.1 260 / 0.1);
+            color: var(--accent);
+            border: 1px solid oklch(85% 0.1 260 / 0.3);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid oklch(90% 0.004 var(--warm-hue));
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .password-strength {
+            margin-top: 8px;
+            height: 4px;
+            background: var(--surface-2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+
+        .strength-0 { width: 20%; background: var(--error); }
+        .strength-1 { width: 40%; background: oklch(65% 0.2 40); }
+        .strength-2 { width: 60%; background: oklch(65% 0.2 80); }
+        .strength-3 { width: 80%; background: oklch(65% 0.2 120); }
+        .strength-4 { width: 100%; background: var(--success); }
+
+        .terms {
+            margin-top: 20px;
+            padding: 16px;
+            background: oklch(98% 0.002 var(--warm-hue) / 0.3);
+            border-radius: 12px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .terms a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .terms a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .register-card {
+                padding: 30px 20px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .logo img {
+                height: 50px;
+            }
+            
+            .logo h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-card">
+            <div class="logo">
+                <img src="../img/自在logo.png" alt="自在空间">
+                <h1>自在空间</h1>
+                <p>加入我们，开启数字艺术之旅</p>
+            </div>
+
+            <div id="errorMessage" class="message error-message"></div>
+            <div id="successMessage" class="message success-message"></div>
+            <div id="infoMessage" class="message info-message"></div>
+
+            <form id="registerForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="username">用户名 *</label>
+                        <input type="text" id="username" class="form-control" required 
+                               pattern="[a-zA-Z0-9_]{3,20}" 
+                               title="3-20个字符，只能包含字母、数字和下划线">
+                        <div class="hint">3-20个字符，只能包含字母、数字和下划线</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">邮箱 *</label>
+                        <input type="email" id="email" class="form-control" required>
+                        <div class="hint">用于接收重要通知和找回密码</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="displayName">显示名称</label>
+                    <input type="text" id="displayName" class="form-control" 
+                           maxlength="50">
+                    <div class="hint">将在社区中显示的名称，如不填写则使用用户名</div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="password">密码 *</label>
+                        <input type="password" id="password" class="form-control" required
+                               minlength="8" maxlength="50">
+                        <div class="password-strength">
+                            <div id="passwordStrengthBar" class="password-strength-bar"></div>
+                        </div>
+                        <div class="hint">至少8个字符，包含大小写字母和数字</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">确认密码 *</label>
+                        <input type="password" id="confirmPassword" class="form-control" required>
+                        <div id="passwordMatchHint" class="hint"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reason">申请理由</label>
+                    <textarea id="reason" class="form-control" rows="3" 
+                              placeholder="请简单说明您希望加入自在空间的原因..."></textarea>
+                    <div class="hint">填写申请理由有助于管理员更快审核您的注册</div>
+                </div>
+
+                <div class="terms">
+                    <p>注册即表示您同意我们的 <a href="../terms.html">服务条款</a> 和 <a href="../privacy.html">隐私政策</a>。</p>
+                    <p>您的账户需要管理员审核通过后才能使用全部功能。</p>
+                    <p>每个用户将获得 <strong>10GB</strong> 的云存储空间。</p>
+                </div>
+
+                <div class="loading" id="loading">
+                    <div class="loading-spinner"></div>
+                    <div style="margin-top: 8px; color: var(--text-secondary);">提交中...</div>
+                </div>
+
+                <button type="submit" class="btn" id="submitBtn">提交注册申请</button>
+            </form>
+
+            <div class="links">
+                <p>已有账户？ <a href="login.html">立即登录</a></p>
+                <p><a href="../index.html">返回首页</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API基础URL
+        const API_BASE_URL = 'http://localhost:5000/api';
+
+        // 密码强度检查
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            
+            if (password.length >= 8) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+            
+            return Math.min(strength, 4);
+        }
+
+        // 更新密码强度显示
+        function updatePasswordStrength() {
+            const password = document.getElementById('password').value;
+            const strength = checkPasswordStrength(password);
+            const bar = document.getElementById('passwordStrengthBar');
+            
+            bar.className = 'password-strength-bar';
+            bar.classList.add(`strength-${strength}`);
+        }
+
+        // 检查密码是否匹配
+        function checkPasswordMatch() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const hint = document.getElementById('passwordMatchHint');
+            
+            if (!confirmPassword) {
+                hint.textContent = '';
+                return true;
+            }
+            
+            if (password === confirmPassword) {
+                hint.textContent = '密码匹配 ✓';
+                hint.style.color = 'var(--success)';
+                return true;
+            } else {
+                hint.textContent = '密码不匹配 ✗';
+                hint.style.color = 'var(--error)';
+                return false;
+            }
+        }
+
+        // 验证表单
+        function validateForm() {
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // 验证用户名格式
+            if (!/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
+                showError('用户名格式不正确，应为3-20个字母、数字或下划线');
+                return false;
+            }
+            
+            // 验证邮箱格式
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showError('邮箱格式不正确');
+                return false;
+            }
+            
+            // 验证密码强度
+            if (password.length < 8) {
+                showError('密码至少需要8个字符');
+                return false;
+            }
+            
+            // 验证密码匹配
+            if (!checkPasswordMatch()) {
+                showError('两次输入的密码不匹配');
+                return false;
+            }
+            
+            return true;
+        }
+
+        // 显示消息
+        function showMessage(type, message) {
+            const div = document.getElementById(`${type}Message`);
+            div.textContent = message;
+            div.style.display = 'block';
+            
+            // 隐藏其他消息
+            ['error', 'success', 'info'].forEach(t => {
+                if (t !== type) {
+                    document.getElementById(`${t}Message`).style.display = 'none';
+                }
+            });
+        }
+
+        function showError(message) {
+            showMessage('error', message);
+        }
+
+        function showSuccess(message) {
+            showMessage('success', message);
+        }
+
+        function showInfo(message) {
+            showMessage('info', message);
+        }
+
+        // 提交注册
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (!validateForm()) {
+                return;
+            }
+            
+            const formData = {
+                username: document.getElementById('username').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                password: document.getElementById('password').value,
+                display_name: document.getElementById('displayName').value.trim() || null,
+                reason: document.getElementById('reason').value.trim() || null
+            };
+            
+            // 显示加载状态
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('submitBtn').disabled = true;
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/user/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showSuccess('注册申请已提交！请等待管理员审核。审核通过后您将收到邮件通知。');
+                    document.getElementById('registerForm').reset();
+                    
+                    // 3秒后跳转到登录页面
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 3000);
+                    
+                } else {
+                    showError(data.message || '注册失败，请稍后重试');
+                }
+            } catch (error) {
+                console.error('注册错误:', error);
+                showError('网络错误，请稍后重试');
+            } finally {
+                // 隐藏加载状态
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('submitBtn').disabled = false;
+            }
+        });
+
+        // 实时验证
+        document.getElementById('password').addEventListener('input', function() {
+            updatePasswordStrength();
+            checkPasswordMatch();
+        });
+
+        document.getElementById('confirmPassword').addEventListener('input', checkPasswordMatch);
+
+        document.getElementById('username').addEventListener('blur', function() {
+            const username = this.value.trim();
+            if (username && !/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
+                this.classList.add('error');
+            } else {
+                this.classList.remove('error');
+            }
+        });
+
+        document.getElementById('email').addEventListener('blur', function() {
+            const email = this.value.trim();
+            if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                this.classList.add('error');
+            } else {
+                this.classList.remove('error');
+            }
+        });
+
+        // 页面加载时初始化
+        window.addEventListener('load', function() {
+            // 检查是否已登录
+            const token = localStorage.getItem('token');
+            if (token) {
+                showInfo('您已登录，将跳转到个人中心...');
+                setTimeout(() => {
+                    window.location.href = 'profile.html';
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>

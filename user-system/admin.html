@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理员后台 - 自在空间</title>
+    <link rel="icon" type="image/png" href="../img/自在logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;350;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --warm-hue: 60;
+            --surface-0: oklch(98% 0.002 var(--warm-hue));
+            --surface-1: oklch(95% 0.003 var(--warm-hue));
+            --surface-2: oklch(90% 0.004 var(--warm-hue));
+            --surface-dark: oklch(12% 0.003 var(--warm-hue));
+            --text-primary: oklch(12% 0.003 var(--warm-hue));
+            --text-secondary: oklch(35% 0.003 var(--warm-hue));
+            --glass-bg: oklch(98% 0.002 var(--warm-hue) / 0.55);
+            --glass-blur: saturate(180%) blur(30px);
+            --accent: oklch(65% 0.15 260);
+            --accent-hover: oklch(60% 0.18 260);
+            --success: oklch(65% 0.2 140);
+            --warning: oklch(65% 0.2 80);
+            --error: oklch(65% 0.2 20);
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--surface-0);
+            color: var(--text-primary);
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 20% 80%, oklch(90% 0.01 var(--warm-hue) / 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, oklch(85% 0.01 var(--warm-hue) / 0.08) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: 16px;
+            padding: 16px 24px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 
+                0 4px 16px oklch(0% 0 0 / 0.06),
+                inset 0 1px 0 oklch(100% 0 0 / 0.4);
+            border: 1px solid oklch(100% 0 0 / 0.2);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .nav-brand img {
+            height: 32px;
+        }
+
+        .nav-brand h1 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            background: oklch(100% 0 0 / 0.1);
+        }
+
+        .nav-link.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .nav-link.btn-logout {
+            background: oklch(80% 0.1 20 / 0.1);
+            color: var(--error);
+        }
+
+        .nav-link.btn-logout:hover {
+            background: oklch(80% 0.1 20 / 0.2);
+        }
+
+        /* 侧边栏 */
+        .admin-layout {
+            display: flex;
+            gap: 24px;
+        }
+
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 
+                0 4px 16px oklch(0% 0 0 / 0.06),
+                inset 0 1px 0 oklch(100% 0 0 / 0.4);
+            border: 1px solid oklch(100% 0 0 / 0.2);
+            margin-bottom: 16px;
+        }
+
+        .admin-info {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .admin-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--surface-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: var(--text-secondary);
+            margin: 0 auto 16px;
+            overflow: hidden;
+        }
+
+        .admin-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .admin-name {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .admin-role {
+            font-size: 14px;
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .admin-email {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .menu {
+            list-style: none;
+        }
+
+        .menu-item {
+            margin-bottom: 8px;
+        }
+
+        .menu-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .menu-link:hover {
+            background: oklch(100% 0 0 / 0.1);
+        }
+
+        .menu-link.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .menu-icon {
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* 主要内容区域 */
+        .main-content {
+            flex: 1;
+        }
+
+        .dashboard-header {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: 
+                0 4px 16px oklch(0% 0 0 / 0.06),
+                inset 0 1px 0 oklch(100% 0 0 / 0.4);
+            border: 1px solid oklch(100% 0 0 / 0.2);
+        }
+
+        .dashboard-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .dashboard-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        /* 统计卡片 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 
+                0 4px 16px oklch(0% 0 0 / 0.06),
+                inset 0 1px 0 oklch(100% 0 0 / 0.4);
+            border: 1px solid oklch(100% 0 0 / 0.2);
+            text-align: center;
+        }
+
+        .stat-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* 快速操作 */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .action-btn {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid oklch(100% 0 0 / 0.2);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .action-btn:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px oklch(65% 0.15 260 / 0.2);
+        }
+
+        .action-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .action-label {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* 最近注册申请 */
+        .recent-card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 
+                0 4px 16px oklch(0% 0 0 / 0.06),
+                inset 0 1px 0 oklch(100% 0 0 / 0.4);
+            border: 1px solid oklch(100% 0 0 / 0.2);
+            margin-bottom: 24px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .card-action {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .card-action:hover {
+            text-decoration: underline;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th {
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            border-bottom: 1px solid oklch(88% 0.004 var(--warm-hue) / 0.3);
+        }
+
+        .table td {
+            padding: 16px;
+            font-size: 14px;
+            border-bottom: 1px solid oklch(88% 0.004 var(--warm-hue) / 0.1);
+        }
+
+        .table tr:hover {
+            background: oklch(100% 0 0 / 0.05);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background: oklch(85% 0.1 80 / 0.2);
+            color: var(--warning);
+        }
+
+        .status-approved {
+            background: oklch(85% 0.1 140 / 0.2);
+            color: var(--success);
+        }
+
+        .status-rejected {
+            background: oklch(85% 0.1 20 / 0.2);
+            color: var(--error);
+        }
+
+        .btn {
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-success:hover {
+            background: oklch(60% 0.22 140);
+        }
+
+        .btn-warning {
+            background: var(--warning);
+        }
+
+        .btn-warning:hover {
+            background: oklch(60% 0.22 80);
+        }
+
+        .btn-error {
+            background: var(--error);
+        }
+
+        .btn-error:hover {
+            background: oklch(60% 0.22 20);
+        }
+
+        /* 消息提示 */
+        .message {
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .error-message {
+            background: oklch(80% 0.1 20 / 0.1);
+            color: var(--error);
+            border: 1px solid oklch(80% 0.1 20 / 0.3);
+        }
+
+        .success-message {
+            background: oklch(85% 0.1 140 / 0.1);
+            color: var(--success);
+            border: 1px solid oklch(85% 0.1 140 / 0.3);
+        }
+
+        /* 加载状态 */
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid oklch(90% 0.004 var(--warm-hue));
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1024px) {
+            .admin-layout {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 12px;
+            }
+            
+            .navbar {
+                flex-direction: column;
+                gap: 16px;
+                padding: 16px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                gap: 8px;
+            }
+            
+            .nav-link {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 导航栏 -->
+        <nav class="navbar">
+            <a href="../index.html" class="nav-brand">
+                <img src="../img/自在logo.png" alt="自在空间">
+                <h1>自在空间</h1>
+            </a>
+            
+            <div class="nav-links">
+                <a href="../index.html" class="nav-link">首页</a>
+                <a href="profile.html" class="nav-link">个人中心</a>
+                <a href="admin.html" class="nav-link active">管理员后台</a>
+                <a href="#" id="logoutBtn" class="nav-link btn-logout">退出登录</a>
+            </div>
+        </nav>
+
+        <!-- 消息提示 -->
+        <div id="errorMessage" class="message error-message"></div>
+        <div id="successMessage" class="message success-message"></div>
+
+        <!-- 加载状态 -->
+        <div id="loading" class="loading">
+            <div class="loading-spinner"></div>
+            <div style="margin-top: 16px; color: var(--text-secondary);">加载中...</div>
+        </div>
+
+        <!-- 管理员布局 -->
+        <div id="adminContent" class="admin-layout" style="display: none;">
+            <!-- 侧边栏 -->
+            <div class="sidebar">
+                <div class="sidebar-card admin-info">
+                    <div class="admin-avatar">
+                        <span id="adminAvatarText">A</span>
+                    </div>
+                    <div class="admin-name" id="adminName">管理员</div>
+                    <div class="admin-role">系统管理员</div>
+                    <div class="admin-email" id="adminEmail">admin@zizaimedia.com</div>
+                </div>
+
+                <div class="sidebar-card">
+                    <ul class="menu">
+                        <li class="menu-item">
+                            <a href="admin.html" class="menu-link active">
+                                <span class="menu-icon">📊</span>
+                                <span>仪表板</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="admin-users.html" class="menu-link">
+                                <span class="menu-icon">👥</span>
+                                <span>用户管理</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="admin-registrations.html" class="menu-link">
+                                <span class="menu-icon">📝</span>
+                                <span>注册审核</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="admin-gallery.html" class="menu-link">
+                                <span class="menu-icon">🖼️</span>
+                                <span>作品管理</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="admin-cloud.html" class="menu-link">
+                                <span class="menu-icon">☁️</span>
+                                <span>云盘管理</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="admin-logs.html" class="menu-link">
+                                <span class="menu-icon">📋</span>
+                                <span>操作日志</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="admin-settings.html" class="menu-link">
+                                <span class="menu-icon">⚙️</span>
+                                <span>系统设置</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 主要内容 -->
+            <div class="main-content">
+                <div class="dashboard-header">
+                    <h1 class="dashboard-title">管理员仪表板</h1>
+                    <p class="dashboard-subtitle">欢迎回来，管理员！这里是系统管理后台。</p>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">👥</div>
+                            <div class="stat-value" id="totalUsers">0</div>
+                            <div class="stat-label">总用户数</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">📝</div>
+                            <div class="stat-value" id="pendingRegistrations">0</div>
+                            <div class="stat-label">待审核申请</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">🖼️</div>
+                            <div class="stat-value" id="totalGalleryItems">0</div>
+                            <div class="stat-label">作品总数</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">☁️</div>
+                            <div class="stat-value" id="totalCloudFiles">0</div>
+                            <div class="stat-label">云盘文件</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 快速操作 -->
+                <div class="quick-actions">
+                    <a href="admin-registrations.html" class="action-btn">
+                        <div class="action-icon">✅</div>
+                        <div class="action-label">审核注册</div>
+                    </a>
+                    <a href="admin-users.html" class="action-btn">
+                        <div class="action-icon">👤</div>
+                        <div class="action-label">管理用户</div>
+                    </a>
+                    <a href="admin-gallery.html" class="action-btn">
+                        <div class="action-icon">🖼️</div>
+                        <div class="action-label">作品管理</div>
+                    </a>
+                    <a href="admin-cloud.html" class="action-btn">
+                        <div class="action-icon">📊</div>
+                        <div class="action-label">存储统计</div>
+                    </a>
+                    <a href="admin-logs.html" class="action-btn">
+                        <div class="action-icon">📋</div>
+                        <div class="action-label">查看日志</div>
+                    </a>
+                    <a href="admin-settings.html" class="action-btn">
+                        <div class="action-icon">⚙️</div>
+                        <div class="action-label">系统设置</div>
+                    </a>
+                </div>
+
+                <!-- 最近注册申请 -->
+                <div class="recent-card">
+                    <div class="card-header">
+                        <h2 class="card-title">最近注册申请</h2>
+                        <a href="admin-registrations.html" class="card-action">查看全部</a>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table" id="recentRegistrationsTable">
+                            <thead>
+                                <tr>
+                                    <th>用户名</th>
+                                    <th>邮箱</th>
+                                    <th>申请时间</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentRegistrationsBody">
+                                <tr>
+                                    <td colspan="5" style="text-align: center; padding: 40px; color: var(--text-secondary);">
+                                        加载中...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 系统状态 -->
+                <div class="recent-card">
+                    <div class="card-header">
+                        <h2 class="card-title">系统状态</h2>
+                        <button id="refreshSystemStatus" class="btn btn-sm">刷新</button>
+                    </div>
+                    
+                    <div class="stats-grid" style="margin-bottom: 0;">
+                        <div class="stat-card">
+                            <div class="stat-icon">💾</div>
+                            <div class="stat-value" id="totalStorage">0 GB</div>
+                            <div class="stat-label">总存储使用</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">📈</div>
+                            <div class="stat-value" id="dailyActiveUsers">0</div>
+                            <div class="stat-label">日活跃用户</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">📤</div>
+                            <div class="stat-value" id="dailyUploads">0</div>
+                            <div class="stat-label">日上传量</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">✅</div>
+                            <div class="stat-value" id="systemHealth">100%</div>
+                            <div class="stat-label">系统健康度</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API基础URL
+        const API_BASE_URL = 'http://localhost:5000/api';
+
+        // 页面元素
+        const loadingEl = document.getElementById('loading');
+        const adminContentEl = document.getElementById('adminContent');
+        const errorMessageEl = document.getElementById('errorMessage');
+        const successMessageEl = document.getElementById('successMessage');
+
+        // 显示消息
+        function showMessage(type, message) {
+            const el = document.getElementById(`${type}Message`);
+            el.textContent = message;
+            el.style.display = 'block';
+            
+            // 隐藏其他消息
+            ['error', 'success'].forEach(t => {
+                if (t !== type) {
+                    document.getElementById(`${t}Message`).style.display = 'none';
+                }
+            });
+            
+            // 自动隐藏成功消息
+            if (type === 'success') {
+                setTimeout(() => {
+                    el.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        function showError(message) {
+            showMessage('error', message);
+        }
+
+        function showSuccess(message) {
+            showMessage('success', message);
+        }
+
+        // 获取认证token
+        function getAuthToken() {
+            return localStorage.getItem('token');
+        }
+
+        // 检查管理员权限
+        async function checkAdminPermission() {
+            const token = getAuthToken();
+            if (!token) {
+                window.location.href = 'login.html';
+                return false;
+            }
+            
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            if (!user.is_admin) {
+                showError('您没有管理员权限');
+                setTimeout(() => {
+                    window.location.href = 'profile.html';
+                }, 2000);
+                return false;
+            }
+            
+            return true;
+        }
+
+        // 加载管理员数据
+        async function loadAdminData() {
+            if (!await checkAdminPermission()) return;
+            
+            const token = getAuthToken();
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            try {
+                // 更新管理员信息
+                document.getElementById('adminName').textContent = user.display_name || user.username;
+                document.getElementById('adminEmail').textContent = user.email;
+                document.getElementById('adminAvatarText').textContent = (user.display_name || user.username).charAt(0).toUpperCase();
+                
+                // 加载统计数据
+                await loadStatistics();
+                
+                // 加载最近注册申请
+                await loadRecentRegistrations();
+                
+                // 加载系统状态
+                await loadSystemStatus();
+                
+                // 显示内容
+                loadingEl.style.display = 'none';
+                adminContentEl.style.display = 'flex';
+                
+            } catch (error) {
+                console.error('加载管理员数据错误:', error);
+                showError('加载数据失败，请刷新页面重试');
+            }
+        }
+
+        // 加载统计数据
+        async function loadStatistics() {
+            const token = getAuthToken();
+            
+            try {
+                // 获取用户总数
+                const usersResponse = await fetch(`${API_BASE_URL}/admin/users?limit=1`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (usersResponse.ok) {
+                    const usersData = await usersResponse.json();
+                    if (usersData.success) {
+                        document.getElementById('totalUsers').textContent = usersData.data.totalCount || 0;
+                    }
+                }
+                
+                // 获取待审核申请
+                const registrationsResponse = await fetch(`${API_BASE_URL}/admin/registration-requests?status=pending&limit=1`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (registrationsResponse.ok) {
+                    const regData = await registrationsResponse.json();
+                    if (regData.success) {
+                        document.getElementById('pendingRegistrations').textContent = regData.data.totalCount || 0;
+                    }
+                }
+                
+                // 获取作品总数
+                const galleryResponse = await fetch(`${API_BASE_URL}/gallery?limit=1`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (galleryResponse.ok) {
+                    const galleryData = await galleryResponse.json();
+                    if (galleryData.success) {
+                        document.getElementById('totalGalleryItems').textContent = galleryData.data.totalCount || 0;
+                    }
+                }
+                
+                // 获取云盘文件总数
+                const cloudResponse = await fetch(`${API_BASE_URL}/cloud/admin/statistics`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (cloudResponse.ok) {
+                    const cloudData = await cloudResponse.json();
+                    if (cloudData.success) {
+                        document.getElementById('totalCloudFiles').textContent = cloudData.data.totalFiles || 0;
+                    }
+                }
+                
+            } catch (error) {
+                console.error('加载统计数据错误:', error);
+            }
+        }
+
+        // 加载最近注册申请
+        async function loadRecentRegistrations() {
+            const token = getAuthToken();
+            const tableBody = document.getElementById('recentRegistrationsBody');
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/admin/registration-requests?limit=5&orderBy=created_at&order=desc`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                tableBody.innerHTML = '';
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    if (data.success && data.data.length > 0) {
+                        data.data.forEach(request => {
+                            const tr = document.createElement('tr');
+                            
+                            // 格式化时间
+                            const createdAt = new Date(request.created_at);
+                            const timeStr = createdAt.toLocaleString('zh-CN', {
+                                month: 'short',
+                                day: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            });
+                            
+                            // 状态标签
+                            let statusClass = 'status-pending';
+                            let statusText = '待审核';
+                            
+                            if (request.status === 'approved') {
+                                statusClass = 'status-approved';
+                                statusText = '已批准';
+                            } else if (request.status === 'rejected') {
+                                statusClass = 'status-rejected';
+                                statusText = '已拒绝';
+                            }
+                            
+                            tr.innerHTML = `
+                                <td>${request.username}</td>
+                                <td>${request.email}</td>
+                                <td>${timeStr}</td>
+                                <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                                <td>
+                                    ${request.status === 'pending' ? `
+                                        <button class="btn btn-success btn-sm" onclick="approveRegistration(${request.id})">批准</button>
+                                        <button class="btn btn-error btn-sm" onclick="rejectRegistration(${request.id})">拒绝</button>
+                                    ` : '--'}
+                                </td>
+                            `;
+                            
+                            tableBody.appendChild(tr);
+                        });
+                    } else {
+                        // 没有数据
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td colspan="5" style="text-align: center; padding: 40px; color: var(--text-secondary);">
+                                暂无注册申请
+                            </td>
+                        `;
+                        tableBody.appendChild(tr);
+                    }
+                }
+            } catch (error) {
+                console.error('加载注册申请错误:', error);
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td colspan="5" style="text-align: center; padding: 40px; color: var(--error);">
+                        加载失败，请刷新重试
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            }
+        }
+
+        // 加载系统状态
+        async function loadSystemStatus() {
+            const token = getAuthToken();
+            
+            try {
+                // 获取云盘统计
+                const cloudResponse = await fetch(`${API_BASE_URL}/cloud/admin/statistics`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (cloudResponse.ok) {
+                    const cloudData = await cloudResponse.json();
+                    if (cloudData.success) {
+                        const totalSizeGB = (cloudData.data.totalSize / (1024 * 1024 * 1024)).toFixed(1);
+                        document.getElementById('totalStorage').textContent = `${totalSizeGB} GB`;
+                    }
+                }
+                
+                // 获取系统统计（这里需要后端提供相应的API）
+                // 暂时使用模拟数据
+                document.getElementById('dailyActiveUsers').textContent = Math.floor(Math.random() * 50) + 10;
+                document.getElementById('dailyUploads').textContent = Math.floor(Math.random() * 100) + 20;
+                document.getElementById('systemHealth').textContent = '100%';
+                
+            } catch (error) {
+                console.error('加载系统状态错误:', error);
+            }
+        }
+
+        // 批准注册申请
+        async function approveRegistration(requestId) {
+            if (!confirm('确定要批准此注册申请吗？')) return;
+            
+            const token = getAuthToken();
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/admin/registration-requests/${requestId}/approve`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showSuccess('注册申请已批准');
+                    await loadRecentRegistrations();
+                    await loadStatistics();
+                } else {
+                    showError(data.message || '批准失败');
+                }
+            } catch (error) {
+                console.error('批准注册错误:', error);
+                showError('操作失败，请重试');
+            }
+        }
+
+        // 拒绝注册申请
+        async function rejectRegistration(requestId) {
+            const reason = prompt('请输入拒绝理由（可选）：');
+            if (reason === null) return; // 用户取消
+            
+            const token = getAuthToken();
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/admin/registration-requests/${requestId}/reject`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ reason: reason || '' })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showSuccess('注册申请已拒绝');
+                    await loadRecentRegistrations();
+                    await loadStatistics();
+                } else {
+                    showError(data.message || '拒绝失败');
+                }
+            } catch (error) {
+                console.error('拒绝注册错误:', error);
+                showError('操作失败，请重试');
+            }
+        }
+
+        // 退出登录
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            if (confirm('确定要退出登录吗？')) {
+                localStorage.clear();
+                window.location.href = 'login.html';
+            }
+        });
+
+        // 刷新系统状态
+        document.getElementById('refreshSystemStatus').addEventListener('click', async function() {
+            await loadSystemStatus();
+            showSuccess('系统状态已刷新');
+        });
+
+        // 页面加载
+        window.addEventListener('load', async function() {
+            await loadAdminData();
+        });
+
+        // 全局函数（供按钮调用）
+        window.approveRegistration = approveRegistration;
+        window.rejectRegistration = rejectRegistration;
+    </script>
+</body>
+</html>
