@@ -4255,7 +4255,7 @@ const I18N = {
   },
 
   'gallery_vr_title_11': {
-    zh: '浙大新年音乐会',
+    zh: '浙大VR跨年直播',
     en: 'ZJU New Year Concert',
     ja: '浙江大学新年音楽会',
     fr: 'Concert du Nouvel An de l\'Université du Zhejiang',
