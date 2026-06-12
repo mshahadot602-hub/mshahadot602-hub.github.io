@@ -1677,7 +1677,7 @@ body:has(.nav.nav-hero) .login-btn-fixed:hover {
 
 .software-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--space-sm);
 }
 
@@ -1737,6 +1737,9 @@ body:has(.nav.nav-hero) .login-btn-fixed:hover {
 
 .software-dl-btn {
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 8px 20px;
   border-radius: 100px;
   border: 0.5px solid var(--border-subtle);
@@ -1747,10 +1750,45 @@ body:has(.nav.nav-hero) .login-btn-fixed:hover {
   cursor: pointer;
   transition: all 200ms var(--ease-out-quart);
   white-space: nowrap;
+  text-decoration: none;
 }
 .software-dl-btn:hover {
   background: var(--accent-light);
   transform: translateY(-1px);
+}
+
+.software-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.software-actions-row {
+  display: flex;
+  gap: 6px;
+}
+.software-dl-btn.dl-win {
+  background: var(--accent);
+  color: #fff;
+}
+.software-dl-btn.dl-mac {
+  background: var(--surface-1);
+  color: var(--text-secondary);
+  border-color: var(--border-subtle);
+}
+.software-dl-btn.dl-mac:hover {
+  background: var(--surface-2);
+  color: var(--text-primary);
+}
+.software-dl-btn.dl-online {
+  background: transparent;
+  color: var(--accent);
+  border: 0.5px solid var(--accent);
+  width: 100%;
+}
+.software-dl-btn.dl-online:hover {
+  background: var(--accent);
+  color: #fff;
 }
 
 </style>
@@ -2766,6 +2804,9 @@ document.addEventListener('DOMContentLoaded', function() {
         <button class="download-btn" id="btnCloudDownload" style="display:inline-flex;align-items:center;gap:10px;padding:16px 40px;font-size:var(--text-md);font-weight:500;border-radius:100px;border:0.5px solid var(--border-subtle);background:var(--glass-bg);backdrop-filter:var(--glass-blur-light);-webkit-backdrop-filter:var(--glass-blur-light);color:var(--text-primary);cursor:pointer;box-shadow:var(--shadow-glass-sm);transition:all 300ms var(--ease-out-expo);opacity:0.6;" onmouseover="this.style.background='var(--glass-bg-strong)';this.style.boxShadow='var(--shadow-glass-md)';this.style.transform='translateY(-2px)';this.style.opacity='0.9';" onmouseout="this.style.background='var(--glass-bg)';this.style.boxShadow='var(--shadow-glass-sm)';this.style.transform='translateY(0)';this.style.opacity='0.6';" onclick="alert('自在网盘即将上线，敬请期待！')">
           <span style="font-size:1.3em;">&#9729;</span> 自在网盘
         </button>
+        <a href="open_server.bat" class="download-btn" id="btnServer" style="display:inline-flex;align-items:center;gap:10px;padding:16px 40px;font-size:var(--text-md);font-weight:500;border-radius:100px;border:0.5px solid var(--border-subtle);background:var(--glass-bg);backdrop-filter:var(--glass-blur-light);-webkit-backdrop-filter:var(--glass-blur-light);color:var(--text-primary);cursor:pointer;box-shadow:var(--shadow-glass-sm);transition:all 300ms var(--ease-out-expo);text-decoration:none;" onmouseover="this.style.background='var(--glass-bg-strong)';this.style.boxShadow='var(--shadow-glass-md)';this.style.transform='translateY(-2px)';" onmouseout="this.style.background='var(--glass-bg)';this.style.boxShadow='var(--shadow-glass-sm)';this.style.transform='translateY(0)';">
+          <span style="font-size:1.3em;">&#128421;</span> 公司服务器
+        </a>
       </div>
       <p style="text-align:center;margin-top:var(--space-sm);">
         <button id="downloadLogoutBtn" style="background:none;border:none;color:var(--text-tertiary);font-size:var(--text-xs);cursor:pointer;text-decoration:underline;">退出登录</button>
@@ -3260,7 +3301,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="software-name">Photoshop</div>
             <div class="software-desc">图像编辑与合成</div>
           </div>
-          <button class="software-dl-btn">下载</button>
+          <div class="software-actions">
+            <div class="software-actions-row">
+              <button class="software-dl-btn dl-win">Windows</button>
+              <button class="software-dl-btn dl-mac">Mac</button>
+            </div>
+            <button class="software-dl-btn dl-online">在线安装</button>
+          </div>
         </div>
         <div class="software-card">
           <div class="software-icon" style="background:#2b0036;">Pr</div>
@@ -3268,7 +3315,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="software-name">Premiere Pro</div>
             <div class="software-desc">专业视频剪辑</div>
           </div>
-          <button class="software-dl-btn">下载</button>
+          <div class="software-actions">
+            <div class="software-actions-row">
+              <button class="software-dl-btn dl-win">Windows</button>
+              <button class="software-dl-btn dl-mac">Mac</button>
+            </div>
+            <button class="software-dl-btn dl-online">在线安装</button>
+          </div>
         </div>
         <div class="software-card">
           <div class="software-icon" style="background:#1a0036;">Ae</div>
@@ -3276,7 +3329,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="software-name">After Effects</div>
             <div class="software-desc">动态图形与视觉特效</div>
           </div>
-          <button class="software-dl-btn">下载</button>
+          <div class="software-actions">
+            <div class="software-actions-row">
+              <button class="software-dl-btn dl-win">Windows</button>
+              <button class="software-dl-btn dl-mac">Mac</button>
+            </div>
+            <button class="software-dl-btn dl-online">在线安装</button>
+          </div>
         </div>
         <div class="software-card">
           <div class="software-icon" style="background:#33001a;">Au</div>
@@ -3284,7 +3343,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="software-name">Audition</div>
             <div class="software-desc">音频编辑与混音</div>
           </div>
-          <button class="software-dl-btn">下载</button>
+          <div class="software-actions">
+            <div class="software-actions-row">
+              <button class="software-dl-btn dl-win">Windows</button>
+              <button class="software-dl-btn dl-mac">Mac</button>
+            </div>
+            <button class="software-dl-btn dl-online">在线安装</button>
+          </div>
         </div>
         <div class="software-card">
           <div class="software-icon" style="background:#1a0030;">Me</div>
@@ -3292,7 +3357,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="software-name">Media Encoder</div>
             <div class="software-desc">视频编码与输出</div>
           </div>
-          <button class="software-dl-btn">下载</button>
+          <div class="software-actions">
+            <div class="software-actions-row">
+              <button class="software-dl-btn dl-win">Windows</button>
+              <button class="software-dl-btn dl-mac">Mac</button>
+            </div>
+            <button class="software-dl-btn dl-online">在线安装</button>
+          </div>
         </div>
         <div class="software-card">
           <div class="software-icon" style="background:#331400;">Ai</div>
@@ -3300,7 +3371,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="software-name">Illustrator</div>
             <div class="software-desc">矢量图形设计</div>
           </div>
-          <button class="software-dl-btn">下载</button>
+          <div class="software-actions">
+            <div class="software-actions-row">
+              <button class="software-dl-btn dl-win">Windows</button>
+              <button class="software-dl-btn dl-mac">Mac</button>
+            </div>
+            <button class="software-dl-btn dl-online">在线安装</button>
+          </div>
         </div>
         <div class="software-card">
           <div class="software-icon" style="background:#330011;">Id</div>
@@ -3308,7 +3385,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="software-name">InDesign</div>
             <div class="software-desc">排版与出版设计</div>
           </div>
-          <button class="software-dl-btn">下载</button>
+          <div class="software-actions">
+            <div class="software-actions-row">
+              <button class="software-dl-btn dl-win">Windows</button>
+              <button class="software-dl-btn dl-mac">Mac</button>
+            </div>
+            <button class="software-dl-btn dl-online">在线安装</button>
+          </div>
         </div>
         <div class="software-card">
           <div class="software-icon" style="background:#003333;">Ic</div>
@@ -3316,7 +3399,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="software-name">InCopy</div>
             <div class="software-desc">协作编辑与排版</div>
           </div>
-          <button class="software-dl-btn">下载</button>
+          <div class="software-actions">
+            <div class="software-actions-row">
+              <button class="software-dl-btn dl-win">Windows</button>
+              <button class="software-dl-btn dl-mac">Mac</button>
+            </div>
+            <button class="software-dl-btn dl-online">在线安装</button>
+          </div>
         </div>
         <div class="software-card">
           <div class="software-icon" style="background:#001a33;">LrC</div>
@@ -3324,7 +3413,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="software-name">Lightroom Classic</div>
             <div class="software-desc">摄影后期与调色</div>
           </div>
-          <button class="software-dl-btn">下载</button>
+          <div class="software-actions">
+            <div class="software-actions-row">
+              <button class="software-dl-btn dl-win">Windows</button>
+              <button class="software-dl-btn dl-mac">Mac</button>
+            </div>
+            <button class="software-dl-btn dl-online">在线安装</button>
+          </div>
         </div>
         <div class="software-card">
           <div class="software-icon" style="background:#330022;">Dw</div>
@@ -3332,7 +3427,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="software-name">Dreamweaver</div>
             <div class="software-desc">网页设计与开发</div>
           </div>
-          <button class="software-dl-btn">下载</button>
+          <div class="software-actions">
+            <div class="software-actions-row">
+              <button class="software-dl-btn dl-win">Windows</button>
+              <button class="software-dl-btn dl-mac">Mac</button>
+            </div>
+            <button class="software-dl-btn dl-online">在线安装</button>
+          </div>
         </div>
         <div class="software-card">
           <div class="software-icon" style="background:#331a00;">An</div>
@@ -3340,7 +3441,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="software-name">Animate</div>
             <div class="software-desc">2D动画制作</div>
           </div>
-          <button class="software-dl-btn">下载</button>
+          <div class="software-actions">
+            <div class="software-actions-row">
+              <button class="software-dl-btn dl-win">Windows</button>
+              <button class="software-dl-btn dl-mac">Mac</button>
+            </div>
+            <button class="software-dl-btn dl-online">在线安装</button>
+          </div>
         </div>
         <div class="software-card">
           <div class="software-icon" style="background:#1a0033;">Ch</div>
@@ -3348,7 +3455,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="software-name">Character Animator</div>
             <div class="software-desc">角色动画与捕捉</div>
           </div>
-          <button class="software-dl-btn">下载</button>
+          <div class="software-actions">
+            <div class="software-actions-row">
+              <button class="software-dl-btn dl-win">Windows</button>
+              <button class="software-dl-btn dl-mac">Mac</button>
+            </div>
+            <button class="software-dl-btn dl-online">在线安装</button>
+          </div>
         </div>
         <div class="software-card">
           <div class="software-icon" style="background:#00331a;">Dn</div>
@@ -3356,7 +3469,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="software-name">Dimension</div>
             <div class="software-desc">3D设计可视化</div>
           </div>
-          <button class="software-dl-btn">下载</button>
+          <div class="software-actions">
+            <div class="software-actions-row">
+              <button class="software-dl-btn dl-win">Windows</button>
+              <button class="software-dl-btn dl-mac">Mac</button>
+            </div>
+            <button class="software-dl-btn dl-online">在线安装</button>
+          </div>
         </div>
         <div class="software-card">
           <div class="software-icon" style="background:#1a1a1a;">Br</div>
@@ -3364,7 +3483,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="software-name">Bridge</div>
             <div class="software-desc">数字资产管理</div>
           </div>
-          <button class="software-dl-btn">下载</button>
+          <div class="software-actions">
+            <div class="software-actions-row">
+              <button class="software-dl-btn dl-win">Windows</button>
+              <button class="software-dl-btn dl-mac">Mac</button>
+            </div>
+            <button class="software-dl-btn dl-online">在线安装</button>
+          </div>
         </div>
 
       </div>
@@ -3381,7 +3506,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="software-name">剪映专业版</div>
             <div class="software-desc">全能视频剪辑工具</div>
           </div>
-          <button class="software-dl-btn">下载</button>
+          <div class="software-actions">
+            <div class="software-actions-row">
+              <button class="software-dl-btn dl-win">Windows</button>
+              <button class="software-dl-btn dl-mac">Mac</button>
+            </div>
+            <button class="software-dl-btn dl-online">在线安装</button>
+          </div>
         </div>
         <div class="software-card">
           <div class="software-icon" style="background:#1a1a2e;">Da</div>
@@ -3389,7 +3520,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="software-name">达芬奇 DaVinci Resolve</div>
             <div class="software-desc">专业调色与剪辑</div>
           </div>
-          <button class="software-dl-btn">下载</button>
+          <div class="software-actions">
+            <div class="software-actions-row">
+              <button class="software-dl-btn dl-win">Windows</button>
+              <button class="software-dl-btn dl-mac">Mac</button>
+            </div>
+            <button class="software-dl-btn dl-online">在线安装</button>
+          </div>
         </div>
         <div class="software-card">
           <div class="software-icon" style="background:#0d3b66;">P7</div>
@@ -3397,7 +3534,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="software-name">Pano2VR 7</div>
             <div class="software-desc">全景VR漫游制作</div>
           </div>
-          <button class="software-dl-btn">下载</button>
+          <div class="software-actions">
+            <div class="software-actions-row">
+              <button class="software-dl-btn dl-win">Windows</button>
+              <button class="software-dl-btn dl-mac">Mac</button>
+            </div>
+            <button class="software-dl-btn dl-online">在线安装</button>
+          </div>
         </div>
         <div class="software-card">
           <div class="software-icon" style="background:#6b0f5c;">MV</div>
@@ -3405,7 +3548,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="software-name">Mistika VR</div>
             <div class="software-desc">VR视频拼接缝合</div>
           </div>
-          <button class="software-dl-btn">下载</button>
+          <div class="software-actions">
+            <div class="software-actions-row">
+              <button class="software-dl-btn dl-win">Windows</button>
+              <button class="software-dl-btn dl-mac">Mac</button>
+            </div>
+            <button class="software-dl-btn dl-online">在线安装</button>
+          </div>
         </div>
         <div class="software-card">
           <div class="software-icon" style="background:#ff6600;">360</div>
@@ -3413,7 +3562,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="software-name">Insta360 Studio</div>
             <div class="software-desc">全景视频编辑处理</div>
           </div>
-          <button class="software-dl-btn">下载</button>
+          <div class="software-actions">
+            <div class="software-actions-row">
+              <button class="software-dl-btn dl-win">Windows</button>
+              <button class="software-dl-btn dl-mac">Mac</button>
+            </div>
+            <button class="software-dl-btn dl-online">在线安装</button>
+          </div>
         </div>
         <div class="software-card">
           <div class="software-icon" style="background:#1f1f1f;">OBS</div>
@@ -3421,7 +3576,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="software-name">OBS Studio</div>
             <div class="software-desc">直播推流与录制</div>
           </div>
-          <button class="software-dl-btn">下载</button>
+          <div class="software-actions">
+            <div class="software-actions-row">
+              <button class="software-dl-btn dl-win">Windows</button>
+              <button class="software-dl-btn dl-mac">Mac</button>
+            </div>
+            <button class="software-dl-btn dl-online">在线安装</button>
+          </div>
         </div>
         <div class="software-card">
           <div class="software-icon" style="background:#0f52ba;">OK</div>
@@ -3429,7 +3590,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="software-name">OK云</div>
             <div class="software-desc">云端协作与资源共享</div>
           </div>
-          <button class="software-dl-btn">下载</button>
+          <div class="software-actions">
+            <div class="software-actions-row">
+              <button class="software-dl-btn dl-win">Windows</button>
+              <button class="software-dl-btn dl-mac">Mac</button>
+            </div>
+            <button class="software-dl-btn dl-online">在线安装</button>
+          </div>
         </div>
         <div class="software-card">
           <div class="software-icon" style="background:#8b4513;">字</div>
@@ -3437,7 +3604,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="software-name">正版字体库</div>
             <div class="software-desc">商业授权字体合集</div>
           </div>
-          <button class="software-dl-btn">下载</button>
+          <div class="software-actions">
+            <div class="software-actions-row">
+              <button class="software-dl-btn dl-win">Windows</button>
+              <button class="software-dl-btn dl-mac">Mac</button>
+            </div>
+            <button class="software-dl-btn dl-online">在线安装</button>
+          </div>
         </div>
         <div class="software-card">
           <div class="software-icon" style="background:#2e7d32;">修</div>
@@ -3445,7 +3618,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="software-name">AI VR快速地面修补</div>
             <div class="software-desc">VR全景三脚架移除脚本</div>
           </div>
-          <a href="remove_tripod.jsx" download class="software-dl-btn" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">下载</a>
+          <div class="software-actions">
+            <div class="software-actions-row">
+              <a href="remove_tripod.jsx" download class="software-dl-btn dl-win" style="text-decoration:none;">Windows</a>
+              <a href="remove_tripod.jsx" download class="software-dl-btn dl-mac" style="text-decoration:none;">Mac</a>
+            </div>
+            <button class="software-dl-btn dl-online">在线安装</button>
+          </div>
         </div>
 
       </div>
