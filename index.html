@@ -3302,38 +3302,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (url) {
           e.preventDefault();
           e.stopPropagation();
-          var a = document.createElement('a');
-          a.href = url;
-          a.download = '';
-          a.style.display = 'none';
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
+          window.open(url, '_blank');
         }
       });
-    });
-  })();
-
-  // 在线安装 → Base64 解码 SMB 路径 → file:// 打开 exe
-  (function() {
-    document.addEventListener('click', function(e) {
-      var el = e.target.closest('a[href^="zizai-install://"]');
-      if (!el) return;
-      e.preventDefault();
-      var b64 = el.getAttribute('href').replace('zizai-install://', '');
-      try {
-        var raw = atob(b64);
-        var bytes = new Uint8Array(raw.length);
-        for (var i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
-        var path = new TextDecoder('utf-8').decode(bytes);
-        var fileUrl = 'file://' + path.replace(/\\/g, '/').replace(/ /g, '%20');
-        var a = document.createElement('a');
-        a.href = fileUrl;
-        a.style.display = 'none';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-      } catch(ex) {}
     });
   })();
 
