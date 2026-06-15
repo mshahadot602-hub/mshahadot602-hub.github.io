@@ -3280,6 +3280,27 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  // 拦截 zizai-install:// 链接，解码 Base64 → SMB 路径 → file:// 协议直接运行
+  (function() {
+    document.addEventListener('click', function(e) {
+      var el = e.target.closest('a[href^="zizai-install://"]');
+      if (!el) return;
+      e.preventDefault();
+      var b64 = el.getAttribute('href').replace('zizai-install://', '');
+      // Base64 解码
+      try {
+        var raw = atob(b64);
+        // 尝试 UTF-8 解码（现代浏览器 TextDecoder）
+        var path = new TextDecoder('utf-8').decode(new Uint8Array([...raw].map(function(c){return c.charCodeAt(0)})));
+      } catch(ex) {
+        try { path = decodeURIComponent(escape(atob(b64))); } catch(e2) { return; }
+      }
+      // SMB 路径 → file:// 格式
+      var fileUrl = 'file://' + path.replace(/\\/g, '/').replace(/ /g, '%20');
+      window.open(fileUrl, '_blank');
+    });
+  })();
+
 </script>
 
 
