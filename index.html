@@ -3280,24 +3280,31 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // 拦截 zizai-install:// 链接，解码 Base64 → SMB 路径 → file:// 协议直接运行
+  // Windows 按钮 → 下载 rar 安装包（file:// SMB 路径）
   (function() {
-    document.addEventListener('click', function(e) {
-      var el = e.target.closest('a[href^="zizai-install://"]');
-      if (!el) return;
-      e.preventDefault();
-      var b64 = el.getAttribute('href').replace('zizai-install://', '');
-      // Base64 解码
-      try {
-        var raw = atob(b64);
-        // 尝试 UTF-8 解码（现代浏览器 TextDecoder）
-        var path = new TextDecoder('utf-8').decode(new Uint8Array([...raw].map(function(c){return c.charCodeAt(0)})));
-      } catch(ex) {
-        try { path = decodeURIComponent(escape(atob(b64))); } catch(e2) { return; }
-      }
-      // SMB 路径 → file:// 格式
-      var fileUrl = 'file://' + path.replace(/\\/g, '/').replace(/ /g, '%20');
-      window.open(fileUrl, '_blank');
+    var winPaths = {
+      'Ps': 'file://192.168.1.200/share4/zizai_share/Adobe/Win/Adobe%20Photoshop%202026%20v27.7.0.11.rar',
+      'Pr': 'file://192.168.1.200/share4/zizai_share/Adobe/Win/Adobe%20Premiere%20Pro%202026%20v26.2.2.3.rar',
+      'Ae': 'file://192.168.1.200/share4/zizai_share/Adobe/Win/Adobe%20After%20Effects%202026%20v26.2.1.2.rar',
+      'Ai': 'file://192.168.1.200/share4/zizai_share/Adobe/Win/Adobe%20Illustrator%202026%20v30.5.1.3.rar',
+      'LrC': 'file://192.168.1.200/share4/zizai_share/Adobe/Win/Adobe%20Lightroom%20Classic%2015.3.1.rar',
+      'Me': 'file://192.168.1.200/share4/zizai_share/Adobe/Win/Adobe%20Media%20Encoder%202026%20v26.2.2.3.rar',
+      'Id': 'file://192.168.1.200/share4/zizai_share/Adobe/Win/Adobe%20InDesign%202026%20v21.4.0.074.rar',
+      'Ic': 'file://192.168.1.200/share4/zizai_share/Adobe/Win/Adobe%20InCopy%202026%20v21.3.0.060.rar'
+    };
+    document.querySelectorAll('.software-dl-btn.dl-win').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        var card = btn.closest('.software-card');
+        if (!card) return;
+        var icon = card.querySelector('.software-icon');
+        var key = icon ? icon.textContent.trim() : '';
+        var url = winPaths[key];
+        if (url) {
+          e.preventDefault();
+          e.stopPropagation();
+          window.open(url, '_blank');
+        }
+      });
     });
   })();
 
