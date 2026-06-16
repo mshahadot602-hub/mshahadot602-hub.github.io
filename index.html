@@ -114,6 +114,11 @@ html {
   text-rendering: optimizeLegibility;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
+}
+
 body {
   font-family: var(--font-body);
   font-size: var(--text-base);
@@ -122,6 +127,10 @@ body {
   color: var(--text-primary);
   background: var(--surface-0);
   overflow-x: hidden;
+}
+
+section[id] {
+  scroll-snap-align: start;
 }
 
 img { max-width: 100%; height: auto; display: block; }
@@ -180,9 +189,9 @@ h1, h2, h3, h4 {
    ============================================ */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 700ms var(--ease-out-expo),
-              transform 700ms var(--ease-out-expo);
+  transform: translateY(36px);
+  transition: opacity 800ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 .reveal-delay-1 { transition-delay: 80ms; }
@@ -3089,7 +3098,7 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
 
   revealEls.forEach(el => observer.observe(el));
 
