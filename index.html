@@ -1961,7 +1961,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <a href="#contact" class="nav-cta" data-i18n="nav_cta">联系我们</a>
     </div>
     <div class="lang-switcher" style="margin-left:var(--space-md);flex-shrink:0;">
-      <button class="lang-btn" id="langBtn" onclick="var d=document.getElementById('langDropdown');d.style.display=d.style.display==='block'?'none':'block';" aria-label="切换语言" style="background:transparent;border:0.5px solid var(--border-subtle);border-radius:var(--radius-sm);padding:8px 18px;cursor:pointer;font-size:var(--text-sm);display:flex;align-items:center;gap:6px;white-space:nowrap;">
+      <button class="lang-btn" id="langBtn" onclick="(function(){var d=document.getElementById('langDropdown');d.style.display=d.style.display==='block'?'none':'block';})()" aria-label="切换语言" style="background:transparent;border:0.5px solid var(--border-subtle);border-radius:var(--radius-sm);padding:8px 16px;cursor:pointer;font-size:var(--text-sm);display:inline-flex;align-items:center;gap:6px;white-space:nowrap;min-width:90px;justify-content:space-between;">
         <span id="langBtnText">中文</span>
         <svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 3l3 4 3-4" stroke="currentColor" fill="none" stroke-width="1.2"/></svg>
       </button>
@@ -3038,6 +3038,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function updateLogo(isHero) {
     if (!logoImg) return;
+    logoImg.style.display = '';
     if (isHero) {
       logoImg.src = LOGO_WHITE;
       logoImg.style.filter = 'none';
