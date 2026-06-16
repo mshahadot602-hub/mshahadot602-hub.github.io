@@ -175,7 +175,7 @@
     function doLogin(name) {
         try {
             localStorage.setItem('zizai_user', JSON.stringify({
-                name: name, avatar: '../img/tox/' + name + '.png', bio: ''
+                name: name, avatar: 'img/tox/' + name + '.png', bio: ''
             }));
         } catch(e) {}
         errorMsg.style.background = 'oklch(85% 0.1 140/0.1)';

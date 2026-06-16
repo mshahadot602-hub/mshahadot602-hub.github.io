@@ -3496,6 +3496,8 @@ document.addEventListener('DOMContentLoaded', function() {
         content.style.display = 'none';
         if (userInput) userInput.value = '';
         if (passInput) passInput.value = '';
+        // 同步更新右上角
+        window.dispatchEvent(new Event('zizai-login-changed'));
       });
     }
   })();
