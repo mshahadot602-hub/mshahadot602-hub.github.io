@@ -285,6 +285,15 @@
                     localStorage.setItem('user', JSON.stringify(data.data));
                     localStorage.setItem('token', data.token);
                     
+                    // 同步到 zizai_user 供首页使用
+                    try {
+                        var zizaiName = data.data.username || data.data.name || username;
+                        localStorage.setItem('zizai_user', JSON.stringify({
+                            name: zizaiName,
+                            avatar: '../img/tox/' + zizaiName + '.png'
+                        }));
+                    } catch(e) {}
+                    
                     showSuccess('登录成功！正在跳转...');
                     
                     // 根据用户角色跳转到不同页面

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>账号设置 - 自在空间</title>
+<link rel="icon" type="image/png" href="../img/自在logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;350;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --warm-hue: 60;
+    --surface-0: oklch(98% 0.002 var(--warm-hue));
+    --surface-1: oklch(95% 0.003 var(--warm-hue));
+    --surface-2: oklch(90% 0.004 var(--warm-hue));
+    --text-primary: oklch(12% 0.003 var(--warm-hue));
+    --text-secondary: oklch(35% 0.003 var(--warm-hue));
+    --text-tertiary: oklch(52% 0.003 var(--warm-hue));
+    --glass-bg: oklch(98% 0.002 var(--warm-hue) / 0.55);
+    --glass-bg-strong: oklch(98% 0.002 var(--warm-hue) / 0.72);
+    --glass-blur: saturate(180%) blur(30px);
+    --shadow-glass-md: 0 4px 12px oklch(0% 0 0 / 0.05), 0 2px 4px oklch(0% 0 0 / 0.03), inset 0 1px 0 oklch(100% 0 0 / 0.5);
+    --radius-lg: 20px;
+    --radius-xl: 28px;
+    --accent: oklch(18% 0.01 var(--warm-hue));
+    --accent-light: oklch(32% 0.01 var(--warm-hue));
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+    background: var(--surface-0);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-image:
+      radial-gradient(circle at 20% 80%, oklch(90% 0.01 var(--warm-hue) / 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, oklch(85% 0.01 var(--warm-hue) / 0.08) 0%, transparent 50%);
+  }
+
+  .settings-container {
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .settings-card {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-radius: var(--radius-xl);
+    padding: 48px 40px;
+    box-shadow: var(--shadow-glass-md);
+    border: 1px solid oklch(100% 0 0 / 0.2);
+  }
+
+  .section-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .avatar-section {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .avatar-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+  }
+
+  .avatar-preview {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+    border: 2px solid oklch(88% 0.004 var(--warm-hue) / 0.6);
+    background: var(--surface-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .avatar-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .avatar-preview .avatar-placeholder {
+    font-size: 40px;
+    opacity: 0.3;
+  }
+
+  .form-group {
+    margin-bottom: 24px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 16px;
+    font-family: 'Noto Sans SC', sans-serif;
+    background: oklch(100% 0 0 / 0.4);
+    border: 1px solid oklch(88% 0.004 var(--warm-hue) / 0.6);
+    border-radius: 12px;
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+  }
+
+  .form-control:focus {
+    outline: none;
+    border-color: oklch(30% 0.005 var(--warm-hue));
+    box-shadow: 0 0 0 3px oklch(18% 0.01 var(--warm-hue) / 0.1);
+    background: oklch(100% 0 0 / 0.6);
+  }
+
+  textarea.form-control {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .btn-save {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Noto Sans SC', sans-serif;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 8px;
+  }
+
+  .btn-save:hover {
+    background: var(--accent-light);
+    transform: translateY(-1px);
+  }
+
+  .btn-save:active {
+    transform: translateY(0);
+  }
+
+  .hint {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--text-tertiary);
+  }
+
+  .back-link-wrap {
+    text-align: center;
+    margin-top: 28px;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 28px;
+    border-radius: 100px;
+    border: 0.5px solid oklch(88% 0.004 var(--warm-hue) / 0.6);
+    background: var(--glass-bg);
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .back-link:hover {
+    background: var(--glass-bg-strong);
+    color: var(--text-primary);
+  }
+</style>
+</head>
+<body>
+<div class="settings-container">
+  <div class="settings-card">
+    <h1 class="section-title">账号设置</h1>
+
+    <!-- Avatar Section -->
+    <div class="avatar-section">
+      <div class="avatar-label">头像</div>
+      <div class="avatar-preview" id="avatarPreview">
+        <img id="avatarPreviewImg" src="" alt="" style="display:none;" onerror="this.style.display='none';document.getElementById('avatarPreviewPlaceholder').style.display='block';">
+        <span class="avatar-placeholder" id="avatarPreviewPlaceholder">&#128100;</span>
+      </div>
+    </div>
+
+    <!-- Name -->
+    <div class="form-group">
+      <label for="settingsName">名字</label>
+      <input type="text" id="settingsName" class="form-control" placeholder="请输入您的名字">
+    </div>
+
+    <!-- Bio -->
+    <div class="form-group">
+      <label for="settingsBio">个人简介</label>
+      <textarea id="settingsBio" class="form-control" placeholder="简单介绍一下自己吧..."></textarea>
+    </div>
+
+    <!-- Save Button -->
+    <button class="btn-save" id="btnSave" onclick="alert('保存功能即将上线，敬请期待！')">保存设置</button>
+    <p class="hint">保存功能将在后续版本中实装</p>
+
+    <div class="back-link-wrap">
+      <a href="../index.html" class="back-link">&#8592; 返回首页</a>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  try {
+    var userData = JSON.parse(localStorage.getItem('zizai_user') || 'null');
+  } catch(e) {
+    userData = null;
+  }
+
+  if (userData && userData.name) {
+    document.getElementById('settingsName').value = userData.name || '';
+    if (userData.avatar) {
+      var img = document.getElementById('avatarPreviewImg');
+      img.src = userData.avatar;
+      img.style.display = 'block';
+      document.getElementById('avatarPreviewPlaceholder').style.display = 'none';
+    }
+  }
+})();
+</script>
+</body>
+</html>
