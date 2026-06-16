@@ -351,15 +351,7 @@ h1, h2, h3, h4 {
   transform: scale(1.08);
 }
 /* Avatar state */
-#loginBtnFixed.is-avatar {
-  padding: 3px;
-  width: 38px; height: 38px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 1.5px solid var(--border-subtle);
-  background: var(--surface-0);
-  display: flex; align-items: center; justify-content: center;
-}
+
 #loginBtnFixed.is-avatar img {
   width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
 }
@@ -1662,16 +1654,7 @@ body:has(.nav.nav-hero) #loginBtnFixed:hover {
 /* ============================================
    Avatar Login Button & Dropdown
    ============================================ */
-#loginBtnFixed.is-avatar {
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  border-radius: 50%;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
 #loginBtnFixed.is-avatar img {
   width: 100%;
   height: 100%;
@@ -1945,7 +1928,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <nav class="nav" id="nav">
   <div class="nav-inner">
     <a href="#hero" class="nav-logo">
-      <img id="navLogo" src="img/img-header-logo.png" alt="自在空间" width="32" height="32" data-i18n-title="nav_logo_alt" data-original-src="img/img-header-logo.png" data-white-src="img/img-header-logo-w.png" onerror="this.style.display='none'">
+      <img id="navLogo" src="img/img-header-logo.png" alt="自在空间" width="32" height="32" data-i18n-title="nav_logo_alt" data-original-src="img/img-header-logo.png" data-white-src="img/img-header-logo-w.png" onerror="this.style.opacity='0.3'">
     </a>
     <div class="nav-links" id="navLinks">
       <a href="#about" class="nav-link" data-i18n="nav_about">关于我们</a>
@@ -1961,7 +1944,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <a href="#contact" class="nav-cta" data-i18n="nav_cta">联系我们</a>
     </div>
     <div class="lang-switcher" style="margin-left:var(--space-md);flex-shrink:0;">
-      <button class="lang-btn" id="langBtn" onclick="var d=document.getElementById('langDropdown');if(d.style.display==='none'||d.style.display==='')d.style.display='block';else d.style.display='none';" aria-label="切换语言" style="background:transparent;border:0.5px solid var(--border-subtle);border-radius:var(--radius-sm);padding:8px 16px;cursor:pointer;font-size:var(--text-sm);display:inline-flex;align-items:center;gap:6px;white-space:nowrap;min-width:90px;justify-content:space-between;">
+      <button class="lang-btn" id="langBtn" onclick="event.stopPropagation();var d=document.getElementById('langDropdown');d.style.display=(d.style.display==='block'?'none':'block');" aria-label="切换语言" style="background:transparent;border:0.5px solid var(--border-subtle);border-radius:var(--radius-sm);padding:8px 16px;cursor:pointer;font-size:var(--text-sm);display:inline-flex;align-items:center;gap:6px;white-space:nowrap;min-width:90px;justify-content:space-between;">
         <span id="langBtnText">中文</span>
         <svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 3l3 4 3-4" stroke="currentColor" fill="none" stroke-width="1.2"/></svg>
       </button>
@@ -1983,7 +1966,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 
     <!-- Login Button in Nav -->
-    <div style="position:relative;margin-left:auto;flex-shrink:0;padding-left:var(--space-lg);">
+    <div style="position:relative;margin-left:var(--space-xl);flex-shrink:0;">
       <a href="user-system/login.html" id="loginBtnFixed" style="display:inline-flex;align-items:center;padding:9px 22px;background:var(--glass-bg);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:0.5px solid var(--border-glass);border-radius:100px;font-size:var(--text-sm);font-weight:500;color:var(--text-secondary);box-shadow:var(--shadow-glass-sm);text-decoration:none;white-space:nowrap;" >登录</a>
       <div class="avatar-dropdown" id="avatarDropdown" style="display:none;position:absolute;top:100%;right:0;margin-top:8px;z-index:1003;background:rgba(255,255,255,0.42);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:1px solid rgba(255,255,255,0.35);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.12);min-width:180px;padding:4px;">
         <a href="user-system/profile.html" style="display:flex;align-items:center;gap:10px;padding:12px 18px;text-decoration:none;color:var(--text-primary);font-size:15px;white-space:nowrap;border-radius:10px;margin:2px 4px;">&#128100; 我的信息</a>
@@ -2022,7 +2005,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="section-inner">
     <div class="story-grid reveal">
       <div style="display:flex;align-items:flex-start;gap:var(--space-xl);">
-        <img src="img/marvis_9aed1523-fc6d-41cd-8e79-afd74d71a51a.png" alt="苏家铭" data-i18n-title="brand_founder_photo_alt" style="width:280px;flex-shrink:0;border-radius:var(--radius-lg);box-shadow:0 4px 24px rgba(0,0,0,.2);" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/marvis_9aed1523-fc6d-41cd-8e79-afd74d71a51a.png" alt="苏家铭" data-i18n-title="brand_founder_photo_alt" style="width:280px;flex-shrink:0;border-radius:var(--radius-lg);box-shadow:0 4px 24px rgba(0,0,0,.2);" onerror="this.style.opacity='0.3'" loading="lazy">
         <div>
           <p class="section-label" data-i18n="brand_label">About Us</p>
           <h2 class="section-title" data-i18n="brand_title">自在，即是存在。</h2>
@@ -2518,70 +2501,70 @@ document.addEventListener('DOMContentLoaded', function() {
 
       <!-- VR Cases -->
       <div class="gallery-item" data-cat="vr-case">
-        <img src="img/VR案例/VR大爱清尘首部尘肺病VR短片.webp" alt="大爱清尘 · 尘肺病" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/VR案例/VR大爱清尘首部尘肺病VR短片.webp" alt="大爱清尘 · 尘肺病" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_vr_title_01">大爱清尘 · 尘肺病</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_vr_sub_01">尘肺病患者的真实困境直击人心</span>
   </div>
       </div>
       <div class="gallery-item" data-cat="vr-case">
-        <img src="img/VR案例/VR宋运稻香.webp" alt="宋运稻香" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/VR案例/VR宋运稻香.webp" alt="宋运稻香" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_vr_title_02">宋运稻香</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_vr_sub_02">沉浸式感受宋代农耕文化魅力</span>
   </div>
       </div>
       <div class="gallery-item" data-cat="vr-case">
-        <img src="img/VR案例/VR山谷音乐节.webp" alt="山谷音乐节" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/VR案例/VR山谷音乐节.webp" alt="山谷音乐节" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_vr_title_03">山谷音乐节</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_vr_sub_03">自然山谷中的音乐狂欢盛宴</span>
   </div>
       </div>
       <div class="gallery-item" data-cat="vr-case">
-        <img src="img/VR案例/VR戈壁亲子挑战营.webp" alt="戈壁亲子挑战营" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/VR案例/VR戈壁亲子挑战营.webp" alt="戈壁亲子挑战营" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_vr_title_04">戈壁亲子挑战营</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_vr_sub_04">戈壁滩上的亲子冒险成长之旅</span>
   </div>
       </div>
       <div class="gallery-item" data-cat="vr-case">
-        <img src="img/VR案例/VR教练来了.webp" alt="教练来了" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/VR案例/VR教练来了.webp" alt="教练来了" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_vr_title_05">教练来了</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_vr_sub_05">专业教练带你沉浸式运动燃脂</span>
   </div>
       </div>
       <div class="gallery-item" data-cat="vr-case">
-        <img src="img/VR案例/VR杭州市养老地图.webp" alt="杭州市养老地图" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/VR案例/VR杭州市养老地图.webp" alt="杭州市养老地图" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_vr_title_06">杭州市养老地图</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_vr_sub_06">一键触达杭城养老服务资源</span>
   </div>
       </div>
       <div class="gallery-item" data-cat="vr-case">
-        <img src="img/VR案例/VR气候印记皖南古镇.webp" alt="气候印记 · 皖南古镇" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/VR案例/VR气候印记皖南古镇.webp" alt="气候印记 · 皖南古镇" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_vr_title_07">气候印记 · 皖南古镇</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_vr_sub_07">气候变化视角下的古镇文化巡礼</span>
   </div>
       </div>
       <div class="gallery-item" data-cat="vr-case">
-        <img src="img/VR案例/VR深圳观鸟.webp" alt="深圳观鸟" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/VR案例/VR深圳观鸟.webp" alt="深圳观鸟" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_vr_title_08">深圳观鸟</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_vr_sub_08">都市中的候鸟栖息地探索之旅</span>
   </div>
       </div>
       <div class="gallery-item" data-cat="vr-case">
-        <img src="img/VR案例/VR濒死体验.webp" alt="濒死体验" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/VR案例/VR濒死体验.webp" alt="濒死体验" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title">濒死体验</span>
     <span class="gallery-caption-subtitle">生命边缘的真实VR沉浸体验</span>
   </div>
       </div>
       <div class="gallery-item" data-cat="vr-case">
-        <img src="img/VR案例/VR百岁老人图谱.webp" alt="百岁老人图谱" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/VR案例/VR百岁老人图谱.webp" alt="百岁老人图谱" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title">百岁老人图谱</span>
     <span class="gallery-caption-subtitle">记录百岁长者的生命故事与智慧</span>
@@ -2595,7 +2578,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
       </div>
       <div class="gallery-item" data-cat="vr-case">
-        <img src="img/VR案例/VR短剧《穿书后霸道总裁宠我上瘾》.webp" alt="VR短剧" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/VR案例/VR短剧《穿书后霸道总裁宠我上瘾》.webp" alt="VR短剧" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title">VR短剧</span>
     <span class="gallery-caption-subtitle">穿书后霸道总裁宠我上瘾</span>
@@ -2669,35 +2652,35 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
 
       <div class="gallery-item" data-cat="photo">
-        <img src="img/剧照/01104874c66cf6f66231638e5bfeae5d_origin(1).webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/剧照/01104874c66cf6f66231638e5bfeae5d_origin(1).webp" alt="剧照" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_photo_title_01">剧照</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_01"></span>
   </div>
       </div>
       <div class="gallery-item" data-cat="photo">
-        <img src="img/剧照/1611ad532c61c69444bc7c53b5dbb465_origin(1).webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/剧照/1611ad532c61c69444bc7c53b5dbb465_origin(1).webp" alt="剧照" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_photo_title_02">剧照</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_02"></span>
   </div>
       </div>
       <div class="gallery-item" data-cat="photo">
-        <img src="img/剧照/2d23df89c6ea07a1f75d0164e2428945_origin(1).webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/剧照/2d23df89c6ea07a1f75d0164e2428945_origin(1).webp" alt="剧照" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_photo_title_03">剧照</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_03"></span>
   </div>
       </div>
       <div class="gallery-item" data-cat="photo">
-        <img src="img/剧照/34e934deaf0d96d3f7f0b56be5b716ab_origin(1).webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/剧照/34e934deaf0d96d3f7f0b56be5b716ab_origin(1).webp" alt="剧照" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_photo_title_04">剧照</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_04"></span>
   </div>
       </div>
       <div class="gallery-item" data-cat="photo">
-        <img src="img/剧照/4035b63d-a69f-45ad-b64d-dd4e9404f94a.webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/剧照/4035b63d-a69f-45ad-b64d-dd4e9404f94a.webp" alt="剧照" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_photo_title_05">剧照</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_05"></span>
@@ -2705,84 +2688,84 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
 
       <div class="gallery-item" data-cat="photo">
-        <img src="img/剧照/42c2ed1be3f49b4160d9a38396f3f3db_compress.webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/剧照/42c2ed1be3f49b4160d9a38396f3f3db_compress.webp" alt="剧照" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_photo_title_06">剧照</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_06"></span>
   </div>
       </div>
       <div class="gallery-item" data-cat="photo">
-        <img src="img/剧照/50675c5b8ca2fbb81292f91e3297ccf1_origin(1).webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/剧照/50675c5b8ca2fbb81292f91e3297ccf1_origin(1).webp" alt="剧照" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_photo_title_07">剧照</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_07"></span>
   </div>
       </div>
       <div class="gallery-item" data-cat="photo">
-        <img src="img/剧照/5a3aee5da9848a3b3002c68f1f36fbe2_origin(1).webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/剧照/5a3aee5da9848a3b3002c68f1f36fbe2_origin(1).webp" alt="剧照" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_photo_title_08">剧照</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_08"></span>
   </div>
       </div>
       <div class="gallery-item" data-cat="photo">
-        <img src="img/剧照/62b8baecde3c3912166dd844d7524c34_origin(1).webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/剧照/62b8baecde3c3912166dd844d7524c34_origin(1).webp" alt="剧照" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_photo_title_09">剧照</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_09"></span>
   </div>
       </div>
       <div class="gallery-item" data-cat="photo">
-        <img src="img/剧照/692e824b-d87a-445d-bd6d-9330994cbbe4.webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/剧照/692e824b-d87a-445d-bd6d-9330994cbbe4.webp" alt="剧照" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_photo_title_10">剧照</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_10"></span>
   </div>
       </div>
       <div class="gallery-item" data-cat="photo">
-        <img src="img/剧照/69a963e78ef5823e1b1e0a94b03649ea_origin(1).webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/剧照/69a963e78ef5823e1b1e0a94b03649ea_origin(1).webp" alt="剧照" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_photo_title_11">剧照</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_11"></span>
   </div>
       </div>
       <div class="gallery-item" data-cat="photo">
-        <img src="img/剧照/6fa22682c9704f2ad36f12c65169530b_origin.webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/剧照/6fa22682c9704f2ad36f12c65169530b_origin.webp" alt="剧照" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_photo_title_12">剧照</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_12"></span>
   </div>
       </div>
       <div class="gallery-item" data-cat="photo">
-        <img src="img/剧照/7a0438ae44f64bcfaaaf106190848e11_origin(1).webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/剧照/7a0438ae44f64bcfaaaf106190848e11_origin(1).webp" alt="剧照" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_photo_title_13">剧照</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_13"></span>
   </div>
       </div>
       <div class="gallery-item" data-cat="photo">
-        <img src="img/剧照/7c5381801f5a4a2c0c690891dc326c8a_origin(1).webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/剧照/7c5381801f5a4a2c0c690891dc326c8a_origin(1).webp" alt="剧照" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_photo_title_14">剧照</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_14"></span>
   </div>
       </div>
       <div class="gallery-item" data-cat="photo">
-        <img src="img/剧照/db3a8a1de5e205ee1ad8bce1a054d40a_origin(1).webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/剧照/db3a8a1de5e205ee1ad8bce1a054d40a_origin(1).webp" alt="剧照" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_photo_title_15">剧照</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_15"></span>
   </div>
       </div>
       <div class="gallery-item" data-cat="photo">
-        <img src="img/剧照/dd017392af2e5e828fbdb80b828062bb_origin.webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/剧照/dd017392af2e5e828fbdb80b828062bb_origin.webp" alt="剧照" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_photo_title_16">剧照</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_16"></span>
   </div>
       </div>
       <div class="gallery-item" data-cat="photo">
-        <img src="img/剧照/dff6b86d764ff7f6cfe4df87fd586f0d_origin(1).webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <img src="img/剧照/dff6b86d764ff7f6cfe4df87fd586f0d_origin(1).webp" alt="剧照" onerror="this.style.opacity='0.3'" loading="lazy">
         <div class="gallery-item-caption">
     <span class="gallery-caption-title" data-i18n="gallery_photo_title_17">剧照</span>
     <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_17"></span>
@@ -2858,24 +2841,24 @@ document.addEventListener('DOMContentLoaded', function() {
       <p class="section-subtitle" data-i18n="partners_subtitle">携手 400+ 品牌与机构，共同用影像传递价值</p>
     </div>
     <div class="partners-grid reveal reveal-delay-1" id="partnersGrid">
-      <div class="partner-item"><img src="img/cooperative_01.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
-      <div class="partner-item"><img src="img/cooperative_02.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
-      <div class="partner-item"><img src="img/cooperative_03.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
-      <div class="partner-item"><img src="img/cooperative_04.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
-      <div class="partner-item"><img src="img/cooperative_05.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
-      <div class="partner-item"><img src="img/cooperative_06.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
-      <div class="partner-item"><img src="img/cooperative_07.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
-      <div class="partner-item"><img src="img/cooperative_08.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
-      <div class="partner-item"><img src="img/cooperative_09.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
-      <div class="partner-item"><img src="img/cooperative_10.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
-      <div class="partner-item"><img src="img/cooperative_11.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
-      <div class="partner-item"><img src="img/cooperative_12.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
-      <div class="partner-item"><img src="img/cooperative_13.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
-      <div class="partner-item"><img src="img/cooperative_14.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
-      <div class="partner-item"><img src="img/cooperative_15.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
-      <div class="partner-item"><img src="img/cooperative_16.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
-      <div class="partner-item"><img src="img/cooperative_17.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
-      <div class="partner-item"><img src="img/cooperative_18.jpg" alt="合作伙伴" onerror="this.style.display='none'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_01.jpg" alt="合作伙伴" onerror="this.style.opacity='0.3'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_02.jpg" alt="合作伙伴" onerror="this.style.opacity='0.3'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_03.jpg" alt="合作伙伴" onerror="this.style.opacity='0.3'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_04.jpg" alt="合作伙伴" onerror="this.style.opacity='0.3'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_05.jpg" alt="合作伙伴" onerror="this.style.opacity='0.3'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_06.jpg" alt="合作伙伴" onerror="this.style.opacity='0.3'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_07.jpg" alt="合作伙伴" onerror="this.style.opacity='0.3'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_08.jpg" alt="合作伙伴" onerror="this.style.opacity='0.3'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_09.jpg" alt="合作伙伴" onerror="this.style.opacity='0.3'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_10.jpg" alt="合作伙伴" onerror="this.style.opacity='0.3'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_11.jpg" alt="合作伙伴" onerror="this.style.opacity='0.3'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_12.jpg" alt="合作伙伴" onerror="this.style.opacity='0.3'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_13.jpg" alt="合作伙伴" onerror="this.style.opacity='0.3'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_14.jpg" alt="合作伙伴" onerror="this.style.opacity='0.3'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_15.jpg" alt="合作伙伴" onerror="this.style.opacity='0.3'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_16.jpg" alt="合作伙伴" onerror="this.style.opacity='0.3'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_17.jpg" alt="合作伙伴" onerror="this.style.opacity='0.3'" loading="lazy"></div>
+      <div class="partner-item"><img src="img/cooperative_18.jpg" alt="合作伙伴" onerror="this.style.opacity='0.3'" loading="lazy"></div>
     </div>
   </div>
 </section>
@@ -3014,7 +2997,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <span style="display: block; margin-top: 4px; font-size: var(--text-xs); color: var(--text-inverse-secondary);" data-i18n="footer_icp">浙ICP备19024569号-1</span>
       </div>
       <div style="text-align: center;">
-        <img src="img/qr-space.jpg" alt="自在空间公众号" style="width: 120px; height: 120px; border-radius: var(--radius-sm); filter: none; display: block; margin: 0 auto 8px;" onerror="this.style.display='none'">
+        <img src="img/qr-space.jpg" alt="自在空间公众号" style="width: 120px; height: 120px; border-radius: var(--radius-sm); filter: none; display: block; margin: 0 auto 8px;" onerror="this.style.opacity='0.3'">
         <span style="font-size: var(--text-xs); color: var(--text-inverse-secondary);" data-i18n="footer_qrcode_label">自在空间公众号</span>
       </div>
     </div>
@@ -3372,33 +3355,16 @@ document.addEventListener('DOMContentLoaded', function() {
       if (userData && userData.name) {
         // 已登录：显示头像
         loginBtn.classList.add('is-avatar');
-        loginBtn.innerHTML = '<img src="' + (userData.avatar || 'img/tox/default.png') + '" alt="' + userData.name + '" onerror="this.src=\'img/tox/default.png\';this.onerror=null;">';
-        loginBtn.setAttribute('data-i18n', '');
+        loginBtn.innerHTML = '<img src="' + (userData.avatar || 'img/tox/default.png') + '" alt="' + userData.name + '" onerror="this.style.display=\'none\'">';
+        loginBtn.removeAttribute('data-i18n');
         loginBtn.removeAttribute('href');
-        loginBtn.style.cursor = 'pointer';
-        // 切换Hero背景为花儿哪里去了视频
-        var heroFrame = document.getElementById('heroVideoFrame');
-        var heroImg = document.querySelector('.hero-bg img');
-        if (heroFrame && heroFrame.dataset.src) {
-          heroFrame.src = heroFrame.dataset.src;
-          heroFrame.style.display = 'block';
-          if (heroImg) heroImg.style.display = 'none';
-        }
+        loginBtn.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;padding:0;width:40px;height:40px;border-radius:50%;overflow:hidden;border:1.5px solid var(--border-subtle);background:var(--surface-0);cursor:pointer;flex-shrink:0;';
       } else {
         // 未登录：显示登录文字
         loginBtn.classList.remove('is-avatar');
         loginBtn.innerHTML = '登录';
-        loginBtn.setAttribute('data-i18n', 'nav_login');
         loginBtn.href = 'user-system/login.html';
-        loginBtn.style.cursor = '';
-        // 隐藏视频背景，恢复图片
-        var heroFrame = document.getElementById('heroVideoFrame');
-        var heroImg = document.querySelector('.hero-bg img');
-        if (heroFrame) {
-          heroFrame.src = 'about:blank';
-          heroFrame.style.display = 'none';
-        }
-        if (heroImg) heroImg.style.display = '';
+        loginBtn.style.cssText = 'display:inline-flex;align-items:center;padding:9px 22px;background:var(--glass-bg);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:0.5px solid var(--border-glass);border-radius:100px;font-size:var(--text-sm);font-weight:500;color:var(--text-secondary);box-shadow:var(--shadow-glass-sm);text-decoration:none;white-space:nowrap;';
       }
     }
 
