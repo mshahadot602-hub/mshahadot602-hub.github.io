@@ -3871,5 +3871,16 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </div>
 
+<script>
+(function() {
+  var ld = document.getElementById('langDropdown'), lb = document.getElementById('langBtn');
+  if (!ld || !lb) return;
+  document.addEventListener('click', function(e) {
+    if (!lb.contains(e.target) && !ld.contains(e.target)) ld.style.display = 'none';
+  });
+  window.addEventListener('wheel', function() { ld.style.display = 'none'; }, {passive:true});
+})();
+</script>
+
 </body>
 </html>
