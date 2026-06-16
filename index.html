@@ -1928,7 +1928,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <nav class="nav" id="nav">
   <div class="nav-inner">
     <a href="#hero" class="nav-logo">
-      <img id="navLogo" src="img/img-header-logo.png" alt="自在空间" width="32" height="32" data-original-src="img/img-header-logo.png" data-white-src="img/img-header-logo-w.png" onerror="this.style.display='none'">
+      <img id="navLogo" src="img/img-header-logo.png" alt="自在空间" width="32" height="32" data-original-src="img/img-header-logo.png" data-white-src="img/img-header-logo-w.png" >
     </a>
     <div class="nav-links" id="navLinks">
       <a href="#about" class="nav-link" data-i18n="nav_about">关于我们</a>
@@ -1944,7 +1944,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <a href="#contact" class="nav-cta" data-i18n="nav_cta">联系我们</a>
     </div>
     <div class="lang-switcher" style="margin-left:var(--space-md);flex-shrink:0;">
-      <button class="lang-btn" id="langBtn" onclick="this.nextElementSibling.classList.toggle('show')" aria-label="切换语言" style="background:transparent;border:0.5px solid var(--border-subtle);border-radius:var(--radius-sm);padding:8px 16px;cursor:pointer;font-size:var(--text-sm);display:inline-flex;align-items:center;gap:6px;white-space:nowrap;min-width:90px;justify-content:space-between;">
+      <button class="lang-btn" id="langBtn" onclick="var d=this.parentElement.querySelector('.lang-dropdown');d.classList.toggle('show')" aria-label="切换语言" style="background:transparent;border:0.5px solid var(--border-subtle);border-radius:var(--radius-sm);padding:8px 16px;cursor:pointer;font-size:var(--text-sm);display:inline-flex;align-items:center;gap:6px;white-space:nowrap;min-width:90px;justify-content:space-between;">
         <span id="langBtnText">中文</span>
         <svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 3l3 4 3-4" stroke="currentColor" fill="none" stroke-width="1.2"/></svg>
       </button>
@@ -1962,6 +1962,9 @@ document.addEventListener('DOMContentLoaded', function() {
         <a href="#" data-lang="pt" onclick="applyLanguage('pt');document.getElementById('langDropdown').classList.remove('show');return false;">🇧🇷 Português</a>
         <a href="#" data-lang="bo" onclick="applyLanguage('bo');document.getElementById('langDropdown').classList.remove('show');return false;">བོད་སྐད།</a>
         <a href="#" data-lang="ug" onclick="applyLanguage('ug');document.getElementById('langDropdown').classList.remove('show');return false;">ئۇيغۇرچە</a>
+        <a href="#" data-lang="zh-Hant" onclick="applyLanguage('zh-Hant');document.getElementById('langDropdown').classList.remove('show');return false;">🇹🇼 繁體中文</a>
+        <a href="#" data-lang="ms" onclick="applyLanguage('ms');document.getElementById('langDropdown').classList.remove('show');return false;">🇲🇾 Bahasa Melayu</a>
+        <a href="#" data-lang="si" onclick="applyLanguage('si');document.getElementById('langDropdown').classList.remove('show');return false;">🇱🇰 සිංහල</a>
       </div>
     </div>
 
