@@ -915,6 +915,40 @@ body:has(.nav.nav-hero) .login-btn-fixed:hover {
   border-color: var(--accent);
 }
 
+/* Featured gallery item (full width) */
+.gallery-featured {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: center;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid oklch(100% 0 0 / 0.2);
+  box-shadow: var(--shadow-glass-md);
+}
+.gallery-featured-media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  background: var(--surface-1);
+}
+.gallery-featured-info { padding: var(--space-xl); }
+.gallery-featured-title {
+  font-family: var(--font-display, 'Noto Serif SC', serif);
+  font-size: 24px; font-weight: 600;
+  color: var(--text-primary); margin-bottom: 8px;
+}
+.gallery-featured-sub { font-size: 14px; color: var(--text-tertiary); margin-bottom: 16px; }
+.gallery-featured-desc { font-size: 15px; line-height: 1.7; color: var(--text-secondary); }
+@media (max-width: 768px) {
+  .gallery-featured { grid-template-columns: 1fr; }
+  .gallery-featured-info { padding: var(--space-md); }
+}
+
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -2739,6 +2773,63 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
       </div>
 
+      <!-- 宣传片 Promo -->
+      <div class="gallery-item" data-cat="promo">
+        <iframe src="https://player.bilibili.com/player.html?isOutside=true&aid=115009325632457&bvid=BV1FHbGzZEBY&cid=31624070330&p=1&muted=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="width:100%;height:100%;border:none;position:absolute;top:0;left:0;" loading="lazy"></iframe>
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title">反诈猎人</span>
+          <span class="gallery-caption-subtitle">杭州自在空间 × 第一财经 反诈神片</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="promo">
+        <iframe src="https://player.bilibili.com/player.html?isOutside=true&aid=1402510376&bvid=BV1rr42147ux&cid=1492092362&p=1&muted=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="width:100%;height:100%;border:none;position:absolute;top:0;left:0;" loading="lazy"></iframe>
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title">自在空间</span>
+          <span class="gallery-caption-subtitle">品牌宣传片</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="promo">
+        <iframe src="https://player.bilibili.com/player.html?isOutside=true&bvid=BV15V4y1N79T&p=1&muted=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="width:100%;height:100%;border:none;position:absolute;top:0;left:0;" loading="lazy"></iframe>
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title">免费午餐特派志愿者</span>
+          <span class="gallery-caption-subtitle">法国人的中国公益之旅</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="promo">
+        <iframe src="https://player.bilibili.com/player.html?isOutside=true&aid=727446490&bvid=BV1PS4y1q7bx&cid=744538165&p=1&muted=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="width:100%;height:100%;border:none;position:absolute;top:0;left:0;" loading="lazy"></iframe>
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title">四川免费午餐</span>
+          <span class="gallery-caption-subtitle">孩子们到底吃什么？</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="promo">
+        <iframe src="https://player.bilibili.com/player.html?isOutside=true&aid=768883115&bvid=BV1pr4y1t7E1&cid=714809973&p=1&muted=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="width:100%;height:100%;border:none;position:absolute;top:0;left:0;" loading="lazy"></iframe>
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title">早衰症孩子</span>
+          <span class="gallery-caption-subtitle">想陪妈妈变老</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="promo">
+        <iframe src="https://player.bilibili.com/player.html?isOutside=true&aid=95420112&bvid=BV1DE411K7f2&cid=162903184&p=1&muted=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="width:100%;height:100%;border:none;position:absolute;top:0;left:0;" loading="lazy"></iframe>
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title">亲亲禾苗 营养一餐</span>
+          <span class="gallery-caption-subtitle">上海仁德基金会公益项目</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="promo">
+        <iframe src="https://player.bilibili.com/player.html?isOutside=true&aid=11345562&bvid=BV1Fx411h7MD&cid=18762637&p=1&muted=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="width:100%;height:100%;border:none;position:absolute;top:0;left:0;" loading="lazy"></iframe>
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title">来自大山 · 侗族大歌</span>
+          <span class="gallery-caption-subtitle">2017公益短片</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="promo">
+        <iframe src="https://player.bilibili.com/player.html?isOutside=true&aid=11840787&bvid=BV1Rx411B7M1&cid=19553800&p=1&muted=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="width:100%;height:100%;border:none;position:absolute;top:0;left:0;" loading="lazy"></iframe>
+        <div class="gallery-item-caption">
+          <span class="gallery-caption-title">放飞梦想</span>
+          <span class="gallery-caption-subtitle">2017流动儿童公益短片</span>
+        </div>
+      </div>
       <!-- More Events (jlp, jr) -->
     </div>
   </div>
