@@ -1136,6 +1136,10 @@ body:has(.nav.nav-hero) .login-btn-fixed:hover {
   grid-template-columns: repeat(4, 1fr);
   gap: var(--space-md);
 }
+.honors-grid.collapsed {
+  max-height: calc(6 * (1em + var(--space-md) * 2 + 120px));
+  overflow: hidden;
+}
 
 .honor-card {
   background: #ffffff;
@@ -2168,7 +2172,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <p class="section-subtitle" data-i18n="honors_subtitle">从纪录片金奖到国际电影节评委会特别奖——自在空间历年荣誉精选</p>
     </div>
 
-    <div class="honors-grid reveal reveal-delay-1" id="honorsGrid">
+    <div class="honors-grid reveal reveal-delay-1 collapsed" id="honorsGrid">
             <div class="honor-card" data-honor-index="0">
               <div class="honor-year">—</div>
               <div class="honor-work">《花儿哪里去了》</div>
@@ -2780,7 +2784,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <p class="section-subtitle" data-i18n="shorts_subtitle">用短平快的方式，记录每一个值得被看见的瞬间</p>
     </div>
     <div class="shorts-grid reveal reveal-delay-1" style="display:flex;gap:var(--space-md);overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:8px;margin:0 calc(-50vw + 50%);width:100vw;">
-      <div class="short-card" style="flex-shrink:0;scroll-snap-align:start;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-glass-md);width:300px;aspect-ratio:9/16;">
+      <div class="short-card" style="flex-shrink:0;scroll-snap-align:start;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-glass-md);width:300px;aspect-ratio:9/21;">
         <iframe
           src="https://open.douyin.com/player/video?vid=7485645279610293540&autoplay=0"
           width="100%"
@@ -2793,25 +2797,25 @@ document.addEventListener('DOMContentLoaded', function() {
           style="display:block;border:none;">
         </iframe>
       </div>
-      <div class="short-card" style="flex-shrink:0;scroll-snap-align:start;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-glass-md);width:300px;aspect-ratio:9/16;">
+      <div class="short-card" style="flex-shrink:0;scroll-snap-align:start;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-glass-md);width:300px;aspect-ratio:9/21;">
         <iframe src="https://open.douyin.com/player/video?vid=7488677472729451795&autoplay=0" width="100%" height="100%" frameborder="0" allowfullscreen loading="lazy" scrolling="no" style="display:block;border:none;"></iframe>
       </div>
-      <div class="short-card" style="flex-shrink:0;scroll-snap-align:start;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-glass-md);width:300px;aspect-ratio:9/16;">
+      <div class="short-card" style="flex-shrink:0;scroll-snap-align:start;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-glass-md);width:300px;aspect-ratio:9/21;">
         <iframe src="https://open.douyin.com/player/video?vid=7651827099761675560&autoplay=0" width="100%" height="100%" frameborder="0" allowfullscreen loading="lazy" scrolling="no" style="display:block;border:none;"></iframe>
       </div>
-      <div class="short-card" style="flex-shrink:0;scroll-snap-align:start;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-glass-md);width:300px;aspect-ratio:9/16;">
+      <div class="short-card" style="flex-shrink:0;scroll-snap-align:start;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-glass-md);width:300px;aspect-ratio:9/21;">
         <iframe src="https://open.douyin.com/player/video?vid=7647819927881125161&autoplay=0" width="100%" height="100%" frameborder="0" allowfullscreen loading="lazy" scrolling="no" style="display:block;border:none;"></iframe>
       </div>
-      <div class="short-card" style="flex-shrink:0;scroll-snap-align:start;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-glass-md);width:300px;aspect-ratio:9/16;">
+      <div class="short-card" style="flex-shrink:0;scroll-snap-align:start;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-glass-md);width:300px;aspect-ratio:9/21;">
         <iframe src="https://open.douyin.com/player/video?vid=7645216810022800692&autoplay=0" width="100%" height="100%" frameborder="0" allowfullscreen loading="lazy" scrolling="no" style="display:block;border:none;"></iframe>
       </div>
-      <div class="short-card" style="flex-shrink:0;scroll-snap-align:start;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-glass-md);width:300px;aspect-ratio:9/16;">
+      <div class="short-card" style="flex-shrink:0;scroll-snap-align:start;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-glass-md);width:300px;aspect-ratio:9/21;">
         <iframe src="https://open.douyin.com/player/video?vid=7618916011735010570&autoplay=0" width="100%" height="100%" frameborder="0" allowfullscreen loading="lazy" scrolling="no" style="display:block;border:none;"></iframe>
       </div>
-      <div class="short-card" style="flex-shrink:0;scroll-snap-align:start;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-glass-md);width:300px;aspect-ratio:9/16;">
+      <div class="short-card" style="flex-shrink:0;scroll-snap-align:start;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-glass-md);width:300px;aspect-ratio:9/21;">
         <iframe src="https://open.douyin.com/player/video?vid=7613672357424696586&autoplay=0" width="100%" height="100%" frameborder="0" allowfullscreen loading="lazy" scrolling="no" style="display:block;border:none;"></iframe>
       </div>
-      <div class="short-card" style="flex-shrink:0;scroll-snap-align:start;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-glass-md);width:300px;aspect-ratio:9/16;">
+      <div class="short-card" style="flex-shrink:0;scroll-snap-align:start;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-glass-md);width:300px;aspect-ratio:9/21;">
         <iframe src="https://open.douyin.com/player/video?vid=7601184057694768393&autoplay=0" width="100%" height="100%" frameborder="0" allowfullscreen loading="lazy" scrolling="no" style="display:block;border:none;"></iframe>
       </div>
     </div>
@@ -2913,7 +2917,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <a href="zizai-install://XFwxOTIuMTY4LjEuMjAwXHNoYXJlNFx6aXphaV9zaGFyZVzmlrB6aXphaS56aXA=" class="download-btn" id="btnZizaiAgent" style="display:inline-flex;align-items:center;gap:10px;padding:16px 40px;font-size:var(--text-md);font-weight:500;border-radius:100px;border:0.5px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;box-shadow:0 2px 12px oklch(0% 0 0 / 0.15);transition:all 300ms var(--ease-out-expo);text-decoration:none;" onmouseover="this.style.background='var(--accent-light)';this.style.boxShadow='0 4px 20px oklch(0% 0 0 / 0.2)';this.style.transform='translateY(-2px)';" onmouseout="this.style.background='var(--accent)';this.style.boxShadow='0 2px 12px oklch(0% 0 0 / 0.15)';this.style.transform='translateY(0)';">
           <span style="font-size:1.3em;">&#129302;</span> 自在Agent
         </a>
-        <a href="PPT/自在新PPT-0519（完整版）.pptx" download class="download-btn" id="btnPPT" style="display:inline-flex;align-items:center;gap:10px;padding:16px 40px;font-size:var(--text-md);font-weight:500;border-radius:100px;border:0.5px solid var(--border-subtle);background:var(--glass-bg);backdrop-filter:var(--glass-blur-light);-webkit-backdrop-filter:var(--glass-blur-light);color:var(--text-primary);cursor:pointer;box-shadow:var(--shadow-glass-sm);transition:all 300ms var(--ease-out-expo);text-decoration:none;" onmouseover="this.style.background='var(--glass-bg-strong)';this.style.boxShadow='var(--shadow-glass-md)';this.style.transform='translateY(-2px)';" onmouseout="this.style.background='var(--glass-bg)';this.style.boxShadow='var(--shadow-glass-sm)';this.style.transform='translateY(0)';">
+        <a href="PPT/自在新PPT-0519（完整版）.pdf" download class="download-btn" id="btnPPT" style="display:inline-flex;align-items:center;gap:10px;padding:16px 40px;font-size:var(--text-md);font-weight:500;border-radius:100px;border:0.5px solid var(--border-subtle);background:var(--glass-bg);backdrop-filter:var(--glass-blur-light);-webkit-backdrop-filter:var(--glass-blur-light);color:var(--text-primary);cursor:pointer;box-shadow:var(--shadow-glass-sm);transition:all 300ms var(--ease-out-expo);text-decoration:none;" onmouseover="this.style.background='var(--glass-bg-strong)';this.style.boxShadow='var(--shadow-glass-md)';this.style.transform='translateY(-2px)';" onmouseout="this.style.background='var(--glass-bg)';this.style.boxShadow='var(--shadow-glass-sm)';this.style.transform='translateY(0)';">
           <span style="font-size:1.3em;">&#128196;</span> 自在PPT下载
         </a>
       </div>
