@@ -245,7 +245,7 @@
     document.getElementById('settingsName').value = userData.name || '';
     if (userData.avatar) {
       var img = document.getElementById('avatarPreviewImg');
-      img.src = userData.avatar;
+      img.src = userData.avatar.replace(/^img\//, '../img/');
       img.style.display = 'block';
       document.getElementById('avatarPreviewPlaceholder').style.display = 'none';
     }

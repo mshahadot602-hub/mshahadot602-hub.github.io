@@ -128,7 +128,7 @@
     document.getElementById('profileName').textContent = userData.name;
     if (userData.avatar) {
       var img = document.getElementById('avatarImg');
-      img.src = userData.avatar;
+      img.src = userData.avatar.replace(/^img\//, '../img/');
       img.style.display = 'block';
       document.getElementById('avatarPlaceholder').style.display = 'none';
     }
