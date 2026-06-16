@@ -84,7 +84,7 @@
   --space-xl: clamp(3rem, 6vw, 5rem);
   --space-2xl: clamp(5rem, 10vw, 8rem);
 
-  --max-width: 1200px;
+  --max-width: 1400px;
   --content-width: 780px;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -1951,7 +1951,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <a href="#contact" class="nav-cta" data-i18n="nav_cta">联系我们</a>
     </div>
     <div class="lang-switcher" style="margin-left:var(--space-md);flex-shrink:0;">
-      <button class="lang-btn" id="langBtn" onclick="var d=document.getElementById('langDropdown');d.style.display=(d.style.display==='block'?'none':'block');" aria-label="切换语言" style="background:transparent;border:0.5px solid var(--border-subtle);border-radius:var(--radius-sm);padding:8px 16px;cursor:pointer;font-size:var(--text-sm);display:inline-flex;align-items:center;gap:6px;white-space:nowrap;min-width:100px;justify-content:space-between;">
+      <button class="lang-btn" id="langBtn" onclick="var d=document.getElementById('langDropdown');d.style.display=d.style.display==='block'?'none':'block'" aria-label="切换语言" style="background:transparent;border:0.5px solid var(--border-subtle);border-radius:var(--radius-sm);padding:8px 16px;cursor:pointer;font-size:var(--text-sm);display:inline-flex;align-items:center;gap:6px;white-space:nowrap;min-width:100px;justify-content:space-between;">
         <span id="langBtnText">中文</span>
         <svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 3l3 4 3-4" stroke="currentColor" fill="none" stroke-width="1.2"/></svg>
       </button>
