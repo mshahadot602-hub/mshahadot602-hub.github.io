@@ -1928,7 +1928,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <nav class="nav" id="nav">
   <div class="nav-inner">
     <a href="#hero" class="nav-logo">
-      <img id="navLogo" src="img/img-header-logo.png" alt="自在空间" width="32" height="32" data-i18n-title="nav_logo_alt" data-original-src="img/img-header-logo.png" data-white-src="img/img-header-logo-w.png" onerror="this.style.opacity='0.3'">
+      <img id="navLogo" src="img/img-header-logo.png" alt="" width="32" height="32" data-original-src="img/img-header-logo.png" data-white-src="img/img-header-logo-w.png" onerror="this.style.display='none'" style="flex-shrink:0;"><span style="font-family:var(--font-display);font-size:var(--text-md);font-weight:600;white-space:nowrap;color:inherit;">自在空间</span>
     </a>
     <div class="nav-links" id="navLinks">
       <a href="#about" class="nav-link" data-i18n="nav_about">关于我们</a>
@@ -1944,7 +1944,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <a href="#contact" class="nav-cta" data-i18n="nav_cta">联系我们</a>
     </div>
     <div class="lang-switcher" style="margin-left:var(--space-md);flex-shrink:0;">
-      <button class="lang-btn" id="langBtn" onclick="event.stopPropagation();var d=document.getElementById('langDropdown');d.style.display=(d.style.display==='block'?'none':'block');" aria-label="切换语言" style="background:transparent;border:0.5px solid var(--border-subtle);border-radius:var(--radius-sm);padding:8px 16px;cursor:pointer;font-size:var(--text-sm);display:inline-flex;align-items:center;gap:6px;white-space:nowrap;min-width:90px;justify-content:space-between;">
+      <button class="lang-btn" id="langBtn" onclick="var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';" aria-label="切换语言" style="background:transparent;border:0.5px solid var(--border-subtle);border-radius:var(--radius-sm);padding:8px 16px;cursor:pointer;font-size:var(--text-sm);display:inline-flex;align-items:center;gap:6px;white-space:nowrap;min-width:90px;justify-content:space-between;">
         <span id="langBtnText">中文</span>
         <svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 3l3 4 3-4" stroke="currentColor" fill="none" stroke-width="1.2"/></svg>
       </button>
