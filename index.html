@@ -1905,7 +1905,7 @@ body:has(.nav.nav-hero) #loginBtnFixed:hover {
 
 
 <!-- i18n multilingual support -->
-<script src="i18n.js" defer></script>
+<script src="i18n.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   var dd = document.getElementById('langDropdown');
@@ -1928,7 +1928,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <nav class="nav" id="nav">
   <div class="nav-inner">
     <a href="#hero" class="nav-logo">
-      <img id="navLogo" src="img/img-header-logo.png" alt="" width="32" height="32" data-original-src="img/img-header-logo.png" data-white-src="img/img-header-logo-w.png" onerror="this.style.display='none'" style="flex-shrink:0;"><span style="font-family:var(--font-display);font-size:var(--text-md);font-weight:600;white-space:nowrap;color:inherit;">自在空间</span>
+      <img id="navLogo" src="img/img-header-logo.png" alt="自在空间" width="32" height="32" data-original-src="img/img-header-logo.png" data-white-src="img/img-header-logo-w.png" onerror="this.style.display='none'">
     </a>
     <div class="nav-links" id="navLinks">
       <a href="#about" class="nav-link" data-i18n="nav_about">关于我们</a>
@@ -1944,24 +1944,24 @@ document.addEventListener('DOMContentLoaded', function() {
       <a href="#contact" class="nav-cta" data-i18n="nav_cta">联系我们</a>
     </div>
     <div class="lang-switcher" style="margin-left:var(--space-md);flex-shrink:0;">
-      <button class="lang-btn" id="langBtn" onclick="var d=this.nextElementSibling;d.style.display=d.style.display==='block'?'none':'block';" aria-label="切换语言" style="background:transparent;border:0.5px solid var(--border-subtle);border-radius:var(--radius-sm);padding:8px 16px;cursor:pointer;font-size:var(--text-sm);display:inline-flex;align-items:center;gap:6px;white-space:nowrap;min-width:90px;justify-content:space-between;">
+      <button class="lang-btn" id="langBtn" onclick="this.nextElementSibling.classList.toggle('show')" aria-label="切换语言" style="background:transparent;border:0.5px solid var(--border-subtle);border-radius:var(--radius-sm);padding:8px 16px;cursor:pointer;font-size:var(--text-sm);display:inline-flex;align-items:center;gap:6px;white-space:nowrap;min-width:90px;justify-content:space-between;">
         <span id="langBtnText">中文</span>
         <svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 3l3 4 3-4" stroke="currentColor" fill="none" stroke-width="1.2"/></svg>
       </button>
       <div class="lang-dropdown" id="langDropdown" style="display:none;position:absolute;top:100%;right:0;margin-top:16px;background:rgba(255,255,255,0.42);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:1px solid rgba(255,255,255,0.35);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.12);z-index:1002;min-width:220px;padding:4px;">
-        <a href="#" data-lang="zh" onclick="applyLanguage('zh');document.getElementById('langDropdown').style.display='none';return false;">🇨🇳 中文</a>
-        <a href="#" data-lang="en" onclick="applyLanguage('en');document.getElementById('langDropdown').style.display='none';return false;">🇺🇸 English</a>
-        <a href="#" data-lang="ja" onclick="applyLanguage('ja');document.getElementById('langDropdown').style.display='none';return false;">🇯🇵 日本語</a>
-        <a href="#" data-lang="fr" onclick="applyLanguage('fr');document.getElementById('langDropdown').style.display='none';return false;">🇫🇷 Français</a>
-        <a href="#" data-lang="ru" onclick="applyLanguage('ru');document.getElementById('langDropdown').style.display='none';return false;">🇷🇺 Русский</a>
-        <a href="#" data-lang="he" onclick="applyLanguage('he');document.getElementById('langDropdown').style.display='none';return false;">🇮🇱 עברית</a>
-        <a href="#" data-lang="ar" onclick="applyLanguage('ar');document.getElementById('langDropdown').style.display='none';return false;">🇸🇦 العربية</a>
-        <a href="#" data-lang="es" onclick="applyLanguage('es');document.getElementById('langDropdown').style.display='none';return false;">🇪🇸 Español</a>
-        <a href="#" data-lang="de" onclick="applyLanguage('de');document.getElementById('langDropdown').style.display='none';return false;">🇩🇪 Deutsch</a>
-        <a href="#" data-lang="ko" onclick="applyLanguage('ko');document.getElementById('langDropdown').style.display='none';return false;">🇰🇷 한국어</a>
-        <a href="#" data-lang="pt" onclick="applyLanguage('pt');document.getElementById('langDropdown').style.display='none';return false;">🇧🇷 Português</a>
-        <a href="#" data-lang="bo" onclick="applyLanguage('bo');document.getElementById('langDropdown').style.display='none';return false;">བོད་སྐད།</a>
-        <a href="#" data-lang="ug" onclick="applyLanguage('ug');document.getElementById('langDropdown').style.display='none';return false;">ئۇيغۇرچە</a>
+        <a href="#" data-lang="zh" onclick="applyLanguage('zh');document.getElementById('langDropdown').classList.remove('show');return false;">🇨🇳 中文</a>
+        <a href="#" data-lang="en" onclick="applyLanguage('en');document.getElementById('langDropdown').classList.remove('show');return false;">🇺🇸 English</a>
+        <a href="#" data-lang="ja" onclick="applyLanguage('ja');document.getElementById('langDropdown').classList.remove('show');return false;">🇯🇵 日本語</a>
+        <a href="#" data-lang="fr" onclick="applyLanguage('fr');document.getElementById('langDropdown').classList.remove('show');return false;">🇫🇷 Français</a>
+        <a href="#" data-lang="ru" onclick="applyLanguage('ru');document.getElementById('langDropdown').classList.remove('show');return false;">🇷🇺 Русский</a>
+        <a href="#" data-lang="he" onclick="applyLanguage('he');document.getElementById('langDropdown').classList.remove('show');return false;">🇮🇱 עברית</a>
+        <a href="#" data-lang="ar" onclick="applyLanguage('ar');document.getElementById('langDropdown').classList.remove('show');return false;">🇸🇦 العربية</a>
+        <a href="#" data-lang="es" onclick="applyLanguage('es');document.getElementById('langDropdown').classList.remove('show');return false;">🇪🇸 Español</a>
+        <a href="#" data-lang="de" onclick="applyLanguage('de');document.getElementById('langDropdown').classList.remove('show');return false;">🇩🇪 Deutsch</a>
+        <a href="#" data-lang="ko" onclick="applyLanguage('ko');document.getElementById('langDropdown').classList.remove('show');return false;">🇰🇷 한국어</a>
+        <a href="#" data-lang="pt" onclick="applyLanguage('pt');document.getElementById('langDropdown').classList.remove('show');return false;">🇧🇷 Português</a>
+        <a href="#" data-lang="bo" onclick="applyLanguage('bo');document.getElementById('langDropdown').classList.remove('show');return false;">བོད་སྐད།</a>
+        <a href="#" data-lang="ug" onclick="applyLanguage('ug');document.getElementById('langDropdown').classList.remove('show');return false;">ئۇيغۇرچە</a>
       </div>
     </div>
 
