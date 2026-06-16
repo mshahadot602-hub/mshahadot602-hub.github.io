@@ -123,7 +123,7 @@ const I18N = {
     ug: 'ھەمكارلاشقۇچىلار',
   },
   'nav_shorts': {
-    zh: '短视频',
+    zh: '苏导有点意思',
     en: 'Shorts',
     ja: 'ショート動画',
     fr: 'Courtes vidéos',
