@@ -13,7 +13,6 @@
         :root {
             --warm-hue: 60;
             --surface-0: oklch(98% 0.002 var(--warm-hue));
-            --surface-1: oklch(95% 0.003 var(--warm-hue));
             --text-primary: oklch(12% 0.003 var(--warm-hue));
             --text-secondary: oklch(35% 0.003 var(--warm-hue));
             --text-tertiary: oklch(52% 0.003 var(--warm-hue));
@@ -21,7 +20,6 @@
             --glass-blur: saturate(180%) blur(30px);
             --accent: oklch(18% 0.01 var(--warm-hue));
             --accent-hover: oklch(32% 0.01 var(--warm-hue));
-            --radius-sm: 12px;
         }
         body {
             font-family: 'Noto Sans SC','PingFang SC','Microsoft YaHei',system-ui,sans-serif;
@@ -43,10 +41,19 @@
             box-shadow: 0 8px 32px oklch(0% 0 0/0.08),0 2px 8px oklch(0% 0 0/0.04),inset 0 1px 0 oklch(100% 0 0/0.4);
             border: 1px solid oklch(100% 0 0/0.2);
         }
-        .logo { text-align: center; margin-bottom: 28px; }
-        .logo img { height: 52px; margin-bottom: 8px; }
-        .logo h1 { font-family: 'Noto Serif SC',serif; font-size: 24px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
-        .logo p { font-size: 14px; color: var(--text-secondary); opacity: 0.8; }
+        .logo-wrap { text-align: center; margin-bottom: 28px; }
+        .logo-circle {
+            width: 64px; height: 64px; border-radius: 50%; overflow: hidden;
+            margin: 0 auto 12px;
+            background: var(--surface-0);
+            border: 2px solid oklch(100% 0 0 / 0.3);
+            box-shadow: 0 2px 12px oklch(0% 0 0/0.06);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .logo-circle img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+        .logo-circle .logo-default { height: 38px; width: auto; }
+        .logo-wrap h1 { font-family: 'Noto Serif SC',serif; font-size: 24px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+        .logo-wrap p { font-size: 14px; color: var(--text-secondary); opacity: 0.8; }
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; font-size: 14px; font-weight: 500; color: var(--text-primary); margin-bottom: 8px; }
         .form-control {
@@ -54,7 +61,7 @@
             font-family: 'Noto Sans SC',sans-serif;
             background: oklch(100% 0 0/0.4);
             border: 1px solid oklch(88% 0.004 var(--warm-hue)/0.6);
-            border-radius: var(--radius-sm); color: var(--text-primary);
+            border-radius: 12px; color: var(--text-primary);
             transition: all 0.2s ease;
         }
         .form-control:focus {
@@ -62,23 +69,6 @@
             box-shadow: 0 0 0 3px oklch(18% 0.01 var(--warm-hue)/0.12);
             background: oklch(100% 0 0/0.6);
         }
-        .avatar-preview-wrap {
-            display: flex; align-items: center; gap: 14px;
-            margin-bottom: 20px; padding: 12px 16px;
-            border-radius: var(--radius-sm);
-            background: oklch(100% 0 0/0.2);
-            border: 1px solid oklch(88% 0.004 var(--warm-hue)/0.5);
-            min-height: 64px;
-        }
-        .avatar-preview-circle {
-            width: 48px; height: 48px; border-radius: 50%; overflow: hidden;
-            background: var(--surface-1); flex-shrink: 0;
-            display: flex; align-items: center; justify-content: center;
-            border: 1.5px solid oklch(100% 0 0/0.5);
-        }
-        .avatar-preview-circle img { width: 100%; height: 100%; object-fit: cover; display: none; }
-        .avatar-preview-placeholder { font-size: 24px; opacity: 0.3; }
-        .avatar-preview-text { font-size: 14px; color: var(--text-tertiary); flex: 1; }
         .btn {
             width: 100%; padding: 14px; font-size: 16px; font-weight: 500;
             font-family: 'Noto Sans SC',sans-serif;
@@ -90,40 +80,28 @@
         .btn:active { transform: translateY(0); }
         .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
         .links { margin-top: 24px; text-align: center; font-size: 14px; color: var(--text-secondary); }
-        .links a { color: var(--text-primary); text-decoration: none; font-weight: 500; transition: color 0.2s; }
-        .links a:hover { color: var(--accent-hover); text-decoration: underline; }
+        .links a { color: var(--text-primary); text-decoration: none; font-weight: 500; }
+        .links a:hover { text-decoration: underline; }
         .error-msg {
             background: oklch(80% 0.1 20/0.1); color: oklch(45% 0.2 20);
             padding: 12px 14px; border-radius: 8px; margin-bottom: 16px;
             font-size: 14px; display: none;
         }
-        .loading-spinner {
-            display: none; text-align: center; margin: 12px 0; color: var(--text-tertiary); font-size: 14px;
-        }
-        @media (max-width: 480px) {
-            .login-card { padding: 30px 20px; }
-            .logo img { height: 44px; }
-        }
+        .loading-spinner { display: none; text-align: center; margin: 12px 0; color: var(--text-tertiary); font-size: 14px; }
     </style>
 </head>
 <body>
     <div class="login-container">
         <div class="login-card">
-            <div class="logo">
-                <img src="../img/自在logo.png" alt="自在空间">
+            <div class="logo-wrap">
+                <div class="logo-circle" id="logoCircle">
+                    <img class="logo-default" src="../img/自在logo.png" alt="自在空间">
+                </div>
                 <h1>自在空间</h1>
                 <p>用科技赋能善因传播</p>
             </div>
 
             <div id="errorMsg" class="error-msg"></div>
-
-            <div class="avatar-preview-wrap" id="avatarWrap">
-                <div class="avatar-preview-circle">
-                    <img id="avatarImg" src="" alt="">
-                    <span class="avatar-preview-placeholder" id="avatarPH">&#128100;</span>
-                </div>
-                <span class="avatar-preview-text" id="avatarText">输入账号后显示头像</span>
-            </div>
 
             <form id="loginForm">
                 <div class="form-group">
@@ -148,107 +126,69 @@
 (function() {
     var names = ['deyi','xiaoxin','momo','范范','小李','小郑','Ying','大韦','千寻','苏导','乌龟','ee'];
     var userInput = document.getElementById('username');
-    var avatarImg = document.getElementById('avatarImg');
-    var avatarPH = document.getElementById('avatarPlaceholder') || document.getElementById('avatarPH');
-    var avatarText = document.getElementById('avatarText');
+    var logoCircle = document.getElementById('logoCircle');
+    var logoDefault = logoCircle.querySelector('.logo-default');
     var errorMsg = document.getElementById('errorMsg');
     var submitBtn = document.getElementById('submitBtn');
     var loading = document.getElementById('loading');
 
-    // Avatar preview on input
+    // Replace logo with avatar on valid input
     userInput.addEventListener('input', function() {
         var v = this.value.trim();
         if (names.includes(v)) {
-            avatarImg.src = '../img/tox/' + v + '.png';
-            avatarImg.style.display = 'block';
-            avatarPH.style.display = 'none';
-            avatarText.textContent = v;
-            avatarText.style.color = 'var(--text-primary)';
+            logoCircle.innerHTML = '<img src="../img/tox/' + v + '.png" alt="' + v + '" onerror="this.src=\'../img/自在logo.png\'">';
         } else {
-            avatarImg.style.display = 'none';
-            avatarPH.style.display = 'block';
-            avatarText.textContent = v ? '未识别的账号' : '输入账号后显示头像';
-            avatarText.style.color = v ? '#c0392b' : 'var(--text-tertiary)';
+            logoCircle.innerHTML = '<img class="logo-default" src="../img/自在logo.png" alt="自在空间">';
         }
     });
 
-    // Login form handler
+    // Login handler
     document.getElementById('loginForm').addEventListener('submit', function(e) {
         e.preventDefault();
         var username = userInput.value.trim();
         var password = document.getElementById('password').value;
         errorMsg.style.display = 'none';
 
-        if (!username || !password) {
-            showError('请填写账号和密码');
-            return;
-        }
+        if (!username || !password) { showError('请填写账号和密码'); return; }
 
-        // Local login
         if (names.includes(username) && password === 'zizai123') {
-            doLocalLogin(username);
-            return;
+            doLogin(username); return;
         }
 
-        // Try API login
-        loading.style.display = 'block';
-        submitBtn.disabled = true;
-
+        loading.style.display = 'block'; submitBtn.disabled = true;
         fetch('http://localhost:5000/api/user/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username: username, password: password })
         })
         .then(function(r) { return r.json(); })
         .then(function(data) {
-            loading.style.display = 'none';
-            submitBtn.disabled = false;
-            if (data.success) {
-                doLocalLogin(data.data.username || data.data.name || username);
-            } else {
-                showError(data.message || '账号或密码错误');
-            }
+            loading.style.display = 'none'; submitBtn.disabled = false;
+            if (data.success) { doLogin(data.data.username || data.data.name || username); }
+            else { showError(data.message || '账号或密码错误'); }
         })
         .catch(function() {
-            loading.style.display = 'none';
-            submitBtn.disabled = false;
-            showError('账号或密码错误（服务器未连接，请检查账号密码是否正确）');
+            loading.style.display = 'none'; submitBtn.disabled = false;
+            showError('账号或密码错误');
         });
     });
 
-    function doLocalLogin(name) {
+    function doLogin(name) {
         try {
             localStorage.setItem('zizai_user', JSON.stringify({
-                name: name,
-                avatar: '../img/tox/' + name + '.png',
-                bio: ''
+                name: name, avatar: '../img/tox/' + name + '.png', bio: ''
             }));
         } catch(e) {}
-
-        // Notify opener window
-        if (window.opener) {
-            try {
-                window.opener.dispatchEvent(new CustomEvent('zizai-login-changed'));
-            } catch(e) {}
-        }
-
-        showError('');
-        errorMsg.style.display = 'none';
         errorMsg.style.background = 'oklch(85% 0.1 140/0.1)';
         errorMsg.style.color = 'oklch(45% 0.2 140)';
-        errorMsg.textContent = '登录成功！正在跳转...';
+        errorMsg.textContent = '登录成功！正在返回首页...';
         errorMsg.style.display = 'block';
-
-        setTimeout(function() {
-            window.location.href = 'profile.html';
-        }, 1000);
+        setTimeout(function() { window.location.href = '../index.html'; }, 800);
     }
 
     function showError(msg) {
         errorMsg.style.background = 'oklch(80% 0.1 20/0.1)';
         errorMsg.style.color = 'oklch(45% 0.2 20)';
-        errorMsg.textContent = msg;
-        errorMsg.style.display = 'block';
+        errorMsg.textContent = msg; errorMsg.style.display = 'block';
     }
 })();
 </script>
