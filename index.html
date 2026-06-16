@@ -252,7 +252,7 @@ h1, h2, h3, h4 {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
+  gap: var(--space-lg);
   flex-wrap: nowrap;
   white-space: nowrap;
 }
@@ -1961,7 +1961,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <a href="#contact" class="nav-cta" data-i18n="nav_cta">联系我们</a>
     </div>
     <div class="lang-switcher" style="margin-left:var(--space-md);flex-shrink:0;">
-      <button class="lang-btn" id="langBtn" onclick="(function(){var d=document.getElementById('langDropdown');d.style.display=d.style.display==='block'?'none':'block';})()" aria-label="切换语言" style="background:transparent;border:0.5px solid var(--border-subtle);border-radius:var(--radius-sm);padding:8px 16px;cursor:pointer;font-size:var(--text-sm);display:inline-flex;align-items:center;gap:6px;white-space:nowrap;min-width:90px;justify-content:space-between;">
+      <button class="lang-btn" id="langBtn" onclick="var d=document.getElementById('langDropdown');if(d.style.display==='none'||d.style.display==='')d.style.display='block';else d.style.display='none';" aria-label="切换语言" style="background:transparent;border:0.5px solid var(--border-subtle);border-radius:var(--radius-sm);padding:8px 16px;cursor:pointer;font-size:var(--text-sm);display:inline-flex;align-items:center;gap:6px;white-space:nowrap;min-width:90px;justify-content:space-between;">
         <span id="langBtnText">中文</span>
         <svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 3l3 4 3-4" stroke="currentColor" fill="none" stroke-width="1.2"/></svg>
       </button>
@@ -1984,7 +1984,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     <!-- Login Button in Nav -->
     <div style="position:relative;margin-left:var(--space-sm);flex-shrink:0;">
-      <a href="user-system/login.html" id="loginBtnFixed" style="display:inline-flex;align-items:center;padding:9px 22px;background:var(--glass-bg);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:0.5px solid var(--border-glass);border-radius:100px;font-size:var(--text-sm);font-weight:500;color:var(--text-secondary);box-shadow:var(--shadow-glass-sm);text-decoration:none;white-space:nowrap;" data-i18n="nav_login">登录</a>
+      <a href="user-system/login.html" id="loginBtnFixed" style="display:inline-flex;align-items:center;padding:9px 22px;background:var(--glass-bg);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:0.5px solid var(--border-glass);border-radius:100px;font-size:var(--text-sm);font-weight:500;color:var(--text-secondary);box-shadow:var(--shadow-glass-sm);text-decoration:none;white-space:nowrap;" >登录</a>
       <div class="avatar-dropdown" id="avatarDropdown" style="display:none;position:absolute;top:100%;right:0;margin-top:8px;z-index:1003;background:rgba(255,255,255,0.42);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:1px solid rgba(255,255,255,0.35);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.12);min-width:180px;padding:4px;">
         <a href="user-system/profile.html" style="display:flex;align-items:center;gap:10px;padding:12px 18px;text-decoration:none;color:var(--text-primary);font-size:15px;white-space:nowrap;border-radius:10px;margin:2px 4px;">&#128100; 我的信息</a>
         <a href="javascript:void(0)" onclick="return false" style="display:flex;align-items:center;gap:10px;padding:12px 18px;text-decoration:none;color:#fff;font-size:15px;white-space:nowrap;cursor:not-allowed;border-radius:10px;margin:2px 4px;opacity:0.5;">&#9729; 我的网盘</a>
@@ -2944,6 +2944,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <a href="zizai-install://XFwxOTIuMTY4LjEuMjAwXHNoYXJlNFx6aXphaV9zaGFyZVzmlrB6aXphaS56aXA=" class="download-btn" id="btnZizaiAgent" style="display:inline-flex;align-items:center;gap:10px;padding:16px 40px;font-size:var(--text-md);font-weight:500;border-radius:100px;border:0.5px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;box-shadow:0 2px 12px oklch(0% 0 0 / 0.15);transition:all 300ms var(--ease-out-expo);text-decoration:none;" onmouseover="this.style.background='var(--accent-light)';this.style.boxShadow='0 4px 20px oklch(0% 0 0 / 0.2)';this.style.transform='translateY(-2px)';" onmouseout="this.style.background='var(--accent)';this.style.boxShadow='0 2px 12px oklch(0% 0 0 / 0.15)';this.style.transform='translateY(0)';">
           <span style="font-size:1.3em;">&#129302;</span> 自在Agent
         </a>
+        <a href="素材/自在相关logo水印素材.zip" download class="download-btn" style="display:inline-flex;align-items:center;gap:10px;padding:16px 40px;font-size:var(--text-md);font-weight:500;border-radius:100px;border:0.5px solid var(--border-subtle);background:var(--glass-bg);backdrop-filter:var(--glass-blur-light);-webkit-backdrop-filter:var(--glass-blur-light);color:var(--text-primary);cursor:pointer;box-shadow:var(--shadow-glass-sm);transition:all 300ms var(--ease-out-expo);text-decoration:none;" onmouseover="this.style.background='var(--glass-bg-strong)';this.style.boxShadow='var(--shadow-glass-md)';this.style.transform='translateY(-2px)';" onmouseout="this.style.background='var(--glass-bg)';this.style.boxShadow='var(--shadow-glass-sm)';this.style.transform='translateY(0)';"><span style="font-size:1.3em;">&#127912;</span> 自在LOGO水印素材</a>
         <a href="PPT/自在新PPT-0519（完整版）.pdf" download class="download-btn" id="btnPPT" style="display:inline-flex;align-items:center;gap:10px;padding:16px 40px;font-size:var(--text-md);font-weight:500;border-radius:100px;border:0.5px solid var(--border-subtle);background:var(--glass-bg);backdrop-filter:var(--glass-blur-light);-webkit-backdrop-filter:var(--glass-blur-light);color:var(--text-primary);cursor:pointer;box-shadow:var(--shadow-glass-sm);transition:all 300ms var(--ease-out-expo);text-decoration:none;" onmouseover="this.style.background='var(--glass-bg-strong)';this.style.boxShadow='var(--shadow-glass-md)';this.style.transform='translateY(-2px)';" onmouseout="this.style.background='var(--glass-bg)';this.style.boxShadow='var(--shadow-glass-sm)';this.style.transform='translateY(0)';">
           <span style="font-size:1.3em;">&#128196;</span> 自在PPT下载
         </a>
