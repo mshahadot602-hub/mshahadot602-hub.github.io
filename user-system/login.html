@@ -7,208 +7,102 @@
     <link rel="icon" type="image/png" href="../img/自在logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;350;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --warm-hue: 60;
             --surface-0: oklch(98% 0.002 var(--warm-hue));
             --surface-1: oklch(95% 0.003 var(--warm-hue));
-            --surface-2: oklch(90% 0.004 var(--warm-hue));
-            --surface-dark: oklch(12% 0.003 var(--warm-hue));
             --text-primary: oklch(12% 0.003 var(--warm-hue));
             --text-secondary: oklch(35% 0.003 var(--warm-hue));
+            --text-tertiary: oklch(52% 0.003 var(--warm-hue));
             --glass-bg: oklch(98% 0.002 var(--warm-hue) / 0.55);
             --glass-blur: saturate(180%) blur(30px);
-            --accent: oklch(65% 0.15 260);
-            --accent-hover: oklch(60% 0.18 260);
+            --accent: oklch(18% 0.01 var(--warm-hue));
+            --accent-hover: oklch(32% 0.01 var(--warm-hue));
+            --radius-sm: 12px;
         }
-
         body {
-            font-family: 'Noto Sans SC', sans-serif;
+            font-family: 'Noto Sans SC','PingFang SC','Microsoft YaHei',system-ui,sans-serif;
             background: var(--surface-0);
             color: var(--text-primary);
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             padding: 20px;
-            background-image: 
-                radial-gradient(circle at 20% 80%, oklch(90% 0.01 var(--warm-hue) / 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, oklch(85% 0.01 var(--warm-hue) / 0.08) 0%, transparent 50%);
+            background-image:
+                radial-gradient(circle at 20% 80%, oklch(90% 0.01 var(--warm-hue)/0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, oklch(85% 0.01 var(--warm-hue)/0.08) 0%, transparent 50%);
         }
-
-        .login-container {
-            width: 100%;
-            max-width: 400px;
-        }
-
+        .login-container { width: 100%; max-width: 400px; }
         .login-card {
             background: var(--glass-bg);
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
-            border-radius: 24px;
-            padding: 40px;
-            box-shadow: 
-                0 8px 32px oklch(0% 0 0 / 0.08),
-                0 2px 8px oklch(0% 0 0 / 0.04),
-                inset 0 1px 0 oklch(100% 0 0 / 0.4);
-            border: 1px solid oklch(100% 0 0 / 0.2);
+            border-radius: 28px; padding: 40px;
+            box-shadow: 0 8px 32px oklch(0% 0 0/0.08),0 2px 8px oklch(0% 0 0/0.04),inset 0 1px 0 oklch(100% 0 0/0.4);
+            border: 1px solid oklch(100% 0 0/0.2);
         }
-
-        .logo {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-
-        .logo img {
-            height: 60px;
-            margin-bottom: 12px;
-        }
-
-        .logo h1 {
-            font-family: 'Noto Serif SC', serif;
-            font-size: 24px;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 4px;
-        }
-
-        .logo p {
-            font-size: 14px;
-            color: var(--text-secondary);
-            opacity: 0.8;
-        }
-
-        .form-group {
-            margin-bottom: 24px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-        }
-
+        .logo { text-align: center; margin-bottom: 28px; }
+        .logo img { height: 52px; margin-bottom: 8px; }
+        .logo h1 { font-family: 'Noto Serif SC',serif; font-size: 24px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+        .logo p { font-size: 14px; color: var(--text-secondary); opacity: 0.8; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 14px; font-weight: 500; color: var(--text-primary); margin-bottom: 8px; }
         .form-control {
-            width: 100%;
-            padding: 12px 16px;
-            font-size: 16px;
-            font-family: 'Noto Sans SC', sans-serif;
-            background: oklch(100% 0 0 / 0.4);
-            border: 1px solid oklch(88% 0.004 var(--warm-hue) / 0.6);
-            border-radius: 12px;
-            color: var(--text-primary);
+            width: 100%; padding: 12px 16px; font-size: 16px;
+            font-family: 'Noto Sans SC',sans-serif;
+            background: oklch(100% 0 0/0.4);
+            border: 1px solid oklch(88% 0.004 var(--warm-hue)/0.6);
+            border-radius: var(--radius-sm); color: var(--text-primary);
             transition: all 0.2s ease;
         }
-
         .form-control:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px oklch(65% 0.15 260 / 0.15);
-            background: oklch(100% 0 0 / 0.6);
+            outline: none; border-color: var(--accent);
+            box-shadow: 0 0 0 3px oklch(18% 0.01 var(--warm-hue)/0.12);
+            background: oklch(100% 0 0/0.6);
         }
-
+        .avatar-preview-wrap {
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 20px; padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            background: oklch(100% 0 0/0.2);
+            border: 1px solid oklch(88% 0.004 var(--warm-hue)/0.5);
+            min-height: 64px;
+        }
+        .avatar-preview-circle {
+            width: 48px; height: 48px; border-radius: 50%; overflow: hidden;
+            background: var(--surface-1); flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            border: 1.5px solid oklch(100% 0 0/0.5);
+        }
+        .avatar-preview-circle img { width: 100%; height: 100%; object-fit: cover; display: none; }
+        .avatar-preview-placeholder { font-size: 24px; opacity: 0.3; }
+        .avatar-preview-text { font-size: 14px; color: var(--text-tertiary); flex: 1; }
         .btn {
-            width: 100%;
-            padding: 14px;
-            font-size: 16px;
-            font-weight: 500;
-            font-family: 'Noto Sans SC', sans-serif;
-            background: var(--accent);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
+            width: 100%; padding: 14px; font-size: 16px; font-weight: 500;
+            font-family: 'Noto Sans SC',sans-serif;
+            background: var(--accent); color: #fff;
+            border: none; border-radius: 100px; cursor: pointer;
             transition: all 0.2s ease;
         }
-
-        .btn:hover {
-            background: var(--accent-hover);
-            transform: translateY(-1px);
+        .btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+        .btn:active { transform: translateY(0); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .links { margin-top: 24px; text-align: center; font-size: 14px; color: var(--text-secondary); }
+        .links a { color: var(--text-primary); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+        .links a:hover { color: var(--accent-hover); text-decoration: underline; }
+        .error-msg {
+            background: oklch(80% 0.1 20/0.1); color: oklch(45% 0.2 20);
+            padding: 12px 14px; border-radius: 8px; margin-bottom: 16px;
+            font-size: 14px; display: none;
         }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        .links {
-            margin-top: 24px;
-            text-align: center;
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-
-        .links a {
-            color: var(--accent);
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        .links a:hover {
-            color: var(--accent-hover);
-            text-decoration: underline;
-        }
-
-        .error-message {
-            background: oklch(80% 0.1 20 / 0.1);
-            color: oklch(50% 0.2 20);
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            display: none;
-        }
-
-        .success-message {
-            background: oklch(85% 0.1 140 / 0.1);
-            color: oklch(50% 0.2 140);
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            display: none;
-        }
-
-        .loading {
-            display: none;
-            text-align: center;
-            margin: 20px 0;
-        }
-
         .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid oklch(90% 0.004 var(--warm-hue));
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+            display: none; text-align: center; margin: 12px 0; color: var(--text-tertiary); font-size: 14px;
         }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
         @media (max-width: 480px) {
-            .login-card {
-                padding: 30px 20px;
-            }
-            
-            .logo img {
-                height: 50px;
-            }
-            
-            .logo h1 {
-                font-size: 20px;
-            }
+            .login-card { padding: 30px 20px; }
+            .logo img { height: 44px; }
         }
     </style>
 </head>
@@ -221,136 +115,142 @@
                 <p>用科技赋能善因传播</p>
             </div>
 
-            <div id="errorMessage" class="error-message"></div>
-            <div id="successMessage" class="success-message"></div>
+            <div id="errorMsg" class="error-msg"></div>
+
+            <div class="avatar-preview-wrap" id="avatarWrap">
+                <div class="avatar-preview-circle">
+                    <img id="avatarImg" src="" alt="">
+                    <span class="avatar-preview-placeholder" id="avatarPH">&#128100;</span>
+                </div>
+                <span class="avatar-preview-text" id="avatarText">输入账号后显示头像</span>
+            </div>
 
             <form id="loginForm">
                 <div class="form-group">
-                    <label for="username">用户名或邮箱</label>
-                    <input type="text" id="username" class="form-control" required>
+                    <label for="username">账号</label>
+                    <input type="text" id="username" class="form-control" placeholder="请输入账号" required>
                 </div>
-
                 <div class="form-group">
                     <label for="password">密码</label>
-                    <input type="password" id="password" class="form-control" required>
+                    <input type="password" id="password" class="form-control" placeholder="请输入密码" required>
                 </div>
-
-                <div class="loading" id="loading">
-                    <div class="loading-spinner"></div>
-                    <div style="margin-top: 8px; color: var(--text-secondary);">登录中...</div>
-                </div>
-
+                <div class="loading-spinner" id="loading">登录中...</div>
                 <button type="submit" class="btn" id="submitBtn">登录</button>
             </form>
 
             <div class="links">
-                <p>还没有账户？ <a href="register.html">立即注册</a></p>
                 <p><a href="../index.html">返回首页</a></p>
             </div>
         </div>
     </div>
 
-    <script>
-        // API基础URL - 根据实际后端部署地址修改
-        const API_BASE_URL = 'http://localhost:5000/api';
-        // const API_BASE_URL = 'https://your-domain.com/api'; // 生产环境
+<script>
+(function() {
+    var names = ['deyi','xiaoxin','momo','范范','小李','小郑','Ying','大韦','千寻','苏导','乌龟','ee'];
+    var userInput = document.getElementById('username');
+    var avatarImg = document.getElementById('avatarImg');
+    var avatarPH = document.getElementById('avatarPlaceholder') || document.getElementById('avatarPH');
+    var avatarText = document.getElementById('avatarText');
+    var errorMsg = document.getElementById('errorMsg');
+    var submitBtn = document.getElementById('submitBtn');
+    var loading = document.getElementById('loading');
 
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value;
-            
-            // 显示加载状态
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('submitBtn').disabled = true;
-            hideMessages();
-            
-            try {
-                const response = await fetch(`${API_BASE_URL}/user/login`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        username: username,
-                        password: password
-                    })
-                });
-                
-                const data = await response.json();
-                
-                if (data.success) {
-                    // 保存用户信息和token
-                    localStorage.setItem('user', JSON.stringify(data.data));
-                    localStorage.setItem('token', data.token);
-                    
-                    // 同步到 zizai_user 供首页使用
-                    try {
-                        var zizaiName = data.data.username || data.data.name || username;
-                        localStorage.setItem('zizai_user', JSON.stringify({
-                            name: zizaiName,
-                            avatar: '../img/tox/' + zizaiName + '.png'
-                        }));
-                    } catch(e) {}
-                    
-                    showSuccess('登录成功！正在跳转...');
-                    
-                    // 根据用户角色跳转到不同页面
-                    setTimeout(() => {
-                        if (data.data.is_admin) {
-                            window.location.href = 'admin.html';
-                        } else {
-                            window.location.href = 'profile.html';
-                        }
-                    }, 1500);
-                    
-                } else {
-                    showError(data.message || '登录失败，请检查用户名和密码');
-                }
-            } catch (error) {
-                console.error('登录错误:', error);
-                showError('网络错误，请稍后重试');
-            } finally {
-                // 隐藏加载状态
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('submitBtn').disabled = false;
+    // Avatar preview on input
+    userInput.addEventListener('input', function() {
+        var v = this.value.trim();
+        if (names.includes(v)) {
+            avatarImg.src = '../img/tox/' + v + '.png';
+            avatarImg.style.display = 'block';
+            avatarPH.style.display = 'none';
+            avatarText.textContent = v;
+            avatarText.style.color = 'var(--text-primary)';
+        } else {
+            avatarImg.style.display = 'none';
+            avatarPH.style.display = 'block';
+            avatarText.textContent = v ? '未识别的账号' : '输入账号后显示头像';
+            avatarText.style.color = v ? '#c0392b' : 'var(--text-tertiary)';
+        }
+    });
+
+    // Login form handler
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var username = userInput.value.trim();
+        var password = document.getElementById('password').value;
+        errorMsg.style.display = 'none';
+
+        if (!username || !password) {
+            showError('请填写账号和密码');
+            return;
+        }
+
+        // Local login
+        if (names.includes(username) && password === 'zizai123') {
+            doLocalLogin(username);
+            return;
+        }
+
+        // Try API login
+        loading.style.display = 'block';
+        submitBtn.disabled = true;
+
+        fetch('http://localhost:5000/api/user/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: username, password: password })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            loading.style.display = 'none';
+            submitBtn.disabled = false;
+            if (data.success) {
+                doLocalLogin(data.data.username || data.data.name || username);
+            } else {
+                showError(data.message || '账号或密码错误');
             }
+        })
+        .catch(function() {
+            loading.style.display = 'none';
+            submitBtn.disabled = false;
+            showError('账号或密码错误（服务器未连接，请检查账号密码是否正确）');
         });
+    });
 
-        function showError(message) {
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
+    function doLocalLogin(name) {
+        try {
+            localStorage.setItem('zizai_user', JSON.stringify({
+                name: name,
+                avatar: '../img/tox/' + name + '.png',
+                bio: ''
+            }));
+        } catch(e) {}
+
+        // Notify opener window
+        if (window.opener) {
+            try {
+                window.opener.dispatchEvent(new CustomEvent('zizai-login-changed'));
+            } catch(e) {}
         }
 
-        function showSuccess(message) {
-            const successDiv = document.getElementById('successMessage');
-            successDiv.textContent = message;
-            successDiv.style.display = 'block';
-        }
+        showError('');
+        errorMsg.style.display = 'none';
+        errorMsg.style.background = 'oklch(85% 0.1 140/0.1)';
+        errorMsg.style.color = 'oklch(45% 0.2 140)';
+        errorMsg.textContent = '登录成功！正在跳转...';
+        errorMsg.style.display = 'block';
 
-        function hideMessages() {
-            document.getElementById('errorMessage').style.display = 'none';
-            document.getElementById('successMessage').style.display = 'none';
-        }
+        setTimeout(function() {
+            window.location.href = 'profile.html';
+        }, 1000);
+    }
 
-        // 检查是否已登录
-        function checkLoginStatus() {
-            const token = localStorage.getItem('token');
-            if (token) {
-                // 如果已登录，根据角色跳转
-                const user = JSON.parse(localStorage.getItem('user') || '{}');
-                if (user.is_admin) {
-                    window.location.href = 'admin.html';
-                } else {
-                    window.location.href = 'profile.html';
-                }
-            }
-        }
-
-        // 页面加载时检查登录状态
-        window.addEventListener('load', checkLoginStatus);
-    </script>
+    function showError(msg) {
+        errorMsg.style.background = 'oklch(80% 0.1 20/0.1)';
+        errorMsg.style.color = 'oklch(45% 0.2 20)';
+        errorMsg.textContent = msg;
+        errorMsg.style.display = 'block';
+    }
+})();
+</script>
 </body>
 </html>
