@@ -951,6 +951,19 @@ body:has(.nav.nav-hero) .login-btn-fixed:hover {
   border-color: var(--accent);
 }
 
+/* Glass scrollbar for shorts */
+.shorts-grid::-webkit-scrollbar { height: 6px; }
+.shorts-grid::-webkit-scrollbar-track { background: transparent; margin: 0 20px; }
+.shorts-grid::-webkit-scrollbar-thumb {
+  background: oklch(100% 0 0 / 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 10px;
+  border: 1px solid oklch(100% 0 0 / 0.15);
+}
+.shorts-grid::-webkit-scrollbar-thumb:hover { background: oklch(100% 0 0 / 0.35); }
+.shorts-grid { scrollbar-width: thin; scrollbar-color: oklch(100% 0 0 / 0.2) transparent; }
+
 /* Featured gallery item (full width) */
 .gallery-featured {
   grid-column: 1 / -1;
@@ -1944,6 +1957,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <a href="#honors" class="nav-link" data-i18n="nav_honors">荣誉奖项</a>
       <a href="#gallery" class="nav-link" data-i18n="nav_gallery">作品画廊</a>
       <a href="#shorts" class="nav-link" data-i18n="nav_shorts">苏导有点意思</a>
+      <a href="#download" class="nav-link" data-i18n="nav_download">资源下载</a>
       <a href="#partners" class="nav-link" data-i18n="nav_partners">合作伙伴</a>
       <a href="#contact" class="nav-cta" data-i18n="nav_cta">联系我们</a>
     </div>
