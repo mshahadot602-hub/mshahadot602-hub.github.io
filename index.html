@@ -1939,6 +1939,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <a href="#vr360" class="nav-link" data-i18n="nav_vr360">720 VR</a>
       <a href="#honors" class="nav-link" data-i18n="nav_honors">荣誉奖项</a>
       <a href="#gallery" class="nav-link" data-i18n="nav_gallery">作品画廊</a>
+      <a href="#shorts" class="nav-link" data-i18n="nav_shorts">短视频</a>
       <a href="#partners" class="nav-link" data-i18n="nav_partners">合作伙伴</a>
       <a href="#contact" class="nav-cta" data-i18n="nav_cta">联系我们</a>
     </div>
@@ -2769,6 +2770,31 @@ document.addEventListener('DOMContentLoaded', function() {
   <button class="lightbox-nav lightbox-next" id="lightboxNext" data-i18n-aria="lightbox_next_aria" data-i18n-aria="lightbox_next_aria" aria-label="下一张">&#8250;</button>
   <img src="" alt="" id="lightboxImg" loading="lazy">
 </div>
+
+<!-- Short Video -->
+<section class="section shorts" id="shorts">
+  <div class="section-inner">
+    <div class="section-header center reveal">
+      <p class="section-label" data-i18n="shorts_label">Short Video</p>
+      <h2 class="section-title" data-i18n="shorts_title">短视频</h2>
+      <p class="section-subtitle" data-i18n="shorts_subtitle">用短平快的方式，记录每一个值得被看见的瞬间</p>
+    </div>
+    <div class="shorts-grid reveal reveal-delay-1" style="display:flex;justify-content:center;gap:var(--space-lg);flex-wrap:wrap;">
+      <div class="short-card" style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-glass-md);max-width:360px;">
+        <iframe
+          src="https://open.douyin.com/player/video?vid=7485645279610293540&autoplay=0"
+          width="360"
+          height="640"
+          frameborder="0"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="unsafe-url"
+          style="display:block;border:none;">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- Cooperative Partners -->
 <section class="section partners" id="partners">
