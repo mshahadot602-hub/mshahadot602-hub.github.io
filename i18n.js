@@ -5057,6 +5057,83 @@ const I18N = {
     "zh-Hant": "穿書後霸道總裁宠我上瘾",
     "ms": "Transmigrated: The Domineering CEO Spoils Me",
     "si": "Transmigrated: The Domineering CEO Spoils Me"
+  },
+  "nav_shorts": {
+    "zh": "苏导有点意思",
+    "en": "Director Su's Shorts",
+    "ja": "蘇監督のショート",
+    "fr": "Courts de Su",
+    "ru": "Шорты Су",
+    "es": "Cortos de Su",
+    "de": "Kurzvideos von Su",
+    "ko": "수 감독 쇼츠",
+    "pt": "Curtas do Su"
+  },
+  "nav_download": {
+    "zh": "资源下载",
+    "en": "Downloads",
+    "ja": "ダウンロード",
+    "fr": "Téléchargements",
+    "ru": "Загрузки",
+    "es": "Descargas",
+    "de": "Downloads",
+    "ko": "다운로드",
+    "pt": "Downloads"
+  },
+  "dl_software": {
+    "zh": "软件下载",
+    "en": "Software",
+    "ja": "ソフトウェア",
+    "fr": "Logiciels",
+    "ko": "소프트웨어",
+    "pt": "Software"
+  },
+  "dl_cloud": {
+    "zh": "自在网盘",
+    "en": "Cloud Drive",
+    "ja": "クラウドドライブ",
+    "fr": "Cloud",
+    "ko": "클라우드",
+    "pt": "Nuvem"
+  },
+  "dl_server": {
+    "zh": "公司服务器",
+    "en": "Server",
+    "ja": "サーバー",
+    "fr": "Serveur",
+    "ko": "서버",
+    "pt": "Servidor"
+  },
+  "dl_agent": {
+    "zh": "自在Agent",
+    "en": "Agent",
+    "ja": "エージェント",
+    "fr": "Agent",
+    "ko": "에이전트",
+    "pt": "Agente"
+  },
+  "dl_ppt": {
+    "zh": "自在PPT下载",
+    "en": "PPT Download",
+    "ja": "PPTダウンロード",
+    "fr": "PPT",
+    "ko": "PPT 다운로드",
+    "pt": "PPT"
+  },
+  "dl_logo": {
+    "zh": "自在LOGO水印素材",
+    "en": "Logo Assets",
+    "ja": "ロゴ素材",
+    "fr": "Logo",
+    "ko": "로고 소재",
+    "pt": "Logo"
+  },
+  "featured_flower_desc": {
+    "zh": "大三那年，苏家铭赴山西拍摄一对年过六旬的农民夫妇，他们坚持30年收养了39名残障弃儿。这部17分钟的纪录片获2011上海国际电影节最佳短片奖和最佳纪录片奖，徐克、贾樟柯亲自颁奖。",
+    "en": "Su Jiaming filmed an elderly couple who adopted 39 abandoned disabled children over 30 years. This 17-min documentary won Best Short Film and Best Documentary at the 2011 Shanghai International Film Festival.",
+    "ja": "蘇家銘は30年間で39人の障害児を育てた老夫婦を撮影。17分のドキュメンタリーは2011年上海国際映画祭で最優秀短編賞を受賞。",
+    "fr": "Su Jiaming a filmé un couple ayant adopté 39 enfants handicapés en 30 ans. Documentaire primé à Shanghai 2011.",
+    "zhHant": "大三那年，蘇家銘赴山西拍攝一對年過六旬的農民夫婦，他們堅持30年收養了39名殘障棄兒。這部17分鐘的紀錄片獲2011上海國際電影節最佳短片獎和最佳紀錄片獎，徐克、賈樟柯親自頒獎。"
   }
 };
 
@@ -5066,10 +5143,6 @@ function applyLanguage(lang) {
   document.documentElement.lang = lang;
   var dir = LANG_DIR[lang] || 'ltr';
   document.documentElement.dir = dir;
-  // Update lang button text
-  var langNames = {zh:'中文简体', 'zh-Hant':'中文繁體', en:'English', ja:'日本語', fr:'Français', ru:'Русский', he:'עברית', ar:'العربية', es:'Español', de:'Deutsch', ko:'한국어', pt:'Português', ms:'Bahasa Melayu', si:'සිංහල', bo:'བོད་སྐད།', ug:'ئۇيغۇرچە'};
-  var btn = document.getElementById('langBtnText');
-  if (btn) btn.textContent = langNames[lang] || lang;
   
   // data-i18n — text content
   var els = document.querySelectorAll('[data-i18n]');
