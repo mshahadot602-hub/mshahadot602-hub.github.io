@@ -4193,6 +4193,11 @@ const I18N = {
   'honor_work_5': { zh: '《甜》', en: 'Sweet', ja: '『甘い』', fr: 'Doux', ru: 'Сладкий', he: 'מתוק', ar: 'حلو', es: 'Dulce', de: 'Süß', ko: '달콤함', pt: 'Doce', bo: 'Sweet', ug: 'تاتلىق' },
   'honor_award_5': { zh: '入选首届西湖青年纪录片论坛作品展映单元', en: 'Selected for West Lake Youth Documentary Forum Screening', ja: '西湖青年ドキュメンタリーフォーラム上映作品', fr: 'Sélectionné au Forum du Documentaire Jeunesse du Lac de l\'Ouest', ru: 'Отобран для показа на Молодежном форуме документального кино', he: 'נבחר להקרנה בפורום הסרטים התיעודיים לנוער', ar: 'مختار لعرض في منتدى الأفلام الوثائقية للشباب', es: 'Seleccionado para el Foro de Documental Juvenil del Lago del Oeste', de: 'Ausgewählt für das Westsee-Jugenddokumentarfilmforum', ko: '서호 청년 다큐멘터리 포럼 상영작 선정', pt: 'Selecionado para o Fórum de Documentário Juvenil do Lago Oeste', bo: 'Selected for Youth Documentary Forum', ug: 'غەربىي كۆل ياشلار ھۆججەتلىك فىلىم فورۇمىغا تاللاندى' },
   'honor_festival_5': { zh: '首届西湖青年纪录片论坛', en: '1st West Lake Youth Documentary Forum', ja: '第1回西湖青年ドキュメンタリーフォーラム', fr: '1er Forum du Documentaire Jeunesse du Lac de l\'Ouest', ru: '1-й Молодежный форум документального кино', he: 'פורום הסרטים התיעודיים הראשון לנוער', ar: 'المنتدى الأول للأفلام الوثائقية للشباب', es: '1er Foro de Documental Juvenil del Lago del Oeste', de: '1. Westsee-Jugenddokumentarfilmforum', ko: '제1회 서호 청년 다큐멘터리 포럼', pt: '1º Fórum de Documentário Juvenil do Lago Oeste', bo: '1st West Lake Youth Documentary Forum', ug: '1-نۆۋەتلىك غەربىي كۆل ياشلار ھۆججەتلىك فىلىم فورۇمى' },
+    'honors_show_more': {
+    zh: '查看更多',
+    en: 'Show More',
+    ja: '\u3082\u3063\u3068\u898b\u308B',
+  },
   'honors_modal_close': {
     zh: '关闭',
     en: 'Close',
