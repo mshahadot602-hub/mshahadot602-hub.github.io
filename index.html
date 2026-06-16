@@ -255,7 +255,7 @@ h1, h2, h3, h4 {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-md);
   flex-wrap: nowrap;
   white-space: nowrap;
   overflow: hidden;
@@ -1949,27 +1949,27 @@ document.addEventListener('DOMContentLoaded', function() {
       <a href="#contact" class="nav-cta" data-i18n="nav_cta">联系我们</a>
     </div>
     <div class="lang-switcher" style="margin-left:var(--space-md);flex-shrink:0;">
-      <button class="lang-btn" id="langBtn"  aria-label="切换语言" style="background:transparent;border:0.5px solid var(--border-subtle);border-radius:var(--radius-sm);padding:8px 16px;cursor:pointer;font-size:var(--text-sm);display:inline-flex;align-items:center;gap:6px;white-space:nowrap;min-width:90px;justify-content:space-between;">
+      <button class="lang-btn" id="langBtn"  aria-label="切换语言" style="background:transparent;border:0.5px solid var(--border-subtle);border-radius:var(--radius-sm);padding:8px 16px;cursor:pointer;font-size:var(--text-sm);display:inline-flex;align-items:center;gap:6px;white-space:nowrap;min-width:100px;justify-content:space-between;">
         <span id="langBtnText">中文</span>
         <svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 3l3 4 3-4" stroke="currentColor" fill="none" stroke-width="1.2"/></svg>
       </button>
-      <div class="lang-dropdown" id="langDropdown" style="display:none;position:absolute;top:100%;right:0;margin-top:16px;background:rgba(255,255,255,0.42);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:1px solid rgba(255,255,255,0.35);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.12);z-index:1002;min-width:220px;padding:4px;">
-        <a href="#" data-lang="zh" onclick="return false">🇨🇳 中文</a>
+            <div class="lang-dropdown" id="langDropdown" style="display:none;position:absolute;top:100%;right:0;margin-top:16px;background:rgba(255,255,255,0.42);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:1px solid rgba(255,255,255,0.35);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.12);z-index:1002;min-width:220px;padding:4px;">
+        <a href="#" data-lang="zh" onclick="return false">🇨🇳 中文简体</a>
+        <a href="#" data-lang="zh-Hant" onclick="return false">🇨🇳 中文繁體</a>
         <a href="#" data-lang="en" onclick="return false">🇺🇸 English</a>
         <a href="#" data-lang="ja" onclick="return false">🇯🇵 日本語</a>
         <a href="#" data-lang="fr" onclick="return false">🇫🇷 Français</a>
         <a href="#" data-lang="ru" onclick="return false">🇷🇺 Русский</a>
-        <a href="#" data-lang="he" onclick="return false">🇮🇱 עברית</a>
-        <a href="#" data-lang="ar" onclick="return false">🇸🇦 العربية</a>
         <a href="#" data-lang="es" onclick="return false">🇪🇸 Español</a>
         <a href="#" data-lang="de" onclick="return false">🇩🇪 Deutsch</a>
-        <a href="#" data-lang="ko" onclick="return false">🇰🇷 한국어</a>
         <a href="#" data-lang="pt" onclick="return false">🇧🇷 Português</a>
-        <a href="#" data-lang="bo" onclick="return false">བོད་སྐད།</a>
-        <a href="#" data-lang="ug" onclick="return false">ئۇيغۇرچە</a>
-        <a href="#" data-lang="zh-Hant" onclick="return false">🇹🇼 繁體中文</a>
+        <a href="#" data-lang="ko" onclick="return false">🇰🇷 한국어</a>
         <a href="#" data-lang="ms" onclick="return false">🇲🇾 Bahasa Melayu</a>
         <a href="#" data-lang="si" onclick="return false">🇱🇰 සිංහල</a>
+        <a href="#" data-lang="he" onclick="return false">🇮🇱 עברית</a>
+        <a href="#" data-lang="ar" onclick="return false">🇸🇦 العربية</a>
+        <a href="#" data-lang="bo" onclick="return false">བོད་སྐད།</a>
+        <a href="#" data-lang="ug" onclick="return false">ئۇيغۇرچە</a>
       </div>
     </div>
 
@@ -3525,25 +3525,32 @@ document.addEventListener('DOMContentLoaded', function() {
     var langDropdown = document.getElementById('langDropdown');
     if (!langBtn || !langDropdown) return;
 
-    // Toggle dropdown
+    function switchLang(lang) {
+      try {
+        if (typeof window.applyLanguage === 'function') {
+          window.applyLanguage(lang);
+        } else {
+          console.warn('applyLanguage not found, retrying...');
+          setTimeout(function() { 
+            if (typeof window.applyLanguage === 'function') window.applyLanguage(lang);
+          }, 200);
+        }
+      } catch(e) { console.error('Language switch error:', e); }
+    }
+
     langBtn.addEventListener('click', function(e) {
       e.stopPropagation();
       langDropdown.style.display = (langDropdown.style.display === 'block') ? 'none' : 'block';
     });
 
-    // Handle language selection
     langDropdown.querySelectorAll('a[data-lang]').forEach(function(a) {
       a.addEventListener('click', function(e) {
         e.preventDefault();
-        var lang = this.getAttribute('data-lang');
-        if (typeof applyLanguage === 'function') {
-          applyLanguage(lang);
-        }
+        switchLang(this.getAttribute('data-lang'));
         langDropdown.style.display = 'none';
       });
     });
 
-    // Close on outside click
     document.addEventListener('click', function(e) {
       if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
         langDropdown.style.display = 'none';
