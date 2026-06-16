@@ -5066,6 +5066,10 @@ function applyLanguage(lang) {
   document.documentElement.lang = lang;
   var dir = LANG_DIR[lang] || 'ltr';
   document.documentElement.dir = dir;
+  // Update lang button text
+  var langNames = {zh:'中文简体', 'zh-Hant':'中文繁體', en:'English', ja:'日本語', fr:'Français', ru:'Русский', he:'עברית', ar:'العربية', es:'Español', de:'Deutsch', ko:'한국어', pt:'Português', ms:'Bahasa Melayu', si:'සිංහල', bo:'བོད་སྐད།', ug:'ئۇيغۇرچە'};
+  var btn = document.getElementById('langBtnText');
+  if (btn) btn.textContent = langNames[lang] || lang;
   
   // data-i18n — text content
   var els = document.querySelectorAll('[data-i18n]');
