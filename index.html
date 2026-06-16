@@ -339,6 +339,24 @@ h1, h2, h3, h4 {
   box-shadow: var(--shadow-glass-md);
   transform: scale(1.08);
 }
+/* Avatar state */
+.login-btn-fixed.is-avatar {
+  padding: 3px;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1.5px solid var(--border-subtle);
+  background: var(--surface-0);
+  display: flex; align-items: center; justify-content: center;
+}
+.login-btn-fixed.is-avatar img {
+  width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
+}
+.login-btn-fixed.is-avatar:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-glass-md);
+  transform: scale(1.08);
+}
 
 /* Hero state: white text, translucent */
 body:has(.nav.nav-hero) .login-btn-fixed {
@@ -948,7 +966,7 @@ body:has(.nav.nav-hero) .login-btn-fixed:hover {
   border: 1px solid oklch(100% 0 0 / 0.2);
   box-shadow: var(--shadow-glass-md);
 }
-.gallery-featured-media {
+.gallery-featured-video {
   position: relative;
   aspect-ratio: 16 / 10;
   width: 100%;
@@ -2152,88 +2170,63 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="honors-grid reveal reveal-delay-1" id="honorsGrid">
             <div class="honor-card" data-honor-index="0">
               <div class="honor-year">—</div>
-              <div class="honor-work" data-i18n="honor_work_0">《花儿哪里去了》</div>
-              <div class="honor-award-name" data-i18n="honor_award_0">评委会特别奖</div>
-              <div class="honor-festival" data-i18n="honor_festival_0">第18届北京大学生电影节短片竞赛单元</div>
+              <div class="honor-work">《花儿哪里去了》</div>
+              <div class="honor-award-name">评委会特别奖</div>
+              <div class="honor-festival">第18届北京大学生电影节短片竞赛单元</div>
             </div>
             <div class="honor-card" data-honor-index="1">
               <div class="honor-year">—</div>
-              <div class="honor-work" data-i18n="honor_work_1">《棋局》</div>
-              <div class="honor-award-name" data-i18n="honor_award_1">一等奖</div>
+              <div class="honor-work">《棋局》</div>
+              <div class="honor-award-name">一等奖</div>
               <div class="honor-festival">2016国家网信办首届“益言益行”全国公益广告大赛</div>
             </div>
             <div class="honor-card" data-honor-index="2">
               <div class="honor-year">2009年</div>
-              <div class="honor-work" data-i18n="honor_work_2">《吃铁的人》</div>
-              <div class="honor-award-name" data-i18n="honor_award_2">纪录片金奖</div>
-              <div class="honor-festival" data-i18n="honor_festival_2">南方多媒短片节纪录片单元</div>
+              <div class="honor-work">《吃铁的人》</div>
+              <div class="honor-award-name">纪录片金奖</div>
+              <div class="honor-festival">南方多媒短片节纪录片单元</div>
             </div>
-            <div class="honor-card" data-honor-index="3">
-              <div class="honor-year">2011年</div>
-              <div class="honor-work" data-i18n="honor_work_0">《花儿哪里去了》</div>
-              <div class="honor-award-name" data-i18n="honor_award_3">最佳短片, 最佳纪录片</div>
-              <div class="honor-festival" data-i18n="honor_festival_3">上海国际电影节 手机电影节</div>
-            </div>
+            
             <div class="honor-card" data-honor-index="4">
               <div class="honor-year">2012年</div>
-              <div class="honor-work" data-i18n="honor_work_4">《俺爸俺妈》</div>
-              <div class="honor-award-name" data-i18n="honor_award_4">示范片</div>
-              <div class="honor-festival" data-i18n="honor_festival_4">壹基金公益影像节</div>
+              <div class="honor-work">《俺爸俺妈》</div>
+              <div class="honor-award-name">示范片</div>
+              <div class="honor-festival">壹基金公益影像节</div>
             </div>
             <div class="honor-card" data-honor-index="5">
               <div class="honor-year">2017年</div>
-              <div class="honor-work" data-i18n="honor_work_5">《甜》</div>
-              <div class="honor-award-name" data-i18n="honor_award_5">入选首届西湖青年纪录片论坛作品展映单元</div>
-              <div class="honor-festival" data-i18n="honor_festival_5">首届西湖青年纪录片论坛</div>
+              <div class="honor-work">《甜》</div>
+              <div class="honor-award-name">入选首届西湖青年纪录片论坛作品展映单元</div>
+              <div class="honor-festival">首届西湖青年纪录片论坛</div>
             </div>
             <div class="honor-card" data-honor-index="6">
               <div class="honor-year">2017年</div>
-              <div class="honor-work" data-i18n="honor_work_6">《姐妹》</div>
-              <div class="honor-award-name" data-i18n="honor_award_6">入围作品</div>
-              <div class="honor-festival" data-i18n="honor_festival_6">第七届 光影纪年-中国纪录片学院奖</div>
+              <div class="honor-work">《姐妹》</div>
+              <div class="honor-award-name">入围作品</div>
+              <div class="honor-festival">第七届 光影纪年-中国纪录片学院奖</div>
             </div>
-            <div class="honor-card" data-honor-index="7">
-              <div class="honor-year">2017年</div>
-              <div class="honor-work" data-i18n="honor_work_5">《甜》</div>
-              <div class="honor-award-name" data-i18n="honor_award_7">二等奖</div>
-              <div class="honor-festival" data-i18n="honor_festival_7">首届公益视频短片大赛</div>
-            </div>
-            <div class="honor-card" data-honor-index="8">
-              <div class="honor-year">2017年</div>
-              <div class="honor-work" data-i18n="honor_work_1">《棋局》</div>
-              <div class="honor-award-name" data-i18n="honor_award_8">三等奖</div>
-              <div class="honor-festival" data-i18n="honor_festival_7">首届公益视频短片大赛</div>
-            </div>
+            
+            
             <div class="honor-card" data-honor-index="9">
               <div class="honor-year">2017年</div>
-              <div class="honor-work" data-i18n="honor_work_9">《爱要好好说》</div>
-              <div class="honor-award-name" data-i18n="honor_award_9">优秀展映影片</div>
-              <div class="honor-festival" data-i18n="honor_festival_9">2017中国公益映像节</div>
+              <div class="honor-work">《爱要好好说》</div>
+              <div class="honor-award-name">优秀展映影片</div>
+              <div class="honor-festival">2017中国公益映像节</div>
             </div>
-            <div class="honor-card" data-honor-index="10">
-              <div class="honor-year">2017年</div>
-              <div class="honor-work" data-i18n="honor_work_9">《爱要好好说》</div>
-              <div class="honor-award-name" data-i18n="honor_award_7">二等奖</div>
-              <div class="honor-festival" data-i18n="honor_festival_10">浙江省公益短片大赛</div>
-            </div>
+            
             <div class="honor-card" data-honor-index="11">
               <div class="honor-year">2018年</div>
-              <div class="honor-work" data-i18n="honor_work_11">《暖城》</div>
-              <div class="honor-award-name" data-i18n="honor_award_8">三等奖</div>
-              <div class="honor-festival" data-i18n="honor_festival_11">第二届公益视频短片大赛</div>
+              <div class="honor-work">《暖城》</div>
+              <div class="honor-award-name">三等奖</div>
+              <div class="honor-festival">第二届公益视频短片大赛</div>
             </div>
             <div class="honor-card" data-honor-index="12">
               <div class="honor-year">2018年</div>
-              <div class="honor-work" data-i18n="honor_work_12">《亲情家书》</div>
-              <div class="honor-award-name" data-i18n="honor_award_12">编入杭州文创产业发展报告</div>
-              <div class="honor-festival" data-i18n="honor_festival_12">文化精品工程</div>
+              <div class="honor-work">《亲情家书》</div>
+              <div class="honor-award-name">编入杭州文创产业发展报告</div>
+              <div class="honor-festival">文化精品工程</div>
             </div>
-            <div class="honor-card" data-honor-index="13">
-              <div class="honor-year">2018年</div>
-              <div class="honor-work" data-i18n="honor_work_4">《俺爸俺妈》</div>
-              <div class="honor-award-name" data-i18n="honor_award_7">二等奖</div>
-              <div class="honor-festival">2018中国梦（浙江）网络视频大赛</div>
-            </div>
+            
             <div class="honor-card" data-honor-index="14">
               <div class="honor-year">2018年</div>
               <div class="honor-work">《创变者·魏文锋》</div>
@@ -2246,24 +2239,14 @@ document.addEventListener('DOMContentLoaded', function() {
               <div class="honor-award-name">最佳手机短视频</div>
               <div class="honor-festival">2018中国梦（浙江）网络视频大赛</div>
             </div>
-            <div class="honor-card" data-honor-index="16">
-              <div class="honor-year">2018年</div>
-              <div class="honor-work" data-i18n="honor_work_6">《姐妹》</div>
-              <div class="honor-award-name">最佳公益影片二等奖</div>
-              <div class="honor-festival">第四届上海公益微电影节</div>
-            </div>
+            
             <div class="honor-card" data-honor-index="17">
               <div class="honor-year">2018年</div>
               <div class="honor-work">《蒙古心弦》</div>
               <div class="honor-award-name">最佳公益导演奖</div>
               <div class="honor-festival">第四届上海公益微电影节</div>
             </div>
-            <div class="honor-card" data-honor-index="18">
-              <div class="honor-year">2018年</div>
-              <div class="honor-work" data-i18n="honor_work_4">《俺爸俺妈》</div>
-              <div class="honor-award-name">优秀公益作品奖</div>
-              <div class="honor-festival">第四届上海公益微电影节</div>
-            </div>
+            
             <div class="honor-card" data-honor-index="19">
               <div class="honor-year">2018年</div>
               <div class="honor-work">《THIS IS MOM》（春晖妈妈）</div>
@@ -2282,18 +2265,8 @@ document.addEventListener('DOMContentLoaded', function() {
               <div class="honor-award-name">入围奖</div>
               <div class="honor-festival">2018年度公益映像奖暨第八届中国公益节</div>
             </div>
-            <div class="honor-card" data-honor-index="22">
-              <div class="honor-year">2019年</div>
-              <div class="honor-work">《移动光明行》（《再·见》）</div>
-              <div class="honor-award-name">全国30强，并获入围奖</div>
-              <div class="honor-festival">#我的捐赠故事#</div>
-            </div>
-            <div class="honor-card" data-honor-index="23">
-              <div class="honor-year">2019年</div>
-              <div class="honor-work" data-i18n="honor_work_6">《姐妹》</div>
-              <div class="honor-award-name">十佳作品</div>
-              <div class="honor-festival">乙亥年第五届“根亲中国”微电影大赛</div>
-            </div>
+            
+            
             <div class="honor-card" data-honor-index="24">
               <div class="honor-year">2019年</div>
               <div class="honor-work">《大山里的心愿》</div>
@@ -2318,18 +2291,8 @@ document.addEventListener('DOMContentLoaded', function() {
               <div class="honor-award-name">企业类入围作品奖</div>
               <div class="honor-festival">中国公益映像节</div>
             </div>
-            <div class="honor-card" data-honor-index="28">
-              <div class="honor-year">2019年</div>
-              <div class="honor-work">《大山里的心愿》</div>
-              <div class="honor-award-name">企业类入围作品奖</div>
-              <div class="honor-festival">中国公益映像节</div>
-            </div>
-            <div class="honor-card" data-honor-index="29">
-              <div class="honor-year">2019年</div>
-              <div class="honor-work">《光明电池》</div>
-              <div class="honor-award-name">优秀公益作品</div>
-              <div class="honor-festival">第五届上海公益微电影节</div>
-            </div>
+            
+            
             <div class="honor-card" data-honor-index="30">
               <div class="honor-year">2019年</div>
               <div class="honor-work">《会飞的盒子》</div>
@@ -2342,18 +2305,8 @@ document.addEventListener('DOMContentLoaded', function() {
               <div class="honor-award-name">优秀公益作品</div>
               <div class="honor-festival">第五届上海公益微电影节</div>
             </div>
-            <div class="honor-card" data-honor-index="32">
-              <div class="honor-year">2019年</div>
-              <div class="honor-work">《光明电池》</div>
-              <div class="honor-award-name">最佳短视频奖</div>
-              <div class="honor-festival">2019中国梦（浙江）网络视频大赛</div>
-            </div>
-            <div class="honor-card" data-honor-index="33">
-              <div class="honor-year">2019年</div>
-              <div class="honor-work">《光明电池》</div>
-              <div class="honor-award-name" data-i18n="honor_award_1">一等奖</div>
-              <div class="honor-festival">慈善文化传播大赛</div>
-            </div>
+            
+            
             <div class="honor-card" data-honor-index="34">
               <div class="honor-year">2019年</div>
               <div class="honor-work">《我和花儿的捐赠故事》</div>
@@ -2366,18 +2319,8 @@ document.addEventListener('DOMContentLoaded', function() {
               <div class="honor-award-name">入围奖</div>
               <div class="honor-festival">厦门Hishorts!短片大赛</div>
             </div>
-            <div class="honor-card" data-honor-index="36">
-              <div class="honor-year">2020年</div>
-              <div class="honor-work">《光明电池》</div>
-              <div class="honor-award-name">2019年度公益映像奖</div>
-              <div class="honor-festival">第九届中国公益节</div>
-            </div>
-            <div class="honor-card" data-honor-index="37">
-              <div class="honor-year">2020年</div>
-              <div class="honor-work">《心声》</div>
-              <div class="honor-award-name">2019年度公益映像奖</div>
-              <div class="honor-festival">第九届中国公益节</div>
-            </div>
+            
+            
             <div class="honor-card" data-honor-index="38">
               <div class="honor-year">2020年</div>
               <div class="honor-work">《传承》</div>
@@ -2390,60 +2333,30 @@ document.addEventListener('DOMContentLoaded', function() {
               <div class="honor-award-name">优秀作品奖</div>
               <div class="honor-festival">庚子年第六届“根亲中国”微电影网络大赛</div>
             </div>
-            <div class="honor-card" data-honor-index="40">
-              <div class="honor-year">2020年</div>
-              <div class="honor-work">《我不是药神，我是陆勇》</div>
-              <div class="honor-award-name" data-i18n="honor_award_7">二等奖</div>
-              <div class="honor-festival">第二届#我的捐赠故事#</div>
-            </div>
-            <div class="honor-card" data-honor-index="41">
-              <div class="honor-year">2020年</div>
-              <div class="honor-work" data-i18n="honor_work_4">《俺爸俺妈》</div>
-              <div class="honor-award-name">入围奖</div>
-              <div class="honor-festival">第二届#我的捐赠故事#</div>
-            </div>
-            <div class="honor-card" data-honor-index="42">
-              <div class="honor-year">2020年</div>
-              <div class="honor-work">《会飞的盒子》</div>
-              <div class="honor-award-name">入围奖</div>
-              <div class="honor-festival">第二届#我的捐赠故事#</div>
-            </div>
+            
+            
+            
             <div class="honor-card" data-honor-index="43">
               <div class="honor-year">2020年</div>
               <div class="honor-work">《创变者·Mantra》</div>
               <div class="honor-award-name">入围奖</div>
               <div class="honor-festival">第二届#我的捐赠故事#</div>
             </div>
-            <div class="honor-card" data-honor-index="44">
-              <div class="honor-year">2020年</div>
-              <div class="honor-work">《心声》</div>
-              <div class="honor-award-name">入围奖</div>
-              <div class="honor-festival">第二届#我的捐赠故事#</div>
-            </div>
+            
             <div class="honor-card" data-honor-index="45">
               <div class="honor-year">2020年</div>
               <div class="honor-work">《再见，老师》</div>
               <div class="honor-award-name">入围奖</div>
               <div class="honor-festival">第二届#我的捐赠故事#</div>
             </div>
-            <div class="honor-card" data-honor-index="46">
-              <div class="honor-year">2020年</div>
-              <div class="honor-work">《爱，未曾遗忘》（丁香医生）</div>
-              <div class="honor-award-name">入围奖</div>
-              <div class="honor-festival">第二届#我的捐赠故事#</div>
-            </div>
+            
             <div class="honor-card" data-honor-index="47">
               <div class="honor-year">2020年</div>
               <div class="honor-work">《亲情家书》之吴晓彤篇</div>
               <div class="honor-award-name">入围奖</div>
               <div class="honor-festival">第二届#我的捐赠故事#</div>
             </div>
-            <div class="honor-card" data-honor-index="48">
-              <div class="honor-year">2020年</div>
-              <div class="honor-work">《是光 大山的孩子会写诗》</div>
-              <div class="honor-award-name">入围奖</div>
-              <div class="honor-festival">第二届#我的捐赠故事#</div>
-            </div>
+            
             <div class="honor-card" data-honor-index="49">
               <div class="honor-year">2020年</div>
               <div class="honor-work">《明天的微笑》</div>
@@ -2462,12 +2375,7 @@ document.addEventListener('DOMContentLoaded', function() {
               <div class="honor-award-name">参与部分拍摄</div>
               <div class="honor-festival">威尼斯国际电影节</div>
             </div>
-            <div class="honor-card" data-honor-index="52">
-              <div class="honor-year">2020年</div>
-              <div class="honor-work">《光明电池》</div>
-              <div class="honor-award-name">入围证书</div>
-              <div class="honor-festival">We爱·两岸青年短片大赛</div>
-            </div>
+            
             <div class="honor-card" data-honor-index="53">
               <div class="honor-year">2020年</div>
               <div class="honor-work">《240秒》</div>
@@ -2492,12 +2400,7 @@ document.addEventListener('DOMContentLoaded', function() {
               <div class="honor-award-name">50强</div>
               <div class="honor-festival">“盛世钱塘，幸福杭州”短视频大赛</div>
             </div>
-            <div class="honor-card" data-honor-index="57">
-              <div class="honor-year">2020年</div>
-              <div class="honor-work">《像你一样，不一样》</div>
-              <div class="honor-award-name">最佳公益短视频一等奖</div>
-              <div class="honor-festival">第六届上海公益微电影节</div>
-            </div>
+            
             <div class="honor-card" data-honor-index="58">
               <div class="honor-year">2020年</div>
               <div class="honor-work">《梦守护》</div>
@@ -2740,23 +2643,119 @@ document.addEventListener('DOMContentLoaded', function() {
     <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_01"></span>
   </div>
       </div>
-      
-      
-      
-      
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/1611ad532c61c69444bc7c53b5dbb465_origin(1).webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_02">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_02"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/2d23df89c6ea07a1f75d0164e2428945_origin(1).webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_03">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_03"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/34e934deaf0d96d3f7f0b56be5b716ab_origin(1).webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_04">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_04"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/4035b63d-a69f-45ad-b64d-dd4e9404f94a.webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_05">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_05"></span>
+  </div>
+      </div>
 
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/42c2ed1be3f49b4160d9a38396f3f3db_compress.webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_06">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_06"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/50675c5b8ca2fbb81292f91e3297ccf1_origin(1).webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_07">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_07"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/5a3aee5da9848a3b3002c68f1f36fbe2_origin(1).webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_08">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_08"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/62b8baecde3c3912166dd844d7524c34_origin(1).webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_09">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_09"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/692e824b-d87a-445d-bd6d-9330994cbbe4.webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_10">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_10"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/69a963e78ef5823e1b1e0a94b03649ea_origin(1).webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_11">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_11"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/6fa22682c9704f2ad36f12c65169530b_origin.webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_12">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_12"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/7a0438ae44f64bcfaaaf106190848e11_origin(1).webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_13">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_13"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/7c5381801f5a4a2c0c690891dc326c8a_origin(1).webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_14">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_14"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/db3a8a1de5e205ee1ad8bce1a054d40a_origin(1).webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_15">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_15"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/dd017392af2e5e828fbdb80b828062bb_origin.webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_16">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_16"></span>
+  </div>
+      </div>
+      <div class="gallery-item" data-cat="photo">
+        <img src="img/剧照/dff6b86d764ff7f6cfe4df87fd586f0d_origin(1).webp" alt="剧照" onerror="this.style.display='none'" loading="lazy">
+        <div class="gallery-item-caption">
+    <span class="gallery-caption-title" data-i18n="gallery_photo_title_17">剧照</span>
+    <span class="gallery-caption-subtitle" data-i18n="gallery_photo_sub_17"></span>
+  </div>
+      </div>
 
       <!-- More Events (jlp, jr) -->
     </div>

@@ -3455,7 +3455,7 @@ const I18N = {
     ug: 'پائالىيەت پىلانلاش',
   },
   'gallery_promo_title_01': {
-    zh: '宣传片项目 01',
+    zh: '反诈猎人',
     en: 'Promo Project 01',
     ja: 'プロモーション作品 01',
     fr: 'Projet promo 01',
@@ -3470,7 +3470,7 @@ const I18N = {
     ug: 'تەشۋىق فىلىمى تۈرى 01',
   },
   'gallery_promo_sub_01': {
-    zh: '敬请期待',
+    zh: '杭州自在空间 × 第一财经 反诈神片',
     en: 'Coming Soon',
     ja: '近日公開',
     fr: 'Bientôt disponible',
@@ -3485,7 +3485,7 @@ const I18N = {
     ug: 'يېقىندا تارقىتىلىدۇ',
   },
   'gallery_promo_title_02': {
-    zh: '宣传片项目 02',
+    zh: '自在空间',
     en: 'Promo Project 02',
     ja: 'プロモーション作品 02',
     fr: 'Projet promo 02',
@@ -3500,7 +3500,7 @@ const I18N = {
     ug: 'تەشۋىق فىلىمى تۈرى 02',
   },
   'gallery_promo_sub_02': {
-    zh: '敬请期待',
+    zh: '品牌宣传片',
     en: 'Coming Soon',
     ja: '近日公開',
     fr: 'Bientôt disponible',
@@ -3515,7 +3515,7 @@ const I18N = {
     ug: 'يېقىندا تارقىتىلىدۇ',
   },
   'gallery_promo_title_03': {
-    zh: '宣传片项目 03',
+    zh: '免费午餐特派志愿者',
     en: 'Promo Project 03',
     ja: 'プロモーション作品 03',
     fr: 'Projet promo 03',
@@ -3530,7 +3530,7 @@ const I18N = {
     ug: 'تەشۋىق فىلىمى تۈرى 03',
   },
   'gallery_promo_sub_03': {
-    zh: '敬请期待',
+    zh: '法国人的中国公益之旅',
     en: 'Coming Soon',
     ja: '近日公開',
     fr: 'Bientôt disponible',
@@ -3545,7 +3545,7 @@ const I18N = {
     ug: 'يېقىندا تارقىتىلىدۇ',
   },
   'gallery_promo_title_04': {
-    zh: '宣传片项目 04',
+    zh: '四川免费午餐',
     en: 'Promo Project 04',
     ja: 'プロモーション作品 04',
     fr: 'Projet promo 04',
@@ -3560,7 +3560,7 @@ const I18N = {
     ug: 'تەشۋىق فىلىمى تۈرى 04',
   },
   'gallery_promo_sub_04': {
-    zh: '敬请期待',
+    zh: '孩子们到底吃什么？',
     en: 'Coming Soon',
     ja: '近日公開',
     fr: 'Bientôt disponible',
@@ -3575,7 +3575,7 @@ const I18N = {
     ug: 'يېقىندا تارقىتىلىدۇ',
   },
   'gallery_promo_title_05': {
-    zh: '宣传片项目 05',
+    zh: '早衰症孩子',
     en: 'Promo Project 05',
     ja: 'プロモーション作品 05',
     fr: 'Projet promo 05',
@@ -3590,7 +3590,7 @@ const I18N = {
     ug: 'تەشۋىق فىلىمى تۈرى 05',
   },
   'gallery_promo_sub_05': {
-    zh: '敬请期待',
+    zh: '想陪妈妈变老',
     en: 'Coming Soon',
     ja: '近日公開',
     fr: 'Bientôt disponible',
