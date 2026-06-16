@@ -252,7 +252,9 @@ h1, h2, h3, h4 {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: var(--space-lg);
+  gap: var(--space-md);
+  flex-wrap: nowrap;
+  white-space: nowrap;
 }
 
 .nav-link {
@@ -2002,8 +2004,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- Hero -->
 <section class="hero" id="hero">
-  <div class="hero-bg">
+  <div class="hero-bg" style="position:relative;">
     <img src="img/banner_01.jpg" alt="" width="1920" height="1080" onerror="this.parentElement.style.background='linear-gradient(135deg, oklch(15% 0.005 60), oklch(25% 0.005 60))'">
+    <iframe id="heroVideoFrame" src="about:blank" data-src="https://player.bilibili.com/player.html?isOutside=true&aid=8499098&bvid=BV1Zx41117HU&cid=13993353&p=1&autoplay=1&muted=1&loop=1&controls=0" style="display:none;position:absolute;top:0;left:0;width:100%;height:100%;border:none;filter:grayscale(100%);opacity:0.45;pointer-events:none;" allow="autoplay" loading="lazy"></iframe>
   </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
@@ -3364,6 +3367,12 @@ document.addEventListener('DOMContentLoaded', function() {
         loginBtn.setAttribute('data-i18n', '');
         loginBtn.removeAttribute('href');
         loginBtn.style.cursor = 'pointer';
+        // 切换Hero背景为花儿哪里去了视频
+        var heroFrame = document.getElementById('heroVideoFrame');
+        if (heroFrame && heroFrame.dataset.src) {
+          heroFrame.src = heroFrame.dataset.src;
+          heroFrame.style.display = 'block';
+        }
       } else {
         // 未登录：显示登录文字
         loginBtn.classList.remove('is-avatar');
@@ -3371,6 +3380,12 @@ document.addEventListener('DOMContentLoaded', function() {
         loginBtn.setAttribute('data-i18n', 'nav_login');
         loginBtn.href = 'user-system/login.html';
         loginBtn.style.cursor = '';
+        // 隐藏视频背景
+        var heroFrame = document.getElementById('heroVideoFrame');
+        if (heroFrame) {
+          heroFrame.src = 'about:blank';
+          heroFrame.style.display = 'none';
+        }
       }
     }
 
