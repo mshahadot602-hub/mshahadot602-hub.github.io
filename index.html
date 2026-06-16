@@ -252,7 +252,7 @@ h1, h2, h3, h4 {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
+  gap: var(--space-lg);
   flex-wrap: nowrap;
   white-space: nowrap;
 }
@@ -333,7 +333,7 @@ h1, h2, h3, h4 {
 }
 .login-btn-fixed:active { transform: translateY(0); }
 /* Avatar state */
-.login-btn-fixed.is-avatar {
+#loginBtnFixed.is-avatar {
   padding: 3px;
   width: 38px; height: 38px;
   border-radius: 50%;
@@ -342,16 +342,16 @@ h1, h2, h3, h4 {
   background: var(--surface-0);
   display: flex; align-items: center; justify-content: center;
 }
-.login-btn-fixed.is-avatar img {
+#loginBtnFixed.is-avatar img {
   width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
 }
-.login-btn-fixed.is-avatar:hover {
+#loginBtnFixed.is-avatar:hover {
   border-color: var(--accent);
   box-shadow: var(--shadow-glass-md);
   transform: scale(1.08);
 }
 /* Avatar state */
-.login-btn-fixed.is-avatar {
+#loginBtnFixed.is-avatar {
   padding: 3px;
   width: 38px; height: 38px;
   border-radius: 50%;
@@ -360,17 +360,17 @@ h1, h2, h3, h4 {
   background: var(--surface-0);
   display: flex; align-items: center; justify-content: center;
 }
-.login-btn-fixed.is-avatar img {
+#loginBtnFixed.is-avatar img {
   width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
 }
-.login-btn-fixed.is-avatar:hover {
+#loginBtnFixed.is-avatar:hover {
   border-color: var(--accent);
   box-shadow: var(--shadow-glass-md);
   transform: scale(1.08);
 }
 
 /* Hero state: white text, translucent */
-body:has(.nav.nav-hero) .login-btn-fixed {
+body:has(.nav.nav-hero) #loginBtnFixed {
   color: #fff;
   border-color: oklch(100% 0 0 / 0.25);
   background: oklch(100% 0 0 / 0.08);
@@ -378,7 +378,7 @@ body:has(.nav.nav-hero) .login-btn-fixed {
   -webkit-backdrop-filter: blur(20px);
   box-shadow: none;
 }
-body:has(.nav.nav-hero) .login-btn-fixed:hover {
+body:has(.nav.nav-hero) #loginBtnFixed:hover {
   background: oklch(100% 0 0 / 0.15);
   border-color: oklch(100% 0 0 / 0.4);
 }
@@ -1662,7 +1662,7 @@ body:has(.nav.nav-hero) .login-btn-fixed:hover {
 /* ============================================
    Avatar Login Button & Dropdown
    ============================================ */
-.login-btn-fixed.is-avatar {
+#loginBtnFixed.is-avatar {
   width: 40px;
   height: 40px;
   padding: 0;
@@ -1672,7 +1672,7 @@ body:has(.nav.nav-hero) .login-btn-fixed:hover {
   align-items: center;
   justify-content: center;
 }
-.login-btn-fixed.is-avatar img {
+#loginBtnFixed.is-avatar img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1941,18 +1941,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <div class="ambient-dots" aria-hidden="true"></div>
 
-<!-- Standalone Login Button -->
-<!-- Login / Avatar Button (JS-managed) -->
-<a href="user-system/login.html" class="login-btn-fixed" id="loginBtnFixed" data-i18n="nav_login">登录</a>
-
-<!-- Avatar Dropdown Menu -->
-<div class="avatar-dropdown" id="avatarDropdown" style="display:none;position:fixed;top:68px;right:114px;z-index:1003;background:rgba(255,255,255,0.42);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:1px solid rgba(255,255,255,0.35);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.12);min-width:180px;padding:4px;">
-  <a href="user-system/profile.html" style="display:flex;align-items:center;gap:10px;padding:12px 18px;text-decoration:none;color:var(--text-primary);font-size:15px;line-height:1.4;white-space:nowrap;transition:background 150ms,border-radius 150ms;cursor:pointer;min-height:44px;border-radius:10px;margin:2px 4px;">&#128100; 我的信息</a>
-  <a href="javascript:void(0)" onclick="return false" style="display:flex;align-items:center;gap:10px;padding:12px 18px;text-decoration:none;color:#fff;font-size:15px;line-height:1.4;white-space:nowrap;cursor:not-allowed;min-height:44px;border-radius:10px;margin:2px 4px;opacity:0.5;">&#9729; 我的网盘</a>
-  <a href="user-system/settings.html" style="display:flex;align-items:center;gap:10px;padding:12px 18px;text-decoration:none;color:var(--text-primary);font-size:15px;line-height:1.4;white-space:nowrap;transition:background 150ms,border-radius 150ms;cursor:pointer;min-height:44px;border-radius:10px;margin:2px 4px;">&#9881; 账号设置</a>
-  <a href="javascript:void(0)" id="avatarLogoutBtn" style="display:flex;align-items:center;gap:10px;padding:12px 18px;text-decoration:none;color:#c0392b;font-size:15px;line-height:1.4;white-space:nowrap;transition:background 150ms,border-radius 150ms;cursor:pointer;min-height:44px;border-radius:10px;margin:2px 4px;">&#10162; 退出账号</a>
-</div>
-
 <!-- Navigation -->
 <nav class="nav" id="nav">
   <div class="nav-inner">
@@ -1991,6 +1979,17 @@ document.addEventListener('DOMContentLoaded', function() {
         <a href="javascript:void(0)" data-lang="pt" onclick="applyLanguage('pt');document.getElementById('langDropdown').classList.remove('show');return false;">🇧🇷 Português</a>
         <a href="javascript:void(0)" data-lang="bo" onclick="applyLanguage('bo');document.getElementById('langDropdown').classList.remove('show');return false;">བོད་སྐད།</a>
         <a href="javascript:void(0)" data-lang="ug" onclick="applyLanguage('ug');document.getElementById('langDropdown').classList.remove('show');return false;">ئۇيغۇرچە</a>
+      </div>
+    </div>
+
+    <!-- Login Button in Nav -->
+    <div style="position:relative;margin-left:var(--space-sm);flex-shrink:0;">
+      <a href="user-system/login.html" id="loginBtnFixed" style="display:inline-flex;align-items:center;padding:9px 22px;background:var(--glass-bg);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:0.5px solid var(--border-glass);border-radius:100px;font-size:var(--text-sm);font-weight:500;color:var(--text-secondary);box-shadow:var(--shadow-glass-sm);text-decoration:none;white-space:nowrap;" data-i18n="nav_login">登录</a>
+      <div class="avatar-dropdown" id="avatarDropdown" style="display:none;position:absolute;top:100%;right:0;margin-top:8px;z-index:1003;background:rgba(255,255,255,0.42);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:1px solid rgba(255,255,255,0.35);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.12);min-width:180px;padding:4px;">
+        <a href="user-system/profile.html" style="display:flex;align-items:center;gap:10px;padding:12px 18px;text-decoration:none;color:var(--text-primary);font-size:15px;white-space:nowrap;border-radius:10px;margin:2px 4px;">&#128100; 我的信息</a>
+        <a href="javascript:void(0)" onclick="return false" style="display:flex;align-items:center;gap:10px;padding:12px 18px;text-decoration:none;color:#fff;font-size:15px;white-space:nowrap;cursor:not-allowed;border-radius:10px;margin:2px 4px;opacity:0.5;">&#9729; 我的网盘</a>
+        <a href="user-system/settings.html" style="display:flex;align-items:center;gap:10px;padding:12px 18px;text-decoration:none;color:var(--text-primary);font-size:15px;white-space:nowrap;border-radius:10px;margin:2px 4px;">&#9881; 账号设置</a>
+        <a href="javascript:void(0)" id="avatarLogoutBtn" style="display:flex;align-items:center;gap:10px;padding:12px 18px;text-decoration:none;color:#c0392b;font-size:15px;white-space:nowrap;border-radius:10px;margin:2px 4px;">&#10162; 退出账号</a>
       </div>
     </div>
 
