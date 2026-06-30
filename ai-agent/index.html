@@ -907,10 +907,14 @@ async function sendMessage() {
     messagesEl.appendChild(createMessageElement(data.reply, 'ai', getTimeString()));
     scrollToBottom();
   } catch (err) {
-    console.error('发送失败:', err);
+    console.error('请求失败:', err.message);
     removeTypingIndicator();
+    let errMsg = '请求失败，请稍后重试。';
+    if (err.message.includes('Failed to fetch')) errMsg = '网络连接失败，请检查网络。';
+    else if (err.message.includes('429')) errMsg = '请求过于频繁，请稍等再试。';
+    else if (err.message.includes('401')) errMsg = 'API密钥错误，请联系管理员。';
     messagesEl.appendChild(
-      createMessageElement('抱歉，网络连接出现问题，请稍后重试。', 'ai', getTimeString())
+      createMessageElement(errMsg + ' (' + err.message + ')', 'ai', getTimeString())
     );
     scrollToBottom();
   } finally {
