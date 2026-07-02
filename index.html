@@ -158,6 +158,7 @@ body {
   width: 40px; height: 40px; border-radius: 10px;
   display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
 }
+.drive-icon.personal { background: rgba(168,85,247,0.2); color: #a855f7; }
 .drive-icon.share  { background: rgba(99,102,241,0.2); color: #818cf8; }
 .drive-icon.share2 { background: rgba(34,197,94,0.2); color: #4ade80; }
 .drive-icon.share3 { background: rgba(251,146,60,0.2); color: #fb923c; }
@@ -395,6 +396,7 @@ body {
       </div>
       <button class="btn btn-info btn-sm" onclick="showFindModal()">🔍 高级查找</button>
       <button class="btn btn-accent btn-sm" onclick="showMountModal()">💾 挂载管理</button>
+      <button class="btn btn-outline btn-sm" onclick="showShareManageModal()">🔗 分享管理</button>
       <button class="btn btn-warn btn-sm" onclick="refreshAll()">🔄 刷新服务器</button>
       <div class="user-badge" id="userBadge"></div>
       <button class="logout-btn" onclick="doLogout()">退出</button>
@@ -481,6 +483,45 @@ body {
     <div class="modal-actions" style="margin-top:12px">
       <button class="btn btn-outline btn-sm" onclick="closeModal('mountModal')">关闭</button>
       <button class="btn btn-outline btn-sm" onclick="loadMounts()">刷新状态</button>
+    </div>
+  </div>
+</div>
+
+<!-- 分享结果弹窗 -->
+<div class="modal-overlay" id="shareResultModal" style="display:none">
+  <div class="modal" style="min-width:460px">
+    <h3>🔗 分享成功</h3>
+    <div style="text-align:center;padding:16px 0">
+      <div style="font-size:18px;font-weight:600;color:#f0f0f0;margin-bottom:6px" id="shareFileName"></div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.4)" id="shareFileSize"></div>
+    </div>
+    <label>分享链接（点击复制）</label>
+    <div style="display:flex;gap:8px">
+      <input type="text" id="shareLinkInput" readonly style="flex:1;padding:10px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(139,92,246,0.4);border-radius:8px;color:#a78bfa;font-size:13px;outline:none;cursor:pointer" onclick="copyShareLink()">
+      <button class="btn btn-primary btn-sm" onclick="copyShareLink()" style="flex-shrink:0">复制</button>
+    </div>
+    <div style="margin-top:8px;text-align:center">
+      <span id="copyHint" style="font-size:12px;color:#4ade80;opacity:0;transition:opacity 0.3s">已复制到剪贴板</span>
+    </div>
+    <div style="margin-top:6px;padding:8px 12px;background:rgba(251,191,36,0.08);border-radius:8px;font-size:12px;color:#fbbf24">
+      提示：任何人获得此链接即可下载文件，请妥善保管。
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('shareResultModal')">关闭</button>
+    </div>
+  </div>
+</div>
+
+<!-- 分享管理弹窗 -->
+<div class="modal-overlay" id="shareManageModal" style="display:none">
+  <div class="modal" style="min-width:500px;max-height:70vh">
+    <h3>🔗 我的分享</h3>
+    <div id="shareListContainer">
+      <div style="padding:20px;text-align:center;color:rgba(255,255,255,0.3)">加载中...</div>
+    </div>
+    <div class="modal-actions" style="margin-top:8px">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('shareManageModal')">关闭</button>
+      <button class="btn btn-outline btn-sm" onclick="loadShares()">刷新</button>
     </div>
   </div>
 </div>
@@ -572,19 +613,6 @@ async function doLogin() {
   btn.disabled = true;
   btn.textContent = '登录中...';
 
-  // 本地账号白名单：果果、KK，密码统一为 zizai123
-  const localUsers = { '果果': 'zizai123', 'KK': 'zizai123' };
-  if (localUsers[user] && localUsers[user] === pass) {
-    state.token = 'local_' + btoa(user + '_' + Date.now());
-    state.username = user;
-    sessionStorage.setItem('zizai_token', state.token);
-    sessionStorage.setItem('zizai_user', state.username);
-    showMainApp();
-    btn.disabled = false;
-    btn.textContent = '登 录';
-    return;
-  }
-
   try {
     const form = new URLSearchParams();
     form.append('username', user);
@@ -638,7 +666,10 @@ function doLogout() {
 function init() {
   renderDrives();
   loadUsage();
-  setInterval(loadUsage, 60000);
+  setInterval(() => {
+    if (state.currentShare === 'personal') loadPersonalUsage();
+    else loadUsage();
+  }, 60000);
   loadMountsSilent();
 
   const dropZone = document.getElementById('dropZone');
@@ -653,7 +684,16 @@ function init() {
 
 function renderDrives() {
   const container = document.getElementById('driveList');
-  container.innerHTML = shares.map(s => `
+  const personal = `
+    <div class="drive-item${state.currentShare === 'personal' ? ' active' : ''}" onclick="selectPersonalDrive()">
+      <div class="drive-icon personal">👤</div>
+      <div class="drive-info">
+        <div class="drive-name">个人网盘</div>
+        <div class="drive-label">1TB 私有空间</div>
+      </div>
+    </div>
+  `;
+  container.innerHTML = personal + shares.map(s => `
     <div class="drive-item${state.currentShare === s.key ? ' active' : ''}" onclick="selectDrive('${s.key}')">
       <div class="drive-icon ${s.cls}">${s.icon}</div>
       <div class="drive-info">
@@ -671,6 +711,17 @@ async function selectDrive(key) {
   state.selectedFiles.clear();
   state.searchMode = false;
   renderDrives();
+  loadUsage();
+  await loadFiles();
+}
+
+async function selectPersonalDrive() {
+  state.currentShare = 'personal';
+  state.currentPath = '';
+  state.selectedFiles.clear();
+  state.searchMode = false;
+  renderDrives();
+  await loadPersonalUsage();
   await loadFiles();
 }
 
@@ -682,8 +733,29 @@ async function loadFiles() {
   updateBreadcrumb();
   updateDeleteBtn();
 
+  if (state.currentShare === 'personal') {
+    await loadPersonalFiles();
+    return;
+  }
+
   try {
     const resp = await authFetch(`${API_BASE}/api/list/${state.currentShare}?path=${encodeURIComponent(state.currentPath)}`);
+    if (resp.status === 401) { doLogout(); return; }
+    if (!resp.ok) { showToast('加载失败', 'error'); return; }
+    const data = await resp.json();
+    if (data.error) { showToast(data.error, 'error'); return; }
+    state.files = data.items || [];
+    state.searchMode = false;
+    renderFiles();
+    updatePathInfo();
+  } catch (e) {
+    showToast('连接失败: ' + e.message, 'error');
+  }
+}
+
+async function loadPersonalFiles() {
+  try {
+    const resp = await authFetch(`${API_BASE}/api/personal/list?path=${encodeURIComponent(state.currentPath)}`);
     if (resp.status === 401) { doLogout(); return; }
     if (!resp.ok) { showToast('加载失败', 'error'); return; }
     const data = await resp.json();
@@ -760,6 +832,7 @@ function renderFiles() {
                     ? `<button class="action-btn" onclick="event.stopPropagation();enterFolder('${esc(f.name)}')">打开</button>`
                     : `<button class="action-btn" onclick="event.stopPropagation();downloadFile('${esc(f.name)}')">下载</button>`
                   }
+                  <button class="action-btn" onclick="event.stopPropagation();shareItem('${esc(f.name)}')">分享</button>
                   <button class="action-btn danger" onclick="event.stopPropagation();deleteItem('${esc(f.name)}')">删除</button>
                 </div>
               </td>
@@ -798,7 +871,8 @@ function navigateTo(idx) {
 
 function updateBreadcrumb() {
   const bc = document.getElementById('breadcrumb');
-  let html = `<span class="breadcrumb-item" onclick="state.currentPath='';state.searchMode=false;loadFiles()">🏠 ${state.currentShare || ''}</span>`;
+  const label = state.currentShare === 'personal' ? '个人网盘' : state.currentShare || '';
+  let html = `<span class="breadcrumb-item" onclick="state.currentPath='';state.searchMode=false;loadFiles()">🏠 ${label}</span>`;
   if (state.currentPath) {
     const parts = state.currentPath.split('/');
     parts.forEach((p, i) => {
@@ -829,7 +903,24 @@ async function startGlobalSearch() {
   if (!q) { showToast('请输入搜索关键词', 'info'); return; }
 
   const listEl = document.getElementById('fileList');
-  listEl.innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">正在全局搜索...</div></div>';
+  listEl.innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">正在搜索...</div></div>';
+
+  if (state.currentShare === 'personal') {
+    try {
+      const resp = await authFetch(`${API_BASE}/api/personal/search?q=${encodeURIComponent(q)}`);
+      if (resp.status === 401) { doLogout(); return; }
+      const data = await resp.json();
+      state.files = data.items || [];
+      state.searchMode = true;
+      state.currentPath = '';
+      state.selectedFiles.clear();
+      renderFiles();
+      updateBreadcrumb();
+      updatePathInfo();
+      showToast(state.files.length === 0 ? '未找到匹配的文件' : `找到 ${state.files.length} 个结果`, 'success');
+    } catch (e) { showToast('搜索失败', 'error'); }
+    return;
+  }
 
   try {
     const resp = await authFetch(`${API_BASE}/api/search_all?q=${encodeURIComponent(q)}`);
@@ -857,9 +948,13 @@ async function startGlobalSearch() {
 function showFindModal() {
   if (!state.currentShare) { showToast('请先选择一个盘符', 'error'); return; }
   const sel = document.getElementById('findShare');
-  sel.innerHTML = shares.map(s =>
-    `<option value="${s.key}"${s.key === state.currentShare ? ' selected' : ''}>${s.key} - ${s.label}</option>`
-  ).join('');
+  if (state.currentShare === 'personal') {
+    sel.innerHTML = '<option value="personal" selected>个人网盘</option>';
+  } else {
+    sel.innerHTML = shares.map(s =>
+      `<option value="${s.key}"${s.key === state.currentShare ? ' selected' : ''}>${s.key} - ${s.label}</option>`
+    ).join('');
+  }
   document.getElementById('findName').value = document.getElementById('searchInput').value || '';
   document.getElementById('findExt').value = '';
   document.getElementById('findMinSize').value = '';
@@ -901,8 +996,12 @@ async function execFind() {
   listEl.innerHTML = '<div class="empty-state"><div class="empty-icon">🔎</div><div class="empty-text">查找中...</div></div>';
   updateBreadcrumb();
 
+  const apiUrl = share === 'personal'
+    ? `${API_BASE}/api/personal/search?${params.toString()}`
+    : `${API_BASE}/api/find/${share}?${params.toString()}`;
+
   try {
-    const resp = await authFetch(`${API_BASE}/api/find/${share}?${params.toString()}`);
+    const resp = await authFetch(apiUrl);
     if (resp.status === 401) { doLogout(); return; }
     const data = await resp.json();
     state.files = data.items || [];
@@ -918,6 +1017,10 @@ async function execFind() {
 
 function downloadFile(name) {
   const fullPath = state.currentPath ? state.currentPath + '/' + name : name;
+  if (state.currentShare === 'personal') {
+    window.open(`${API_BASE}/api/personal/download?path=${encodeURIComponent(fullPath)}`, '_blank');
+    return;
+  }
   window.open(`${API_BASE}/api/download/${state.currentShare}?path=${encodeURIComponent(fullPath)}`, '_blank');
 }
 
@@ -926,8 +1029,13 @@ function downloadFile(name) {
 async function deleteItem(name) {
   if (!confirm(`确定要删除 "${name}" 吗？此操作不可撤销。`)) return;
   const fullPath = state.currentPath ? state.currentPath + '/' + name : name;
+
+  const apiUrl = state.currentShare === 'personal'
+    ? `${API_BASE}/api/personal/delete?path=${encodeURIComponent(fullPath)}`
+    : `${API_BASE}/api/delete/${state.currentShare}?path=${encodeURIComponent(fullPath)}`;
+
   try {
-    const resp = await authFetch(`${API_BASE}/api/delete/${state.currentShare}?path=${encodeURIComponent(fullPath)}`, { method: 'DELETE' });
+    const resp = await authFetch(apiUrl, { method: 'DELETE' });
     if (resp.status === 401) { doLogout(); return; }
     if (resp.ok) {
       showToast(`已删除: ${name}`, 'success');
@@ -947,7 +1055,10 @@ async function deleteSelected() {
   let ok = 0;
   for (const name of state.selectedFiles) {
     const p = state.currentPath ? state.currentPath + '/' + name : name;
-    try { const r = await authFetch(`${API_BASE}/api/delete/${state.currentShare}?path=${encodeURIComponent(p)}`, { method: 'DELETE' }); if (r.ok) ok++; } catch (e) {}
+    const apiUrl = state.currentShare === 'personal'
+      ? `${API_BASE}/api/personal/delete?path=${encodeURIComponent(p)}`
+      : `${API_BASE}/api/delete/${state.currentShare}?path=${encodeURIComponent(p)}`;
+    try { const r = await authFetch(apiUrl, { method: 'DELETE' }); if (r.ok) ok++; } catch (e) {}
   }
   showToast(`已删除 ${ok}/${state.selectedFiles.size}`, 'success');
   state.selectedFiles.clear();
@@ -958,7 +1069,10 @@ async function deleteSelected() {
 
 function showUploadModal() {
   if (!state.currentShare) { showToast('请先选择一个盘符', 'error'); return; }
-  document.getElementById('uploadPathLabel').textContent = state.currentShare + (state.currentPath ? '/' + state.currentPath : '/');
+  const label = state.currentShare === 'personal'
+    ? '个人网盘' + (state.currentPath ? '/' + state.currentPath : '/')
+    : state.currentShare + (state.currentPath ? '/' + state.currentPath : '/');
+  document.getElementById('uploadPathLabel').textContent = label;
   document.getElementById('uploadModal').style.display = 'flex';
   document.getElementById('uploadProgress').classList.remove('show');
   document.getElementById('uploadProgress').innerHTML = '';
@@ -985,8 +1099,12 @@ async function startUpload() {
   const fd = new FormData();
   state.pendingFiles.forEach(f => fd.append('files', f));
 
+  const apiUrl = state.currentShare === 'personal'
+    ? `${API_BASE}/api/personal/upload?path=${encodeURIComponent(state.currentPath)}`
+    : `${API_BASE}/api/upload/${state.currentShare}?path=${encodeURIComponent(state.currentPath)}`;
+
   try {
-    const resp = await authFetch(`${API_BASE}/api/upload/${state.currentShare}?path=${encodeURIComponent(state.currentPath)}`, { method: 'POST', body: fd });
+    const resp = await authFetch(apiUrl, { method: 'POST', body: fd });
     if (resp.status === 401) { doLogout(); return; }
     const result = await resp.json();
     state.pendingFiles.forEach(f => {
@@ -1021,8 +1139,13 @@ function showMkdirModal() {
 async function createFolder() {
   const name = document.getElementById('mkdirName').value.trim();
   if (!name) { showToast('请输入文件夹名称', 'error'); return; }
+
+  const apiUrl = state.currentShare === 'personal'
+    ? `${API_BASE}/api/personal/mkdir?path=${encodeURIComponent(state.currentPath)}&name=${encodeURIComponent(name)}`
+    : `${API_BASE}/api/mkdir/${state.currentShare}?path=${encodeURIComponent(state.currentPath)}&name=${encodeURIComponent(name)}`;
+
   try {
-    const resp = await authFetch(`${API_BASE}/api/mkdir/${state.currentShare}?path=${encodeURIComponent(state.currentPath)}&name=${encodeURIComponent(name)}`, { method: 'POST' });
+    const resp = await authFetch(apiUrl, { method: 'POST' });
     if (resp.status === 401) { doLogout(); return; }
     if (resp.ok) {
       showToast(`已创建: ${name}`, 'success');
@@ -1166,6 +1289,166 @@ async function loadUsage() {
     document.getElementById('usageDetail').innerHTML = `已用 ${data.used_str}<br>共 ${data.total_str}`;
   } catch (e) {
     document.getElementById('usageDetail').textContent = '获取中...';
+  }
+}
+
+async function loadPersonalUsage() {
+  try {
+    const resp = await authFetch(`${API_BASE}/api/personal/usage`);
+    if (resp.status === 401) { doLogout(); return; }
+    const data = await resp.json();
+    const pct = data.percent > 0 ? `${data.percent}%` : '--';
+    document.getElementById('usagePercent').textContent = pct;
+    document.getElementById('usageBar').style.width = data.percent > 0 ? `${data.percent}%` : '0%';
+    document.getElementById('usageDetail').innerHTML = `已用 ${data.used_str}<br>共 ${data.total_str}`;
+  } catch (e) {
+    document.getElementById('usageDetail').textContent = '获取中...';
+  }
+}
+
+// ==================== 分享功能 ====================
+
+async function shareItem(name) {
+  if (!state.currentShare) return;
+  showToast('正在创建分享...', 'info');
+  
+  const fullPath = state.currentPath ? state.currentPath + '/' + name : name;
+  const shareType = state.currentShare === 'personal' ? 'personal' : 'shared';
+  const shareName = shareType === 'personal' ? '' : state.currentShare;
+
+  const form = new URLSearchParams();
+  form.append('share_type', shareType);
+  if (shareName) form.append('share_name', shareName);
+  form.append('path', fullPath);
+
+  try {
+    const resp = await authFetch(`${API_BASE}/api/share/create`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: form.toString()
+    });
+    if (resp.status === 401) { doLogout(); return; }
+    const data = await resp.json();
+    if (data.link) {
+      showShareResult(data);
+    } else {
+      showToast('分享失败: ' + (data.error || '未知错误'), 'error');
+    }
+  } catch (e) {
+    showToast('分享失败: ' + e.message, 'error');
+  }
+}
+
+function showShareResult(data) {
+  document.getElementById('shareFileName').textContent = data.file_name + (data.is_folder ? '（文件夹）' : '');
+  document.getElementById('shareFileSize').textContent = data.file_size_str;
+  document.getElementById('shareLinkInput').value = data.link;
+  document.getElementById('copyHint').style.opacity = '0';
+  document.getElementById('shareResultModal').style.display = 'flex';
+}
+
+function copyShareLink() {
+  const input = document.getElementById('shareLinkInput');
+  input.select();
+  input.setSelectionRange(0, 99999);
+  try {
+    navigator.clipboard.writeText(input.value);
+    const hint = document.getElementById('copyHint');
+    hint.style.opacity = '1';
+    setTimeout(() => hint.style.opacity = '0', 2000);
+  } catch (e) {
+    showToast('复制失败，请手动复制', 'error');
+  }
+}
+
+function showShareManageModal() {
+  document.getElementById('shareManageModal').style.display = 'flex';
+  loadShares();
+}
+
+async function loadShares() {
+  const container = document.getElementById('shareListContainer');
+  container.innerHTML = '<div style="padding:20px;text-align:center;color:rgba(255,255,255,0.3)">加载中...</div>';
+  
+  try {
+    const resp = await authFetch(`${API_BASE}/api/share/list`);
+    if (resp.status === 401) { doLogout(); return; }
+    const data = await resp.json();
+    const items = data.items || [];
+    
+    if (items.length === 0) {
+      container.innerHTML = '<div style="padding:40px;text-align:center;color:rgba(255,255,255,0.2)"><div style="font-size:48px;margin-bottom:12px">🔗</div><div>暂无分享链接</div></div>';
+      return;
+    }
+    
+    container.innerHTML = `
+      <div style="max-height:50vh;overflow-y:auto;margin:-12px -24px 0;padding:12px 24px">
+        <table style="width:100%;border-collapse:collapse">
+          <thead>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.05)">
+              <th style="text-align:left;padding:8px 12px;font-size:11px;color:rgba(255,255,255,0.3)">文件</th>
+              <th style="text-align:left;padding:8px 12px;font-size:11px;color:rgba(255,255,255,0.3)">大小</th>
+              <th style="text-align:left;padding:8px 12px;font-size:11px;color:rgba(255,255,255,0.3)">创建时间</th>
+              <th style="text-align:left;padding:8px 12px;font-size:11px;color:rgba(255,255,255,0.3)">下载</th>
+              <th style="text-align:left;padding:8px 12px;font-size:11px;color:rgba(255,255,255,0.3)">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${items.map(item => `
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.03)">
+                <td style="padding:12px 12px;font-size:13px">
+                  <div style="display:flex;align-items:flex-start;gap:8px">
+                    <span style="font-size:16px">${item.is_folder ? '📁' : '📄'}</span>
+                    <div>
+                      <div style="font-weight:500;color:#e0e0e0">${esc(item.file_name)}${item.is_folder ? '（文件夹）' : ''}</div>
+                      <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px">
+                        <a href="${item.link}" target="_blank" style="color:#818cf8;text-decoration:none">${item.link.replace('http://192.168.1.23:8889/s/', '.../s/')}</a>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td style="padding:12px 12px;font-size:12px;color:rgba(255,255,255,0.5)">${item.file_size_str}</td>
+                <td style="padding:12px 12px;font-size:12px;color:rgba(255,255,255,0.5)">${item.created_at}</td>
+                <td style="padding:12px 12px;font-size:12px;color:rgba(255,255,255,0.5)">${item.downloads}</td>
+                <td style="padding:12px 12px">
+                  <button class="action-btn" onclick="copyShareLinkText('${item.link}')" style="padding:4px 10px">复制</button>
+                  <button class="action-btn danger" onclick="revokeShare('${item.share_id}')" style="padding:4px 10px">撤销</button>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    `;
+  } catch (e) {
+    container.innerHTML = '<div style="padding:20px;text-align:center;color:#f87171">加载失败: ' + e.message + '</div>';
+  }
+}
+
+function copyShareLinkText(link) {
+  try {
+    navigator.clipboard.writeText(link);
+    showToast('链接已复制到剪贴板', 'success');
+  } catch (e) {
+    showToast('复制失败，请手动复制', 'error');
+  }
+}
+
+async function revokeShare(shareId) {
+  if (!confirm('确定要撤销此分享吗？链接将立即失效。')) return;
+  
+  try {
+    const resp = await authFetch(`${API_BASE}/api/share/revoke/${shareId}`, { method: 'DELETE' });
+    if (resp.status === 401) { doLogout(); return; }
+    if (resp.ok) {
+      showToast('分享已撤销', 'success');
+      loadShares();
+    } else {
+      const err = await resp.json();
+      showToast('撤销失败: ' + err.error, 'error');
+    }
+  } catch (e) {
+    showToast('撤销失败: ' + e.message, 'error');
   }
 }
 
