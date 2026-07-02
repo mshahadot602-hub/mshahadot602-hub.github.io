@@ -572,6 +572,19 @@ async function doLogin() {
   btn.disabled = true;
   btn.textContent = '登录中...';
 
+  // 本地账号白名单：果果、KK，密码统一为 zizai123
+  const localUsers = { '果果': 'zizai123', 'KK': 'zizai123' };
+  if (localUsers[user] && localUsers[user] === pass) {
+    state.token = 'local_' + btoa(user + '_' + Date.now());
+    state.username = user;
+    sessionStorage.setItem('zizai_token', state.token);
+    sessionStorage.setItem('zizai_user', state.username);
+    showMainApp();
+    btn.disabled = false;
+    btn.textContent = '登 录';
+    return;
+  }
+
   try {
     const form = new URLSearchParams();
     form.append('username', user);
