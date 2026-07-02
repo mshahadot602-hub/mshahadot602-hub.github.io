@@ -1,0 +1,2025 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>审片 - 专属链接</title>
+<style>
+:root {
+  --bg: #0a0a0c;
+  --surface: rgba(255,255,255,0.04);
+  --surface-hover: rgba(255,255,255,0.08);
+  --glass: rgba(255,255,255,0.06);
+  --glass-border: rgba(255,255,255,0.08);
+  --text: #e8e8ed;
+  --text-secondary: rgba(255,255,255,0.55);
+  --text-muted: rgba(255,255,255,0.35);
+  --accent: #d4a853;
+  --accent-dim: rgba(212,168,83,0.2);
+  --accent-glow: rgba(212,168,83,0.12);
+  --danger: #e05555;
+  --danger-dim: rgba(224,85,85,0.12);
+  --success: #4caf84;
+  --success-dim: rgba(76,175,132,0.12);
+  --radius-sm: 10px;
+  --radius: 16px;
+  --radius-lg: 22px;
+  --shadow-glass: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);
+  --blur: blur(24px) saturate(180%);
+  --blur-strong: blur(40px) saturate(180%);
+  --transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: -40%; left: -20%;
+  width: 80vw; height: 80vw;
+  background: radial-gradient(circle, rgba(212,168,83,0.05) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -30%; right: -15%;
+  width: 60vw; height: 60vw;
+  background: radial-gradient(circle, rgba(212,168,83,0.03) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 主容器 */
+.container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 40px 32px 80px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* 顶部信息栏 */
+.header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.site-title {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  opacity: 0.7;
+}
+.project-title {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.project-tags {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.tag {
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+}
+.tag-type {
+  background: rgba(212,168,83,0.12);
+  color: var(--accent);
+  border: 1px solid rgba(212,168,83,0.25);
+}
+.tag-version {
+  background: rgba(255,255,255,0.05);
+  color: var(--text-secondary);
+  border: 1px solid var(--glass-border);
+}
+.tag-status-pending { background: rgba(212,168,83,0.1); color: var(--accent); border: 1px solid rgba(212,168,83,0.25); }
+.tag-status-approved { background: rgba(76,175,132,0.15); color: var(--success); border: 1px solid rgba(76,175,132,0.25); }
+.tag-status-revision { background: rgba(224,85,85,0.15); color: var(--danger); border: 1px solid rgba(224,85,85,0.25); }
+
+/* 视频播放区 */
+.player-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.player-card {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  background: var(--glass);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border: 1px solid var(--glass-border);
+  overflow: hidden;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+  position: relative;
+}
+.player-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.player-card video {
+  width: 100%;
+  display: block;
+  background: #000;
+  outline: none;
+  position: relative;
+  z-index: 0;
+}
+
+/* 水印 */
+.watermark {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 5;
+  max-width: 120px;
+  max-height: 60px;
+  opacity: 0.7;
+  filter: brightness(0) invert(1);
+  pointer-events: none;
+}
+
+/* 标注画布 */
+.annotation-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+}
+.annotation-canvas.drawing-mode {
+  cursor: crosshair;
+}
+
+/* 文字标注输入框 */
+.text-anno-input {
+  position: absolute;
+  z-index: 10;
+  background: rgba(22,22,24,0.92);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border);
+  border-radius: 6px;
+  color: #fff;
+  font-size: 16px;
+  font-family: inherit;
+  padding: 6px 10px;
+  outline: none;
+  min-width: 120px;
+}
+.text-anno-input::placeholder {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* 标注工具栏 */
+.annotation-toolbar {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.annotation-toolbar.show {
+  display: flex;
+}
+.tool-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+  position: relative;
+}
+.tool-btn:hover {
+  background: var(--surface-hover);
+  border-color: rgba(255,255,255,0.15);
+  color: var(--text);
+}
+.tool-btn.active {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.tool-btn svg {
+  width: 16px;
+  height: 16px;
+}
+.color-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+/* 占位状态 */
+.placeholder {
+  aspect-ratio: 16 / 9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.3);
+  color: var(--text-muted);
+  gap: 12px;
+}
+.placeholder svg {
+  width: 56px; height: 56px;
+  opacity: 0.2;
+}
+.placeholder p {
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+
+/* 操作按钮区 */
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.btn {
+  padding: 14px 32px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  background: var(--glass);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: inherit;
+}
+.btn:hover { background: var(--surface-hover); border-color: rgba(255,255,255,0.15); transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+.btn-approve {
+  background: rgba(76,175,132,0.08);
+  border-color: rgba(76,175,132,0.25);
+  color: var(--success);
+}
+.btn-approve:hover {
+  background: rgba(76,175,132,0.14);
+  border-color: rgba(76,175,132,0.4);
+  box-shadow: 0 8px 24px rgba(76,175,132,0.12);
+}
+.btn-revise {
+  background: rgba(224,85,85,0.08);
+  border-color: rgba(224,85,85,0.25);
+  color: var(--danger);
+}
+.btn-revise:hover {
+  background: rgba(224,85,85,0.14);
+  border-color: rgba(224,85,85,0.4);
+  box-shadow: 0 8px 24px rgba(224,85,85,0.12);
+}
+.btn:disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* 反馈结果提示 */
+.feedback-result {
+  text-align: center;
+  padding: 16px 24px;
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 24px;
+  animation: popIn 0.4s ease;
+}
+@keyframes popIn { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+.feedback-result.approved {
+  background: rgba(76,175,132,0.1);
+  border: 1px solid rgba(76,175,132,0.2);
+  color: var(--success);
+}
+.feedback-result.revision {
+  background: rgba(224,85,85,0.1);
+  border: 1px solid rgba(224,85,85,0.2);
+  color: var(--danger);
+}
+
+/* 加载与错误 */
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 16px;
+  color: var(--text-muted);
+}
+.spinner {
+  width: 36px; height: 36px;
+  border: 2.5px solid rgba(255,255,255,0.1);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.error-404 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  text-align: center;
+  gap: 12px;
+}
+.error-404 .code {
+  font-size: 72px;
+  font-weight: 700;
+  letter-spacing: -2px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.05) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.error-404 h2 { font-size: 20px; font-weight: 500; color: var(--text-secondary); }
+.error-404 p { font-size: 14px; color: var(--text-muted); max-width: 400px; line-height: 1.6; }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 300;
+  padding: 12px 24px;
+  border-radius: 24px;
+  background: rgba(30,30,40,0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  animation: toastIn 0.3s ease;
+  pointer-events: none;
+}
+@keyframes toastIn { 0% { opacity: 0; transform: translateX(-50%) translateY(12px); } 100% { opacity: 1; transform: translateX(-50%) translateY(0); } }
+
+/* 两栏布局 */
+.main-layout {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+.left-panel {
+  flex: 1;
+  min-width: 0;
+}
+.right-panel {
+  width: 340px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 24px;
+  max-height: calc(100vh - 48px);
+  display: flex;
+  flex-direction: column;
+}
+
+/* 反馈面板 */
+.feedback-panel {
+  background: var(--glass);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-glass);
+}
+.feedback-panel-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--glass-border);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.feedback-panel-header .count {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+.feedback-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 120px;
+}
+.feedback-list::-webkit-scrollbar {
+  width: 4px;
+}
+.feedback-list::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+}
+.feedback-empty {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+  padding: 32px 16px;
+}
+
+/* 单条反馈 */
+.feedback-item {
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--glass-border);
+  transition: background var(--transition);
+}
+.feedback-item:hover {
+  background: rgba(255,255,255,0.06);
+}
+.feedback-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.feedback-time-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: var(--accent-dim);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 500;
+  font-family: 'SF Mono', 'Consolas', monospace;
+  border: 1px solid rgba(212,168,83,0.2);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.feedback-time-btn:hover {
+  background: rgba(212,168,83,0.2);
+  border-color: rgba(212,168,83,0.35);
+}
+.feedback-time-btn svg {
+  width: 12px;
+  height: 12px;
+}
+.feedback-item-time {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.feedback-comment {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.feedback-annotations {
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: color 0.2s;
+}
+.feedback-annotations:hover {
+  color: var(--accent);
+}
+.anno-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.3);
+  flex-shrink: 0;
+}
+
+/* 反馈回复区 */
+.feedback-reply-area {
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid var(--border);
+  display: none;
+}
+.feedback-reply-area.show {
+  display: block;
+}
+.feedback-reply-list {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 8px;
+}
+.reply-item {
+  display: flex;
+  gap: 8px;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.4;
+}
+.reply-item + .reply-item {
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+.reply-username {
+  font-weight: 600;
+  color: var(--accent);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.reply-text {
+  color: var(--text-secondary);
+  word-break: break-word;
+}
+.reply-time {
+  font-size: 10px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  margin-left: auto;
+}
+.reply-input-row {
+  display: flex;
+  gap: 6px;
+}
+.reply-input-row input {
+  flex: 1;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 12px;
+  color: var(--text);
+  outline: none;
+}
+.reply-input-row input:focus {
+  border-color: var(--accent);
+}
+.reply-input-row .btn-reply-send {
+  background: var(--accent);
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-weight: 600;
+}
+.reply-input-row .btn-reply-send:hover {
+  opacity: 0.85;
+}
+.fb-reply-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: color 0.2s, background 0.2s;
+  margin-top: 4px;
+}
+.fb-reply-btn:hover {
+  color: var(--accent);
+  background: rgba(255,255,255,0.05);
+}
+.fb-reply-btn svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* 评论输入区 */
+.comment-box {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  position: relative;
+}
+.comment-input-wrap {
+  flex: 1;
+  position: relative;
+}
+.comment-input {
+  width: 100%;
+  padding: 12px 14px;
+  padding-right: 80px;
+  border-radius: var(--radius);
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+  resize: none;
+  outline: none;
+  transition: border-color var(--transition);
+  line-height: 1.4;
+  min-height: 44px;
+  max-height: 100px;
+}
+.comment-input:focus {
+  border-color: var(--accent);
+}
+.comment-input::placeholder {
+  color: var(--text-muted);
+}
+.comment-timestamp {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: 'SF Mono', 'Consolas', monospace;
+  pointer-events: none;
+}
+.btn-send {
+  padding: 12px 20px;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  background: rgba(212,168,83,0.12);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: inherit;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.btn-send:hover {
+  background: rgba(212,168,83,0.22);
+  box-shadow: 0 4px 16px rgba(212,168,83,0.15);
+}
+.btn-send:disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* 表情面板 */
+.emoji-toggle {
+  padding: 12px 10px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  background: var(--glass);
+  color: var(--text-secondary);
+  font-size: 18px;
+  cursor: pointer;
+  transition: all var(--transition);
+  line-height: 1;
+  flex-shrink: 0;
+}
+.emoji-toggle:hover {
+  background: var(--surface-hover);
+  border-color: rgba(255,255,255,0.15);
+}
+.emoji-panel {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  margin-bottom: 8px;
+  padding: 10px;
+  background: rgba(20,20,30,0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  z-index: 100;
+  max-width: 320px;
+  gap: 4px;
+}
+.emoji-panel.show {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+}
+.emoji-item {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+.emoji-item:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .container { padding: 24px 16px 60px; }
+  .project-title { font-size: 22px; }
+  .btn { padding: 12px 24px; font-size: 14px; }
+  .actions { gap: 10px; flex-wrap: wrap; }
+}
+@media (max-width: 480px) {
+  .actions { flex-direction: column; align-items: stretch; }
+  .btn { justify-content: center; }
+}
+
+/* 留言板 */
+.message-panel {
+  background: var(--glass);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-glass);
+  margin-top: 16px;
+}
+.message-panel-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--glass-border);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.message-panel-header .count {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+.message-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 260px;
+}
+.message-list::-webkit-scrollbar {
+  width: 4px;
+}
+.message-list::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+}
+.message-empty {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+  padding: 24px 0;
+}
+.message-item {
+  background: rgba(255,255,255,0.03);
+  border-radius: var(--radius);
+  padding: 12px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.message-item .msg-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.message-item .msg-username {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+}
+.message-item .msg-time {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.message-item .msg-text {
+  font-size: 13px;
+  color: var(--text-primary);
+  line-height: 1.5;
+  word-break: break-word;
+}
+.message-input-area {
+  border-top: 1px solid var(--glass-border);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.message-name {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.message-name:focus { border-color: var(--accent); }
+.message-name::placeholder { color: var(--text-muted); }
+.message-compose {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}
+.message-textarea {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-family: inherit;
+  resize: none;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.message-textarea:focus { border-color: var(--accent); }
+.message-textarea::placeholder { color: var(--text-muted); }
+.btn-message-send {
+  padding: 10px 16px;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  flex-shrink: 0;
+}
+.btn-message-send:hover { opacity: 0.85; }
+.btn-message-send:disabled { opacity: 0.4; cursor: not-allowed; }
+</style>
+  <script src="api-config.js"></script>
+</head>
+<body>
+
+<!-- 加载中 -->
+<div class="loading-screen" id="loadingScreen">
+  <div class="spinner"></div>
+  <p>正在加载审片页面...</p>
+</div>
+
+<!-- 主内容 -->
+<div class="container" id="mainContent" style="display:none;">
+  <div class="header">
+    <div class="site-title">自在审片系统</div>
+    <h1 class="project-title" id="projectTitle">--</h1>
+    <div class="project-tags" id="projectTags"></div>
+  </div>
+
+  <div class="version-selector" id="versionSelector" style="display:none; text-align:center; margin-bottom:16px;">
+    <label for="versionSelect" style="color:var(--text-secondary); font-size:13px; margin-right:8px;">审片版本</label>
+    <select id="versionSelect" style="padding:8px 16px; border-radius:var(--radius-sm); background:var(--glass); color:var(--text); border:1px solid var(--glass-border); font-size:14px; font-family:inherit; cursor:pointer; outline:none;"></select>
+  </div>
+
+  <div class="main-layout">
+    <div class="left-panel">
+      <div class="player-wrapper">
+        <div class="player-card" id="playerCard">
+          <img class="watermark" src="/watermark.png" alt="">
+          <div class="placeholder" id="videoPlaceholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="2.5"/>
+              <polygon points="10,8 16,12 10,16"/>
+            </svg>
+            <p id="placeholderText">暂无审片版本</p>
+          </div>
+          <video id="videoPlayer" controls playsinline style="display:none;"></video>
+          <canvas class="annotation-canvas" id="annoCanvas"></canvas>
+          <input type="text" class="text-anno-input" id="textAnnoInput" placeholder="输入文字后回车" style="display:none;" />
+        </div>
+      </div>
+
+      <div class="annotation-toolbar" id="annoBar">
+        <button class="tool-btn active" data-tool="rect" title="矩形">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+        </button>
+        <button class="tool-btn" data-tool="ellipse" title="圆形">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="12" rx="10" ry="10"/></svg>
+        </button>
+        <button class="tool-btn" data-tool="arrow" title="箭头">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="19" x2="19" y2="5"/><polyline points="12,5 19,5 19,12"/></svg>
+        </button>
+        <button class="tool-btn" data-tool="text" title="文字">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,7 4,4 20,4 20,7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+        </button>
+        <div style="width:1px;height:20px;background:var(--glass-border);margin:0 4px;"></div>
+        <button class="tool-btn" data-color="#FF3B30" title="红色"><span class="color-dot" style="background:#FF3B30;"></span></button>
+        <button class="tool-btn" data-color="#FFD60A" title="黄色"><span class="color-dot" style="background:#FFD60A;"></span></button>
+        <button class="tool-btn active" data-color="#30D158" title="绿色"><span class="color-dot" style="background:#30D158;"></span></button>
+        <button class="tool-btn" data-color="#64D2FF" title="蓝色"><span class="color-dot" style="background:#64D2FF;"></span></button>
+        <button class="tool-btn" data-color="#FFFFFF" title="白色"><span class="color-dot" style="background:#FFFFFF;"></span></button>
+        <div style="width:1px;height:20px;background:var(--glass-border);margin:0 4px;"></div>
+        <button class="tool-btn" data-linewidth="2" title="细线"><svg viewBox="0 0 24 24" width="18" height="18"><line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" stroke-width="1.5"/></svg></button>
+        <button class="tool-btn active" data-linewidth="4" title="中等"><svg viewBox="0 0 24 24" width="18" height="18"><line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" stroke-width="3"/></svg></button>
+        <button class="tool-btn" data-linewidth="6" title="粗线"><svg viewBox="0 0 24 24" width="18" height="18"><line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" stroke-width="5"/></svg></button>
+        <div style="width:1px;height:20px;background:var(--glass-border);margin:0 4px;"></div>
+        <button class="tool-btn" id="btnSaveAnno" title="保存标注" style="font-size:14px;">💾</button>
+        <button class="tool-btn" id="btnUndo" title="撤销">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+        </button>
+        <button class="tool-btn" id="btnClearAnno" title="清除全部">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,6 5,6 21,6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+        </button>
+      </div>
+
+      <div class="comment-box">
+        <div class="comment-input-wrap">
+          <textarea class="comment-input" id="commentInput" placeholder="在此位置添加修改意见..." rows="1"></textarea>
+          <span class="comment-timestamp" id="commentTimestamp">00:00</span>
+        </div>
+        <button class="emoji-toggle" id="btnEmoji" title="表情">😊</button>
+        <button class="btn-send" id="btnSendComment">发送</button>
+        <div class="emoji-panel" id="emojiPanel"></div>
+      </div>
+
+      <div id="feedbackResult" style="display:none;"></div>
+
+      <div class="actions" id="actionButtons">
+        <button class="btn btn-approve" id="btnApprove">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          通过
+        </button>
+        <button class="btn btn-revise" id="btnRevise">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          需修改
+        </button>
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <div class="feedback-panel">
+        <div class="feedback-panel-header">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          修改意见
+          <span class="count" id="feedbackCount">0 条</span>
+        </div>
+        <div class="feedback-list" id="feedbackList">
+          <div class="feedback-empty" id="feedbackEmpty">暂无修改意见</div>
+        </div>
+      </div>
+      <div class="message-panel">
+        <div class="message-panel-header">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          留言板
+          <span class="count" id="messageCount">0 条</span>
+        </div>
+        <div class="message-list" id="messageList">
+          <div class="message-empty" id="messageEmpty">暂无留言，来说点什么吧</div>
+        </div>
+        <div class="message-input-area">
+          <input type="text" class="message-name" id="messageName" placeholder="昵称（选填）" maxlength="20">
+          <div class="message-compose">
+            <textarea class="message-textarea" id="messageTextarea" placeholder="写下你的留言..." rows="2" maxlength="500"></textarea>
+            <button class="btn-message-send" id="btnMessageSend" title="发送留言">发送</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 404 -->
+<div class="error-404" id="errorScreen" style="display:none;">
+  <div class="code">404</div>
+  <h2>项目不存在</h2>
+  <p>该审片链接无效或项目已被删除。请联系后期老师获取新的审片链接。</p>
+</div>
+
+<script>
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('token');
+
+  const loadingScreen = document.getElementById('loadingScreen');
+  const mainContent = document.getElementById('mainContent');
+  const errorScreen = document.getElementById('errorScreen');
+
+  if (!token) {
+    loadingScreen.style.display = 'none';
+    errorScreen.style.display = 'flex';
+    return;
+  }
+
+  let projectData = null;
+  let currentStatus = null;
+
+  function showToast(msg) {
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity 0.3s'; }, 2000);
+    setTimeout(() => t.remove(), 2500);
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function getStatusTag(status) {
+    const map = {
+      pending: ['待审中', 'tag-status-pending'],
+      approved: ['已通过', 'tag-status-approved'],
+      revision: ['需修改', 'tag-status-revision']
+    };
+    return map[status] || ['未知', ''];
+  }
+
+  let currentVideoIndex = 0;
+
+  function renderUI() {
+    const p = projectData;
+    document.getElementById('projectTitle').textContent = p.name;
+    currentStatus = p.status;
+
+    const [statusLabel, statusClass] = getStatusTag(p.status);
+    document.getElementById('projectTags').innerHTML = `
+      <span class="tag ${statusClass}">${statusLabel}</span>
+    `;
+
+    const videos = p.videos || [];
+    const versionSelector = document.getElementById('versionSelector');
+    const versionSelect = document.getElementById('versionSelect');
+    const videoPlayer = document.getElementById('videoPlayer');
+    const videoPlaceholder = document.getElementById('videoPlaceholder');
+    const placeholderText = document.getElementById('placeholderText');
+
+    if (videos.length > 0) {
+      versionSelector.style.display = 'block';
+      versionSelect.innerHTML = '';
+      videos.forEach((video, idx) => {
+        const opt = document.createElement('option');
+        opt.value = idx;
+        opt.textContent = 'v' + video.version;
+        versionSelect.appendChild(opt);
+      });
+      versionSelect.value = '0';
+      currentVideoIndex = 0;
+
+      const firstVideo = videos[0];
+      videoPlaceholder.style.display = 'none';
+      videoPlayer.style.display = 'block';
+      videoPlayer.src = API_BASE + '/api/stream?token=' + token + '&file=' + encodeURIComponent(firstVideo.displayName);
+    } else {
+      versionSelector.style.display = 'none';
+      videoPlayer.style.display = 'none';
+      videoPlayer.src = '';
+      videoPlaceholder.style.display = 'flex';
+      placeholderText.textContent = '暂无审片版本';
+    }
+
+    updateButtons();
+    renderFeedbacks();
+  }
+
+  function switchVideo(index) {
+    const videos = projectData.videos || [];
+    if (index < 0 || index >= videos.length) return;
+    currentVideoIndex = index;
+    const video = videos[index];
+    const videoPlayer = document.getElementById('videoPlayer');
+    videoPlayer.src = API_BASE + '/api/stream?token=' + token + '&file=' + encodeURIComponent(video.displayName);
+    videoPlayer.load();
+    videoPlayer.play();
+    annotations = [];
+    viewAnnoFeedbackId = null;
+    setTimeout(resizeCanvas, 200);
+    renderFeedbacks();
+  }
+
+  function updateButtons() {
+    const btnApprove = document.getElementById('btnApprove');
+    const btnRevise = document.getElementById('btnRevise');
+    const feedbackResult = document.getElementById('feedbackResult');
+
+    if (currentStatus === 'approved') {
+      btnApprove.disabled = true;
+      btnRevise.disabled = true;
+      feedbackResult.style.display = 'block';
+      feedbackResult.className = 'feedback-result approved';
+      feedbackResult.innerHTML = `
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-5px;margin-right:6px;"><polyline points="20 6 9 17 4 12"/></svg>
+        感谢您的反馈！该视频已标记为「通过」。
+      `;
+    } else if (currentStatus === 'revision') {
+      btnApprove.disabled = true;
+      btnRevise.disabled = true;
+      feedbackResult.style.display = 'block';
+      feedbackResult.className = 'feedback-result revision';
+      feedbackResult.innerHTML = `
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-5px;margin-right:6px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/></svg>
+        感谢您的反馈！该视频已标记为「需修改」，后期老师将尽快处理。
+      `;
+    } else {
+      btnApprove.disabled = false;
+      btnRevise.disabled = false;
+      feedbackResult.style.display = 'none';
+    }
+  }
+
+  async function submitFeedback(status) {
+    try {
+      const videos = projectData.videos || [];
+      const video = videos[currentVideoIndex];
+      const videoId = video ? video.id : null;
+      const res = await fetch(API_BASE + '/api/projects/' + token + '/status', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status, videoId })
+      });
+      const data = await res.json();
+      if (data.success) {
+        currentStatus = status;
+        updateButtons();
+      } else {
+        showToast(data.error || '操作失败');
+      }
+    } catch (err) {
+      showToast('网络错误，请重试');
+    }
+  }
+
+  document.getElementById('btnApprove').addEventListener('click', () => submitFeedback('approved'));
+  document.getElementById('btnRevise').addEventListener('click', () => submitFeedback('revision'));
+
+  // ========== 评论功能 ==========
+
+  function formatTime(seconds) {
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  function getCurrentVideo() {
+    const videos = projectData.videos || [];
+    return videos[currentVideoIndex] || null;
+  }
+
+  function renderFeedbacks() {
+    const video = getCurrentVideo();
+    const feedbacks = (video && video.feedbacks) ? video.feedbacks : [];
+    const list = document.getElementById('feedbackList');
+    const count = document.getElementById('feedbackCount');
+    const empty = document.getElementById('feedbackEmpty');
+
+    count.textContent = feedbacks.length + ' 条';
+
+    if (feedbacks.length === 0) {
+      list.innerHTML = '<div class="feedback-empty">暂无修改意见</div>';
+      return;
+    }
+
+    list.innerHTML = feedbacks.map(fb => {
+      const timeLabel = fb.timeLabel || formatTime(fb.timestamp || 0);
+      const hasAnno = fb.annotations && fb.annotations.length > 0;
+      const isAnnoOnly = fb.comment === '[标注]';
+
+      let annoHTML = '';
+      if (hasAnno) {
+        const typeMap = { rect: '矩形框', ellipse: '圆形', arrow: '箭头', pen: '画笔', text: '文字' };
+        const counts = {};
+        fb.annotations.forEach(a => {
+          const label = typeMap[a.type] || a.type;
+          counts[label] = (counts[label] || 0) + 1;
+        });
+        const parts = Object.entries(counts).map(([k, v]) => v + '个' + k).join('、');
+        const colors = [...new Set(fb.annotations.map(a => a.color))];
+        const dots = colors.map(c => '<span class="anno-dot" style="background:' + c + ';"></span>').join('');
+        annoHTML = '<div class="feedback-annotations" onclick="window._seekToAnno(\'' + fb.id + '\',' + (fb.annotations[0].frameTimestamp || fb.timestamp) + ')">' + dots + ' ' + parts + '</div>';
+      }
+
+      const commentHTML = isAnnoOnly ? '' : '<div class="feedback-comment">' + escapeHtml(fb.comment) + '</div>';
+
+      return '<div class="feedback-item">' +
+        '<div class="feedback-item-header">' +
+          '<button class="feedback-time-btn" onclick="window._seekTo(' + (fb.timestamp || 0) + ')" title="点击跳转到该位置">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5,3 19,12 5,21"/></svg>' +
+            timeLabel +
+          '</button>' +
+          '<span class="feedback-item-time">' + (fb.createdAt ? new Date(fb.createdAt).toLocaleString('zh-CN', {month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}) : '') + '</span>' +
+        '</div>' +
+        annoHTML +
+        commentHTML +
+        '<button class="fb-reply-btn" onclick="toggleFeedbackReply(\'' + fb.id + '\')" title="留言">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>' +
+          '留言' +
+        '</button>' +
+        '<div class="feedback-reply-area" id="replyArea_' + fb.id + '">' +
+          '<div class="feedback-reply-list" id="replyList_' + fb.id + '"></div>' +
+          '<div class="reply-input-row">' +
+            '<input type="text" class="reply-input" id="replyInput_' + fb.id + '" placeholder="输入留言..." maxlength="500" onkeydown="handleReplyKey(event, \'' + fb.id + '\')">' +
+            '<button class="btn-reply-send" onclick="sendFeedbackReply(\'' + fb.id + '\')">发送</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  window._seekTo = function(seconds) {
+    const vp = document.getElementById('videoPlayer');
+    if (vp) {
+      vp.currentTime = seconds;
+      vp.play();
+    }
+  };
+
+  window._seekToAnno = function(feedbackId, seconds) {
+    const vp = document.getElementById('videoPlayer');
+    if (!vp) return;
+    viewAnnoFeedbackId = feedbackId;
+    // dismiss any open text input
+    document.getElementById('textAnnoInput').style.display = 'none';
+    vp.currentTime = seconds;
+    if (vp.paused) {
+      resizeCanvas();
+      const video = getCurrentVideo();
+      if (video && video.feedbacks) {
+        const fb = video.feedbacks.find(f => f.id === feedbackId);
+        if (fb && fb.annotations) {
+          redrawAnnotations(fb.annotations);
+          annoBar.classList.add('show');
+          annoCanvas.classList.add('drawing-mode');
+          return;
+        }
+      }
+      viewAnnoFeedbackId = null;
+    } else {
+      vp.pause();
+    }
+  };
+
+  // ==================== 反馈回复 ====================
+  async function toggleFeedbackReply(feedbackId) {
+    const area = document.getElementById('replyArea_' + feedbackId);
+    if (!area) return;
+    const wasHidden = !area.classList.contains('show');
+    if (wasHidden) {
+      area.classList.add('show');
+      await loadFeedbackReplies(feedbackId);
+      setTimeout(function() {
+        const inp = document.getElementById('replyInput_' + feedbackId);
+        if (inp) inp.focus();
+      }, 100);
+    } else {
+      area.classList.remove('show');
+    }
+  }
+
+  async function loadFeedbackReplies(feedbackId) {
+    const list = document.getElementById('replyList_' + feedbackId);
+    if (!list) return;
+    try {
+      const res = await fetch(API_BASE + '/api/projects/' + project.token + '/videos/' + currentVideoId + '/feedbacks/' + feedbackId + '/replies');
+      if (!res.ok) throw new Error('获取回复失败');
+      const data = await res.json();
+      const replies = data.replies || [];
+      if (replies.length === 0) {
+        list.innerHTML = '<div style="font-size:12px;color:var(--text-muted);padding:4px 0;">暂无留言</div>';
+      } else {
+        list.innerHTML = replies.map(r =>
+          '<div class="reply-item">' +
+            '<span class="reply-username">' + escapeHtml(r.username) + '</span>' +
+            '<span class="reply-text">' + escapeHtml(r.text) + '</span>' +
+            '<span class="reply-time">' + new Date(r.createdAt).toLocaleString('zh-CN', {month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}) + '</span>' +
+          '</div>'
+        ).join('');
+      }
+    } catch (err) {
+      list.innerHTML = '<div style="font-size:12px;color:var(--danger);">加载失败：' + err.message + '</div>';
+    }
+  }
+
+  async function sendFeedbackReply(feedbackId) {
+    const input = document.getElementById('replyInput_' + feedbackId);
+    if (!input) return;
+    const text = input.value.trim();
+    if (!text) return;
+
+    const username = localStorage.getItem('review_nickname') || '导演';
+
+    try {
+      const res = await fetch(API_BASE + '/api/projects/' + project.token + '/videos/' + currentVideoId + '/feedbacks/' + feedbackId + '/replies', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, text })
+      });
+      if (!res.ok) throw new Error('发送失败');
+      input.value = '';
+      await loadFeedbackReplies(feedbackId);
+    } catch (err) {
+      showToast('留言失败：' + err.message);
+    }
+  }
+
+  function handleReplyKey(event, feedbackId) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      sendFeedbackReply(feedbackId);
+    }
+  }
+
+  async function submitComment() {
+    const input = document.getElementById('commentInput');
+    const comment = input.value.trim();
+    const video = getCurrentVideo();
+    if (!video) { showToast('没有可审片的视频'); return; }
+    if (!comment) { showToast('请输入修改意见'); return; }
+
+    const vp = document.getElementById('videoPlayer');
+    const timestamp = vp ? vp.currentTime : 0;
+    const timeLabel = formatTime(timestamp);
+
+    const body = { timestamp, timeLabel, comment };
+    if (annotations.length > 0) {
+      body.annotations = convertAnnotations(annotations, timestamp);
+    }
+
+    const btn = document.getElementById('btnSendComment');
+    btn.disabled = true;
+    btn.textContent = '发送中...';
+
+    try {
+      const res = await fetch(API_BASE + '/api/projects/' + token + '/videos/' + video.id + '/feedbacks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const data = await res.json();
+      if (data.success) {
+        input.value = '';
+        annotations = [];
+        redrawAll();
+        updateCommentTimestamp();
+        if (!projectData.videos[currentVideoIndex].feedbacks) {
+          projectData.videos[currentVideoIndex].feedbacks = [];
+        }
+        projectData.videos[currentVideoIndex].feedbacks.push(data.feedback);
+        renderFeedbacks();
+        showToast('意见已提交');
+      } else {
+        showToast(data.error || '提交失败');
+      }
+    } catch (err) {
+      showToast('网络错误，请重试');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '发送';
+    }
+  }
+
+  function updateCommentTimestamp() {
+    const vp = document.getElementById('videoPlayer');
+    const ts = document.getElementById('commentTimestamp');
+    if (vp && ts) {
+      ts.textContent = formatTime(vp.currentTime);
+    }
+  }
+
+  document.getElementById('videoPlayer').addEventListener('timeupdate', updateCommentTimestamp);
+  document.getElementById('videoPlayer').addEventListener('seeking', updateCommentTimestamp);
+
+  document.getElementById('btnSendComment').addEventListener('click', submitComment);
+
+  document.getElementById('commentInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      submitComment();
+    }
+  });
+
+  // ========== 表情面板 ==========
+
+  const EMOJI_LIST = [
+    '😀','😂','🤣','😊','😍','🥰','😘','😜',
+    '🤔','😅','😢','😭','😤','😡','👍','👎',
+    '👏','🙌','💪','🤝','❤️','🔥','⭐','🎉',
+    '✨','💯','✅','❌','⚠️','💡','📌','🗑️',
+    '🕐','⏰','🎬','🎥','📹','🎞️','✂️','🔊',
+    '💬','👇','👆','👉','🙏','🤩','😎','🥳'
+  ];
+
+  (function initEmojiPanel() {
+    const panel = document.getElementById('emojiPanel');
+    panel.innerHTML = EMOJI_LIST.map(e =>
+      '<button class="emoji-item" data-emoji="' + e + '">' + e + '</button>'
+    ).join('');
+  })();
+
+  document.getElementById('btnEmoji').addEventListener('click', function(e) {
+    e.stopPropagation();
+    document.getElementById('emojiPanel').classList.toggle('show');
+  });
+
+  document.getElementById('emojiPanel').addEventListener('click', function(e) {
+    const btn = e.target.closest('.emoji-item');
+    if (!btn) return;
+    const emoji = btn.getAttribute('data-emoji');
+    const input = document.getElementById('commentInput');
+    const start = input.selectionStart;
+    const end = input.selectionEnd;
+    input.value = input.value.slice(0, start) + emoji + input.value.slice(end);
+    input.focus();
+    input.selectionStart = input.selectionEnd = start + emoji.length;
+    document.getElementById('emojiPanel').classList.remove('show');
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.emoji-toggle') && !e.target.closest('.emoji-panel')) {
+      document.getElementById('emojiPanel').classList.remove('show');
+    }
+  });
+
+  document.getElementById('versionSelect').addEventListener('change', function() {
+    switchVideo(parseInt(this.value, 10));
+  });
+
+  // ========== 标注功能 ==========
+
+  const annoCanvas = document.getElementById('annoCanvas');
+  const annoCtx = annoCanvas.getContext('2d');
+  const annoBar = document.getElementById('annoBar');
+  let currentTool = 'rect';
+  let currentColor = '#30D158';
+  let currentLineWidth = 4;
+  let annotations = [];
+  let isDrawing = false;
+  let startX, startY;
+  let viewAnnoFeedbackId = null;
+
+  function resizeCanvas() {
+    const vp = document.getElementById('videoPlayer');
+    const card = document.getElementById('playerCard');
+    if (!vp || !card) return;
+    const rect = card.getBoundingClientRect();
+    annoCanvas.width = rect.width;
+    annoCanvas.height = rect.height;
+  }
+
+  function getCanvasPos(e) {
+    const rect = annoCanvas.getBoundingClientRect();
+    return {
+      x: (e.clientX - rect.left) * (annoCanvas.width / rect.width),
+      y: (e.clientY - rect.top) * (annoCanvas.height / rect.height)
+    };
+  }
+
+  const playerCard = document.getElementById('playerCard');
+
+  playerCard.addEventListener('click', function(e) {
+    if (!annoCanvas.classList.contains('drawing-mode')) return;
+    const vp = document.getElementById('videoPlayer');
+    if (!vp) return;
+    const rect = vp.getBoundingClientRect();
+    const clickY = e.clientY - rect.top;
+    if (clickY < rect.height - 40) {
+      e.preventDefault();
+    }
+  }, true);
+
+  playerCard.addEventListener('mousedown', function(e) {
+    if (!annoCanvas.classList.contains('drawing-mode')) return;
+    const pos = getCanvasPos(e);
+
+    if (currentTool === 'text') {
+      showTextInput(pos);
+      return;
+    }
+
+    isDrawing = true;
+    startX = pos.x;
+    startY = pos.y;
+    e.preventDefault();
+  });
+
+  playerCard.addEventListener('mousemove', function(e) {
+    if (!isDrawing || !annoCanvas.classList.contains('drawing-mode')) return;
+    const pos = getCanvasPos(e);
+    redrawAll();
+    if (currentTool === 'rect') {
+      annoCtx.strokeStyle = currentColor;
+      annoCtx.lineWidth = currentLineWidth;
+      annoCtx.strokeRect(startX, startY, pos.x - startX, pos.y - startY);
+    } else if (currentTool === 'ellipse') {
+      annoCtx.strokeStyle = currentColor;
+      annoCtx.lineWidth = currentLineWidth;
+      annoCtx.beginPath();
+      const rx = Math.abs(pos.x - startX) / 2;
+      const ry = Math.abs(pos.y - startY) / 2;
+      const cx = (startX + pos.x) / 2;
+      const cy = (startY + pos.y) / 2;
+      annoCtx.ellipse(cx, cy, rx, ry, 0, 0, 2 * Math.PI);
+      annoCtx.stroke();
+    } else if (currentTool === 'arrow') {
+      drawArrow(annoCtx, startX, startY, pos.x, pos.y, currentColor, currentLineWidth);
+    }
+  });
+
+  playerCard.addEventListener('mouseup', function(e) {
+    if (!isDrawing) return;
+    isDrawing = false;
+    const pos = getCanvasPos(e);
+    const dx = pos.x - startX;
+    const dy = pos.y - startY;
+    if (Math.abs(dx) < 3 && Math.abs(dy) < 3) return;
+
+    if (currentTool === 'rect') {
+      annotations.push({
+        type: 'rect',
+        x: Math.min(startX, pos.x),
+        y: Math.min(startY, pos.y),
+        w: Math.abs(dx),
+        h: Math.abs(dy),
+        color: currentColor,
+        lineWidth: currentLineWidth
+      });
+    } else if (currentTool === 'ellipse') {
+      annotations.push({
+        type: 'ellipse',
+        x: Math.min(startX, pos.x),
+        y: Math.min(startY, pos.y),
+        w: Math.abs(dx),
+        h: Math.abs(dy),
+        color: currentColor,
+        lineWidth: currentLineWidth
+      });
+    } else if (currentTool === 'arrow') {
+      annotations.push({
+        type: 'arrow',
+        x1: startX, y1: startY,
+        x2: pos.x, y2: pos.y,
+        color: currentColor,
+        lineWidth: currentLineWidth
+      });
+    }
+    redrawAll();
+  });
+
+  playerCard.addEventListener('mouseleave', function() {
+    if (isDrawing) {
+      isDrawing = false;
+      redrawAll();
+    }
+  });
+
+  function showTextInput(pos) {
+    const input = document.getElementById('textAnnoInput');
+    const cardRect = playerCard.getBoundingClientRect();
+    const canvasRect = annoCanvas.getBoundingClientRect();
+
+    const scaleX = canvasRect.width / (annoCanvas.width || 1);
+    const scaleY = canvasRect.height / (annoCanvas.height || 1);
+    const left = canvasRect.left - cardRect.left + pos.x * scaleX;
+    const top = canvasRect.top - cardRect.top + pos.y * scaleY - 10;
+
+    input.style.display = 'block';
+    input.style.left = left + 'px';
+    input.style.top = top + 'px';
+    input.style.color = currentColor;
+    input.value = '';
+
+    // defer focus to avoid click preventDefault interference
+    setTimeout(function() { input.focus(); }, 10);
+
+    const done = () => {
+      const text = input.value.trim();
+      input.style.display = 'none';
+      input.removeEventListener('keydown', onKey);
+      input.removeEventListener('blur', done);
+      if (text) {
+        annotations.push({
+          type: 'text',
+          x: pos.x,
+          y: pos.y,
+          text: text,
+          color: currentColor,
+          fontSize: 18
+        });
+        redrawAll();
+      }
+    };
+
+    const onKey = (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); done(); }
+      if (e.key === 'Escape') { input.value = ''; done(); }
+    };
+    input.addEventListener('keydown', onKey);
+    input.addEventListener('blur', done);
+  }
+
+  function drawArrow(ctx, fromX, fromY, toX, toY, color, lineWidth) {
+    const headLen = 12;
+    const angle = Math.atan2(toY - fromY, toX - fromX);
+    ctx.beginPath();
+    ctx.moveTo(fromX, fromY);
+    ctx.lineTo(toX, toY);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = lineWidth || 4;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(toX, toY);
+    ctx.lineTo(toX - headLen * Math.cos(angle - Math.PI / 6), toY - headLen * Math.sin(angle - Math.PI / 6));
+    ctx.lineTo(toX - headLen * Math.cos(angle + Math.PI / 6), toY - headLen * Math.sin(angle + Math.PI / 6));
+    ctx.closePath();
+    ctx.fillStyle = color;
+    ctx.fill();
+  }
+
+  function redrawAll() {
+    annoCtx.clearRect(0, 0, annoCanvas.width, annoCanvas.height);
+    annotations.forEach(a => {
+      if (a.type === 'rect') {
+        annoCtx.strokeStyle = a.color;
+        annoCtx.lineWidth = a.lineWidth || 4;
+        annoCtx.strokeRect(a.x, a.y, a.w, a.h);
+      } else if (a.type === 'ellipse') {
+        annoCtx.strokeStyle = a.color;
+        annoCtx.lineWidth = a.lineWidth || 4;
+        annoCtx.beginPath();
+        const rx = a.w / 2;
+        const ry = a.h / 2;
+        const cx = a.x + rx;
+        const cy = a.y + ry;
+        annoCtx.ellipse(cx, cy, rx, ry, 0, 0, 2 * Math.PI);
+        annoCtx.stroke();
+      } else if (a.type === 'arrow') {
+        drawArrow(annoCtx, a.x1, a.y1, a.x2, a.y2, a.color, a.lineWidth || 4);
+      } else if (a.type === 'text') {
+        annoCtx.fillStyle = a.color;
+        annoCtx.font = (a.fontSize || 18) + 'px "SF Pro Display", -apple-system, sans-serif';
+        annoCtx.fillText(a.text, a.x, a.y);
+      }
+    });
+  }
+
+  function redrawAnnotations(annotationList) {
+    annoCtx.clearRect(0, 0, annoCanvas.width, annoCanvas.height);
+    const cw = annoCanvas.width;
+    const ch = annoCanvas.height;
+    annotationList.forEach(a => {
+      if (a.type === 'rect') {
+        const pts = a.points;
+        if (pts && pts.length >= 2) {
+          const x1 = Math.min(pts[0].x, pts[1].x) * cw;
+          const y1 = Math.min(pts[0].y, pts[1].y) * ch;
+          const x2 = Math.max(pts[0].x, pts[1].x) * cw;
+          const y2 = Math.max(pts[0].y, pts[1].y) * ch;
+          annoCtx.strokeStyle = a.color || '#30D158';
+          annoCtx.lineWidth = a.lineWidth || 4;
+          annoCtx.strokeRect(x1, y1, x2 - x1, y2 - y1);
+        }
+      } else if (a.type === 'ellipse') {
+        const pts = a.points;
+        if (pts && pts.length >= 2) {
+          const x1 = Math.min(pts[0].x, pts[1].x) * cw;
+          const y1 = Math.min(pts[0].y, pts[1].y) * ch;
+          const x2 = Math.max(pts[0].x, pts[1].x) * cw;
+          const y2 = Math.max(pts[0].y, pts[1].y) * ch;
+          const rx = (x2 - x1) / 2;
+          const ry = (y2 - y1) / 2;
+          const cx = x1 + rx;
+          const cy = y1 + ry;
+          annoCtx.strokeStyle = a.color || '#30D158';
+          annoCtx.lineWidth = a.lineWidth || 4;
+          annoCtx.beginPath();
+          annoCtx.ellipse(cx, cy, rx, ry, 0, 0, 2 * Math.PI);
+          annoCtx.stroke();
+        }
+      } else if (a.type === 'arrow') {
+        const pts = a.points;
+        if (pts && pts.length >= 2) {
+          drawArrow(annoCtx, pts[0].x * cw, pts[0].y * ch, pts[1].x * cw, pts[1].y * ch, a.color || '#30D158', a.lineWidth || 4);
+        }
+      } else if (a.type === 'text') {
+        const pts = a.points;
+        if (pts && pts.length >= 1) {
+          annoCtx.fillStyle = a.color || '#30D158';
+          annoCtx.font = (a.fontSize || 18) + 'px "SF Pro Display", -apple-system, sans-serif';
+          annoCtx.fillText(a.text || '', pts[0].x * cw, pts[0].y * ch);
+        }
+      }
+    });
+  }
+
+  function convertAnnotations(annos, timestamp) {
+    const cw = annoCanvas.width || 1;
+    const ch = annoCanvas.height || 1;
+    return annos.map(a => {
+      if (a.type === 'rect') {
+        return {
+          type: 'rect',
+          points: [{ x: a.x / cw, y: a.y / ch }, { x: (a.x + a.w) / cw, y: (a.y + a.h) / ch }],
+          color: a.color,
+          lineWidth: a.lineWidth,
+          frameTimestamp: timestamp
+        };
+      } else if (a.type === 'ellipse') {
+        return {
+          type: 'ellipse',
+          points: [{ x: a.x / cw, y: a.y / ch }, { x: (a.x + a.w) / cw, y: (a.y + a.h) / ch }],
+          color: a.color,
+          lineWidth: a.lineWidth,
+          frameTimestamp: timestamp
+        };
+      } else if (a.type === 'arrow') {
+        return {
+          type: 'arrow',
+          points: [{ x: a.x1 / cw, y: a.y1 / ch }, { x: a.x2 / cw, y: a.y2 / ch }],
+          color: a.color,
+          lineWidth: a.lineWidth,
+          frameTimestamp: timestamp
+        };
+      } else if (a.type === 'text') {
+        return {
+          type: 'text',
+          points: [{ x: a.x / cw, y: a.y / ch }],
+          text: a.text,
+          color: a.color,
+          fontSize: a.fontSize,
+          frameTimestamp: timestamp
+        };
+      }
+      return null;
+    }).filter(Boolean);
+  }
+
+  async function saveAnnotations() {
+    if (annotations.length === 0) { showToast('请先画标注'); return; }
+    const video = getCurrentVideo();
+    if (!video) { showToast('没有可审片的视频'); return; }
+
+    const vp = document.getElementById('videoPlayer');
+    const timestamp = vp ? vp.currentTime : 0;
+    const timeLabel = formatTime(timestamp);
+    const converted = convertAnnotations(annotations, timestamp);
+
+    const btnSave = document.getElementById('btnSaveAnno');
+    btnSave.disabled = true;
+    btnSave.innerHTML = '保存中...';
+
+    try {
+      const res = await fetch(API_BASE + '/api/projects/' + token + '/videos/' + video.id + '/feedbacks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ timestamp, timeLabel, comment: '[标注]', annotations: converted })
+      });
+      const data = await res.json();
+      if (data.success) {
+        annotations = [];
+        redrawAll();
+        if (!projectData.videos[currentVideoIndex].feedbacks) {
+          projectData.videos[currentVideoIndex].feedbacks = [];
+        }
+        projectData.videos[currentVideoIndex].feedbacks.push(data.feedback);
+        renderFeedbacks();
+        showToast('标注已保存');
+      } else {
+        showToast(data.error || '保存失败');
+      }
+    } catch (err) {
+      showToast('网络错误，请重试');
+    } finally {
+      btnSave.disabled = false;
+      btnSave.innerHTML = '💾';
+    }
+  }
+
+  // toolbar events
+  annoBar.addEventListener('click', async function(e) {
+    const btn = e.target.closest('.tool-btn');
+    if (!btn) return;
+
+    if (btn.dataset.tool) {
+      currentTool = btn.dataset.tool;
+      annoBar.querySelectorAll('[data-tool]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    } else if (btn.dataset.color) {
+      currentColor = btn.dataset.color;
+      annoBar.querySelectorAll('[data-color]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    } else if (btn.dataset.linewidth) {
+      currentLineWidth = parseInt(btn.dataset.linewidth, 10);
+      annoBar.querySelectorAll('[data-linewidth]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    } else if (btn.id === 'btnUndo') {
+      annotations.pop();
+      redrawAll();
+    } else if (btn.id === 'btnClearAnno') {
+      annotations = [];
+      redrawAll();
+    } else if (btn.id === 'btnSaveAnno') {
+      await saveAnnotations();
+    }
+  });
+
+  document.getElementById('videoPlayer').addEventListener('pause', function() {
+    annoBar.classList.add('show');
+    annoCanvas.classList.add('drawing-mode');
+    resizeCanvas();
+    if (viewAnnoFeedbackId) {
+      const video = getCurrentVideo();
+      if (video && video.feedbacks) {
+        const fb = video.feedbacks.find(f => f.id === viewAnnoFeedbackId);
+        if (fb && fb.annotations) {
+          redrawAnnotations(fb.annotations);
+          return;
+        }
+      }
+      viewAnnoFeedbackId = null;
+    }
+    redrawAll();
+  });
+
+  document.getElementById('videoPlayer').addEventListener('play', function() {
+    annoBar.classList.remove('show');
+    annoCanvas.classList.remove('drawing-mode');
+    annoCtx.clearRect(0, 0, annoCanvas.width, annoCanvas.height);
+    viewAnnoFeedbackId = null;
+    document.getElementById('textAnnoInput').style.display = 'none';
+  });
+
+  document.getElementById('videoPlayer').addEventListener('loadedmetadata', resizeCanvas);
+  window.addEventListener('resize', function() {
+    resizeCanvas();
+    redrawAll();
+  });
+
+  // ========== 留言板 ==========
+
+  async function loadMessages() {
+    try {
+      const res = await fetch(API_BASE + '/api/projects/' + token + '/messages');
+      const data = await res.json();
+      if (data.success) {
+        renderMessages(data.messages);
+      }
+    } catch (err) {
+      // 静默失败
+    }
+  }
+
+  function renderMessages(messages) {
+    const list = document.getElementById('messageList');
+    const empty = document.getElementById('messageEmpty');
+    const count = document.getElementById('messageCount');
+    if (!messages || messages.length === 0) {
+      list.innerHTML = '';
+      list.appendChild(empty);
+      count.textContent = '0 条';
+      return;
+    }
+    count.textContent = messages.length + ' 条';
+    const html = messages.map(msg => {
+      const time = new Date(msg.createdAt);
+      const timeStr = time.toLocaleString('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+      return '<div class="message-item">' +
+        '<div class="msg-header">' +
+        '<span class="msg-username">' + escapeHtml(msg.username) + '</span>' +
+        '<span class="msg-time">' + timeStr + '</span>' +
+        '</div>' +
+        '<div class="msg-text">' + escapeHtml(msg.text) + '</div>' +
+        '</div>';
+    }).reverse().join('');
+    list.innerHTML = html;
+    if (empty.parentNode === list) empty.remove();
+  }
+
+  async function sendMessage() {
+    const textarea = document.getElementById('messageTextarea');
+    const btn = document.getElementById('btnMessageSend');
+    const nameInput = document.getElementById('messageName');
+    const text = textarea.value.trim();
+    if (!text) return;
+
+    btn.disabled = true;
+    btn.textContent = '发送中...';
+    try {
+      const res = await fetch(API_BASE + '/api/projects/' + token + '/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: nameInput.value.trim(), text: text })
+      });
+      const data = await res.json();
+      if (data.success) {
+        textarea.value = '';
+        await loadMessages();
+      } else {
+        showToast('发送失败：' + (data.error || '未知错误'));
+      }
+    } catch (err) {
+      showToast('网络错误，请重试');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '发送';
+    }
+  }
+
+  document.getElementById('btnMessageSend').addEventListener('click', sendMessage);
+  document.getElementById('messageTextarea').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+
+  // 加载项目
+  async function loadProject() {
+    try {
+      const res = await fetch(API_BASE + '/api/projects/' + token);
+      const data = await res.json();
+      if (!data.success) {
+        loadingScreen.style.display = 'none';
+        errorScreen.style.display = 'flex';
+        return;
+      }
+      projectData = data.project;
+      loadingScreen.style.display = 'none';
+      mainContent.style.display = 'block';
+      renderUI();
+      loadMessages();
+    } catch (err) {
+      loadingScreen.style.display = 'none';
+      errorScreen.style.display = 'flex';
+    }
+  }
+
+  loadProject();
+})();
+</script>
+</body>
+</html>
