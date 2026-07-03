@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>自在空间 · 服务器监控系统</title>
+<style>
+  /* 离线模式：使用系统自带等宽字体 */
+  @font-face {
+    font-family: 'JetBrains Mono';
+    src: local('Consolas'), local('Courier New');
+    font-weight: 300 700;
+  }
+
+  :root {
+    --bg: oklch(0.03 0.03 252);
+    --tx1: oklch(0.97 0.01 260);
+    --tx2: oklch(0.64 0.02 260);
+    --gr: oklch(0.78 0.22 154);
+    --bl: oklch(0.70 0.15 244);
+    --cy: oklch(0.76 0.17 194);
+    --pu: oklch(0.68 0.18 294);
+    --am: oklch(0.77 0.15 74);
+    --ro: oklch(0.64 0.20 16);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:100vw;height:100vh;overflow:hidden;background:var(--bg);color:var(--tx1);font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+
+  /* ── 背景层 ── */
+  .scanline{position:fixed;inset:0;z-index:9998;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 3px,oklch(0 0 0/0.016) 3px,oklch(0 0 0/0.016) 6px)}
+  .scanbar{position:fixed;left:0;width:100%;height:2px;z-index:9998;pointer-events:none;background:linear-gradient(90deg,transparent,oklch(0.76 0.17 194/0.10),transparent);animation:sm 4s linear infinite}
+  @keyframes sm{0%{top:-2px}100%{top:100%}}
+
+  /* 六边形网格 */
+  .hex-grid{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.06}
+  .hex-grid svg{width:100%;height:100%}
+
+  /* 普通网格 */
+  .grid-bg{position:fixed;inset:0;z-index:1;pointer-events:none;background-image:linear-gradient(oklch(0.28 0.03 254/0.07) 1px,transparent 1px),linear-gradient(90deg,oklch(0.28 0.03 254/0.07) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 82% 72% at 50% 50%,black 16%,transparent 68%);animation:gs 25s linear infinite}
+  @keyframes gs{0%{background-position:0 0,0 0}100%{background-position:56px 56px,56px 56px}}
+
+  /* 暗角 */
+  .vignette{position:fixed;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse at 50% 50%,transparent 40%,oklch(0.02 0.02 252/0.78) 100%)}
+
+  /* 数据流线 */
+  .data-lines{position:fixed;inset:0;z-index:3;pointer-events:none}
+  .data-lines svg{width:100%;height:100%}
+  .fl{stroke-dasharray:5 18;animation:fd 4.5s linear infinite}
+  .fl.sl{animation-duration:7s}.fl.fa{animation-duration:2.2s}.fl.rv{animation-direction:reverse}
+  @keyframes fd{to{stroke-dashoffset:-46}}
+  .fl-node{animation:fn 3s ease-in-out infinite}
+  .fl-node.n2{animation-duration:4s;animation-delay:1s}
+  .fl-node.n3{animation-duration:3.5s;animation-delay:2s}
+  @keyframes fn{0%,100%{opacity:0.3;r:2}50%{opacity:0.9;r:4}}
+
+  /* 粒子 */
+  #p{position:fixed;inset:0;z-index:4;pointer-events:none}
+
+  /* 轨道环 */
+  .orbit-ring{position:fixed;z-index:5;pointer-events:none;border-radius:50%;border:0.5px solid oklch(0.44 0.06 254/0.12)}
+  .orbit-ring.o1{width:min(620px,50vw);height:min(620px,50vw);top:50%;left:50%;transform:translate(-50%,-50%) rotateX(60deg);animation:or 20s linear infinite}
+  .orbit-ring.o2{width:min(700px,56vw);height:min(700px,56vw);top:50%;left:50%;transform:translate(-50%,-50%) rotateX(60deg) rotateY(30deg);animation:or 25s linear infinite reverse}
+  @keyframes or{0%{transform:translate(-50%,-50%) rotateX(60deg) rotate(0deg)}100%{transform:translate(-50%,-50%) rotateX(60deg) rotate(360deg)}}
+  .orbit-dot{position:fixed;z-index:5;pointer-events:none;width:4px;height:4px;border-radius:50%;background:var(--cy);box-shadow:0 0 12px var(--cy),0 0 28px var(--cy)}
+  .orbit-dot.d1{animation:od1 8s linear infinite}
+  .orbit-dot.d2{animation:od2 11s linear infinite}
+  .orbit-dot.d3{animation:od3 9s linear infinite reverse}
+  @keyframes od1{0%{top:calc(50% - 310px);left:calc(50% + 0px)}25%{top:calc(50% + 0px);left:calc(50% + 310px)}50%{top:calc(50% + 310px);left:calc(50% + 0px)}75%{top:calc(50% + 0px);left:calc(50% - 310px)}100%{top:calc(50% - 310px);left:calc(50% + 0px)}}
+  @keyframes od2{0%{top:calc(50% - 200px);left:calc(50% + 260px)}33%{top:calc(50% + 260px);left:calc(50% + 200px)}66%{top:calc(50% + 200px);left:calc(50% - 260px)}100%{top:calc(50% - 200px);left:calc(50% + 260px)}}
+  @keyframes od3{0%{top:calc(50% - 280px);left:calc(50% - 180px)}50%{top:calc(50% + 280px);left:calc(50% + 180px)}100%{top:calc(50% - 280px);left:calc(50% - 180px)}}
+
+  /* 顶部光条 */
+  .top-bar{position:fixed;top:0;left:0;width:100%;height:1px;z-index:6;pointer-events:none;background:oklch(0.34 0.04 254/0.25)}
+  .top-bar::after{content:'';position:absolute;top:0;left:-20%;width:20%;height:100%;background:linear-gradient(90deg,transparent,var(--cy),transparent);animation:bs 5s linear infinite}
+  @keyframes bs{0%{left:-20%}100%{left:120%}}
+
+  .hc{position:fixed;z-index:8;pointer-events:none;opacity:0.20}
+  .hc.tl{top:24px;left:24px}.hc.tr{top:24px;right:24px}.hc.bl{bottom:24px;left:24px}.hc.br{bottom:24px;right:24px}
+  .hc svg{width:50px;height:50px}
+
+  /* ── 主布局 ── */
+  .main{position:relative;z-index:10;display:grid;grid-template-columns:530px 1fr 530px;grid-template-rows:110px 1fr 60px;width:100vw;height:100vh;padding:8px 12px 10px;gap:12px}
+
+  /* Header */
+  .hd{grid-column:1/-1;grid-row:1;display:flex;align-items:center;justify-content:space-between;padding:0 8px;position:relative}
+  .hd-c{display:flex;flex-direction:column;align-items:center;position:absolute;left:50%;transform:translateX(-50%);gap:6px}
+  .hd-c1{font-size:30px;font-weight:700;letter-spacing:0.16em;color:var(--tx1);text-shadow:0 0 40px oklch(0.76 0.17 194/0.35),0 0 80px oklch(0.76 0.17 194/0.15);white-space:nowrap}
+  .hd-c2{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:400;letter-spacing:0.34em;color:var(--tx2);text-transform:uppercase;white-space:nowrap}
+  .hd-l{display:flex;align-items:center;gap:14px}
+  .logo-d{width:12px;height:12px;border-radius:50%;background:var(--gr);box-shadow:0 0 18px var(--gr),0 0 46px var(--gr);animation:pls 2s ease-in-out infinite}
+  @keyframes pls{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(1.5)}}
+  .hd-r{display:flex;align-items:center;gap:20px}
+  .hd-dt{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;letter-spacing:0.06em;color:var(--cy);text-shadow:0 0 14px var(--cy)}
+  .btn-log{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.10em;padding:7px 18px;border-radius:4px;cursor:pointer;border:1px solid oklch(0.44 0.06 254/0.35);background:oklch(0.16 0.02 254/0.55);color:var(--tx2);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:all 0.3s ease;position:relative;overflow:hidden}
+  .btn-log::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,var(--cy),transparent 70%);opacity:0;transition:opacity 0.3s}
+  .btn-log:hover{color:var(--tx1);border-color:var(--cy);box-shadow:0 0 24px oklch(0.76 0.17 194/0.2)}
+  .btn-log:hover::before{opacity:0.08}
+
+  .sb{grid-column:1/-1;z-index:11;display:flex;justify-content:center;gap:40px;padding:4px 0;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.10em;color:var(--tx2);border-bottom:1px solid oklch(0.28 0.03 254/0.15)}
+  .sb .sv{color:var(--gr);font-weight:600;margin-left:6px}
+
+  /* 卡片 */
+  .sc{background:oklch(0.15 0.02 254/0.48);backdrop-filter:blur(26px) saturate(160%);-webkit-backdrop-filter:blur(26px) saturate(160%);border:1px solid oklch(0.36 0.04 254/0.24);border-radius:7px;padding:18px 22px 14px;position:relative;overflow:hidden;transition:all 0.35s cubic-bezier(0.22,1,0.36,1);display:flex;flex-direction:column;gap:12px}
+  .sc::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--ac,var(--gr));opacity:0.85;box-shadow:0 0 14px var(--ac,var(--gr))}
+  .sc::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 110% -10%,var(--ac,var(--gr)),transparent 78%);opacity:0;transition:opacity 0.5s;pointer-events:none}
+  .sc:hover{border-color:oklch(0.54 0.06 254/0.45);transform:translateY(-3px);box-shadow:0 12px 40px oklch(0 0 0/0.55),0 0 0 1px var(--ac,var(--gr)),0 0 40px oklch(0.76 0.17 194/0.06)}
+  .sc:hover::after{opacity:0.06}
+  .sc-hd{display:flex;align-items:center;justify-content:space-between}
+  .sc-nm{font-size:17px;font-weight:700;letter-spacing:0.06em;color:var(--tx1)}
+  .sc-st{display:flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:0.07em;color:var(--tx2)}
+  .sd{width:8px;height:8px;border-radius:50%;animation:pls 2s ease-in-out infinite}
+  .sd.on{background:var(--gr);box-shadow:0 0 12px var(--gr)}
+  .sc-rr{display:flex;align-items:center;gap:20px}
+  .rw{position:relative;flex-shrink:0}
+  .rw canvas{display:block}
+  .rp{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--tx1);pointer-events:none}
+  .ri{flex:1}
+  .ri-l{font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:var(--tx2);font-family:'JetBrains Mono',monospace;margin-bottom:4px}
+  .ri-v{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:700;color:var(--tx1)}
+  .ri-v.sm{font-size:20px;margin-top:6px}
+  .cb{width:100%;height:100px;position:relative;border-radius:5px;overflow:hidden;background:oklch(0.11 0.02 254/0.38);border:1px solid oklch(0.26 0.03 254/0.20)}
+  .cb canvas{display:block;width:100%;height:100%}
+  .up{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx2);letter-spacing:0.06em}
+
+  .act-row{display:flex;gap:8px}
+  .act-btn{flex:1;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.08em;padding:6px 0;border-radius:4px;cursor:pointer;border:1px solid oklch(0.36 0.04 254/0.3);background:oklch(0.16 0.02 254/0.45);color:var(--tx2);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:all 0.25s ease;text-align:center;position:relative;overflow:hidden}
+  .act-btn::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,var(--clr,var(--cy)),transparent 70%);opacity:0;transition:opacity 0.25s}
+  .act-btn:hover{transform:translateY(-1px)}
+  .act-btn:active{transform:scale(0.96)}
+  .act-btn.start{--clr:var(--gr)}.act-btn.start:hover{color:var(--gr);border-color:var(--gr);box-shadow:0 0 16px oklch(0.78 0.22 154/0.2)}.act-btn.start:hover::before{opacity:0.10}
+  .act-btn.deploy{--clr:var(--bl)}.act-btn.deploy:hover{color:var(--bl);border-color:var(--bl);box-shadow:0 0 16px oklch(0.70 0.15 244/0.2)}.act-btn.deploy:hover::before{opacity:0.10}
+  .act-btn.stop{--clr:var(--ro)}.act-btn.stop:hover{color:var(--ro);border-color:var(--ro);box-shadow:0 0 16px oklch(0.64 0.20 16/0.2)}.act-btn.stop:hover::before{opacity:0.10}
+  .act-btn.reset{--clr:var(--am)}.act-btn.reset:hover{color:var(--am);border-color:var(--am);box-shadow:0 0 16px oklch(0.77 0.15 74/0.2)}.act-btn.reset:hover::before{opacity:0.10}
+
+  .lc{grid-column:1;grid-row:2;display:flex;flex-direction:column;gap:12px;overflow-y:auto}
+  .rc{grid-column:3;grid-row:2;display:flex;flex-direction:column;gap:12px;overflow-y:auto}
+
+  /* 中间视频 - 大椭圆 + 羽化边缘 */
+  .ce{grid-column:2;grid-row:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+  .vw{
+    position:relative;
+    width:min(500px,38vw);
+    aspect-ratio:3/4;
+    border-radius:50%;
+    overflow:visible;
+  }
+  /* 羽化遮罩 - 用径向渐变做柔和边缘 */
+  .vw-mask{
+    position:absolute;
+    inset:-40px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:1;
+    background:radial-gradient(ellipse 50% 50% at 50% 50%, transparent 55%, var(--bg) 100%);
+  }
+  .vw-inner{
+    position:relative;
+    width:100%;height:100%;
+    border-radius:50%;
+    overflow:hidden;
+    background:oklch(0.10 0.02 254/0.15);
+  }
+  .vw-inner video{
+    width:100%;height:100%;
+    object-fit:contain;
+    mix-blend-mode:screen;
+    opacity:0.96;
+  }
+  .vw-glow{
+    position:absolute;
+    inset:-60px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:0;
+    background:radial-gradient(ellipse 50% 50% at 50% 50%, oklch(0.52 0.09 254/0.12) 30%, transparent 70%);
+    animation:vg 4s ease-in-out infinite alternate;
+  }
+  @keyframes vg{
+    0%{opacity:0.6;transform:scale(0.96)}
+    100%{opacity:1;transform:scale(1.04)}
+  }
+  /* 虚化光环 */
+  .vw-aura{
+    position:absolute;
+    inset:-30px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:0;
+    border:3px solid oklch(0.48 0.06 254/0.08);
+    box-shadow:0 0 80px oklch(0.50 0.08 254/0.12), inset 0 0 80px oklch(0.40 0.06 254/0.06);
+    animation:va 5s ease-in-out infinite alternate;
+  }
+  @keyframes va{
+    0%{border-color:oklch(0.48 0.06 254/0.06);box-shadow:0 0 60px oklch(0.50 0.08 254/0.08)}
+    100%{border-color:oklch(0.54 0.10 244/0.12);box-shadow:0 0 100px oklch(0.52 0.10 244/0.16)}
+  }
+
+  .vl{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:0.16em;color:var(--tx2);text-align:center;margin-top:-8px}
+  .vl .hl{color:var(--cy);font-weight:700;text-shadow:0 0 18px var(--cy)}
+
+  /* 底部图表 - 加大 */
+  .bc{display:flex;gap:18px;width:100%;max-width:1020px}
+  .bch{
+    flex:1;height:150px;
+    background:oklch(0.15 0.02 254/0.48);
+    backdrop-filter:blur(26px) saturate(160%);-webkit-backdrop-filter:blur(26px) saturate(160%);
+    border:1px solid oklch(0.36 0.04 254/0.24);
+    border-radius:7px;position:relative;overflow:hidden;
+  }
+  .bch canvas{display:block;width:100%;height:100%}
+  .bch-lbl{position:absolute;top:14px;left:18px;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;letter-spacing:0.10em;color:var(--tx2)}
+  .bch-val{position:absolute;top:10px;right:18px;font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;letter-spacing:0.04em;color:var(--tx1)}
+
+  .ft{grid-column:1/-1;grid-row:3;display:flex;align-items:center;justify-content:center;gap:36px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.09em;color:var(--tx2);margin-top:6px}
+  .ft .fd{width:5px;height:5px;border-radius:50%;background:var(--gr)}
+
+  .lc::-webkit-scrollbar,.rc::-webkit-scrollbar{width:3px}
+  .lc::-webkit-scrollbar-track,.rc::-webkit-scrollbar-track{background:transparent}
+  .lc::-webkit-scrollbar-thumb,.rc::-webkit-scrollbar-thumb{background:oklch(0.34 0.02 254/0.22);border-radius:2px}
+
+  @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important}}
+</style>
+</head>
+<body>
+
+<!-- 背景层 -->
+<div class="scanline"></div>
+<div class="scanbar"></div>
+<div class="top-bar"></div>
+
+<!-- 六边形科技网格 -->
+<div class="hex-grid">
+  <svg viewBox="0 0 1200 800" preserveAspectRatio="none">
+    <defs>
+      <pattern id="hex" width="60" height="104" patternUnits="userSpaceOnUse" patternTransform="scale(1.2)">
+        <path d="M30 0 L60 17 L60 52 L30 69 L0 52 L0 17 Z" fill="none" stroke="oklch(0.76 0.17 194)" stroke-width="0.4"/>
+        <path d="M30 104 L60 87 L60 52 L30 69 L0 52 L0 87 Z" fill="none" stroke="oklch(0.76 0.17 194)" stroke-width="0.3"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#hex)"/>
+  </svg>
+</div>
+
+<div class="grid-bg"></div>
+<div class="vignette"></div>
+
+<!-- 数据流线 -->
+<div class="data-lines">
+  <svg viewBox="0 0 1920 1080" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="oklch(0.76 0.17 194/0.20)"/><stop offset="100%" stop-color="oklch(0.64 0.12 244/0.01)"/></linearGradient>
+      <linearGradient id="g2" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="oklch(0.68 0.18 294/0.16)"/><stop offset="100%" stop-color="oklch(0.64 0.12 244/0.01)"/></linearGradient>
+      <linearGradient id="g3" x1="50%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="oklch(0.76 0.17 194/0.10)"/><stop offset="100%" stop-color="transparent"/></linearGradient>
+    </defs>
+    <line x1="0" y1="160" x2="400" y2="340" class="fl sl" stroke="url(#g1)" stroke-width="1.2"/>
+    <line x1="0" y1="420" x2="400" y2="560" class="fl fa" stroke="url(#g1)" stroke-width="0.8"/>
+    <line x1="0" y1="660" x2="400" y2="800" class="fl rv" stroke="url(#g1)" stroke-width="0.7"/>
+    <line x1="1520" y1="200" x2="1920" y2="380" class="fl fa" stroke="url(#g2)" stroke-width="1.2"/>
+    <line x1="1520" y1="480" x2="1920" y2="620" class="fl sl rv" stroke="url(#g2)" stroke-width="0.8"/>
+    <line x1="1520" y1="720" x2="1920" y2="860" class="fl fa" stroke="url(#g2)" stroke-width="0.7"/>
+    <line x1="720" y1="0" x2="720" y2="80" class="fl fa" stroke="url(#g3)" stroke-width="0.8"/>
+    <line x1="1200" y1="970" x2="1200" y2="1080" class="fl sl" stroke="url(#g3)" stroke-width="0.8"/>
+    <line x1="260" y1="0" x2="260" y2="50" class="fl rv" stroke="url(#g1)" stroke-width="0.6"/>
+    <line x1="1660" y1="0" x2="1660" y2="60" class="fl fa" stroke="url(#g2)" stroke-width="0.6"/>
+    <line x1="0" y1="810" x2="220" y2="930" class="fl sl rv" stroke="url(#g1)" stroke-width="0.5"/>
+    <line x1="1720" y1="920" x2="1920" y2="1020" class="fl fa" stroke="url(#g2)" stroke-width="0.5"/>
+    <!-- 流动节点 -->
+    <circle r="2" fill="oklch(0.76 0.17 194)" class="fl-node"><animateMotion dur="6s" repeatCount="indefinite" path="M0,160 L400,340"/></circle>
+    <circle r="2" fill="oklch(0.68 0.18 294)" class="fl-node n2"><animateMotion dur="7s" repeatCount="indefinite" path="M1520,200 L1920,380"/></circle>
+    <circle r="2" fill="oklch(0.78 0.22 154)" class="fl-node n3"><animateMotion dur="5s" repeatCount="indefinite" path="M0,660 L400,800"/></circle>
+  </svg>
+</div>
+
+<!-- 轨道环 -->
+<div class="orbit-ring o1"></div>
+<div class="orbit-ring o2"></div>
+<div class="orbit-dot d1"></div>
+<div class="orbit-dot d2"></div>
+<div class="orbit-dot d3"></div>
+
+<canvas id="p"></canvas>
+
+<div class="hc tl"><svg viewBox="0 0 50 50" fill="none" stroke="oklch(0.76 0.17 194)" stroke-width="1.4"><path d="M0 25 L25 0 L25 25 L50 25"/><line x1="10" y1="10" x2="32" y2="10" stroke-width="0.7" opacity="0.4"/><line x1="10" y1="10" x2="10" y2="32" stroke-width="0.7" opacity="0.4"/></svg></div>
+<div class="hc tr"><svg viewBox="0 0 50 50" fill="none" stroke="oklch(0.68 0.18 294)" stroke-width="1.4"><path d="M50 25 L25 0 L25 25 L0 25"/><line x1="40" y1="10" x2="18" y2="10" stroke-width="0.7" opacity="0.4"/><line x1="40" y1="10" x2="40" y2="32" stroke-width="0.7" opacity="0.4"/></svg></div>
+<div class="hc bl"><svg viewBox="0 0 50 50" fill="none" stroke="oklch(0.76 0.17 194)" stroke-width="1.4"><path d="M0 25 L25 50 L25 25 L50 25"/><line x1="10" y1="40" x2="32" y2="40" stroke-width="0.7" opacity="0.4"/><line x1="10" y1="18" x2="10" y2="40" stroke-width="0.7" opacity="0.4"/></svg></div>
+<div class="hc br"><svg viewBox="0 0 50 50" fill="none" stroke="oklch(0.68 0.18 294)" stroke-width="1.4"><path d="M50 25 L25 50 L25 25 L0 25"/><line x1="40" y1="40" x2="18" y2="40" stroke-width="0.7" opacity="0.4"/><line x1="40" y1="18" x2="40" y2="40" stroke-width="0.7" opacity="0.4"/></svg></div>
+
+<div class="main">
+  <div class="hd">
+    <div class="hd-l"><div class="logo-d"></div></div>
+    <div class="hd-c">
+      <div class="hd-c1">自在空间文化艺术有限公司</div>
+      <div class="hd-c2">服务器监控系统</div>
+    </div>
+    <div class="hd-r">
+      <div class="hd-dt" id="dt"></div>
+      <button class="btn-log" onclick="document.getElementById('logModal').style.display='flex'">系 统 日 志</button>
+    </div>
+  </div>
+
+  <div class="sb">
+    <div>节点<span class="sv" id="nc">7</span></div>
+    <div>在线<span class="sv" id="oc">7</span></div>
+    <div>延迟<span class="sv" id="al">14ms</span></div>
+    <div>吞吐<span class="sv" id="tp">9.2k</span></div>
+    <div>运行时间<span class="sv">128d 6h</span></div>
+  </div>
+
+  <div class="lc" id="lc"></div>
+
+  <div class="ce">
+    <div class="vw">
+      <div class="vw-glow"></div>
+      <div class="vw-aura"></div>
+      <div class="vw-inner">
+        <video autoplay loop muted playsinline>
+          <source src="panda.webm" type="video/webm">
+          <source src="panda.mov" type="video/quicktime">
+        </video>
+      </div>
+      <div class="vw-mask"></div>
+    </div>
+    <div class="vl">NODE · <span class="hl">PANDA-CORE</span> · LIVE</div>
+    <div class="bc" id="bc"></div>
+  </div>
+
+  <div class="rc" id="rc"></div>
+
+  <div class="ft">
+    <div class="fd"></div><span>ALL SYSTEMS OPERATIONAL</span><div class="fd"></div>
+    <span>LAST INCIDENT: 23d 4h AGO</span>
+  </div>
+</div>
+
+<!-- 日志弹窗 -->
+<div id="logModal" style="display:none;position:fixed;inset:0;z-index:10000;background:oklch(0 0 0/0.75);backdrop-filter:blur(10px);align-items:center;justify-content:center">
+  <div style="background:oklch(0.14 0.02 254/0.92);border:1px solid oklch(0.40 0.05 254/0.4);border-radius:8px;padding:28px 32px;width:min(680px,85vw);max-height:70vh;overflow-y:auto;font-family:'JetBrains Mono',monospace">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+      <div style="font-size:16px;font-weight:600;letter-spacing:0.08em;color:var(--cy)">系 统 日 志</div>
+      <button onclick="document.getElementById('logModal').style.display='none'" style="background:none;border:none;color:var(--tx2);font-size:22px;cursor:pointer;line-height:1">&times;</button>
+    </div>
+    <div style="font-size:12px;line-height:2;color:var(--tx2);letter-spacing:0.04em">
+      <div style="color:var(--gr)">[14:05:22] INFO</div><div>自在空间官网 · 健康检查通过 · 延迟 32ms</div>
+      <div style="color:var(--gr)">[14:05:22] INFO</div><div>善因科技官网 · 健康检查通过 · 延迟 28ms</div>
+      <div style="color:var(--cy)">[14:04:58] DEPLOY</div><div>自在网盘 · 自动扩容完成 · 新增节点 3 个</div>
+      <div style="color:var(--gr)">[14:04:31] INFO</div><div>自在 RPA · 任务队列正常 · 活跃任务 47</div>
+      <div style="color:var(--am)">[14:03:12] WARN</div><div>自在审片系统 · GPU 使用率峰值 82% · 已自动限流</div>
+      <div style="color:var(--gr)">[14:02:45] INFO</div><div>自在 AI Agent · Token 吞吐正常 · 3.4k/s</div>
+      <div style="color:var(--gr)">[14:01:08] START</div><div>PANDA-CORE 节点上线 · 运行正常</div>
+      <div style="color:var(--cy)">[13:58:33] DEPLOY</div><div>监控面板 v3.2.1 热更新完成</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SVCS = [
+  {id:'zizai',nm:'自在空间官网',ac:'oklch(0.70 0.15 244)',rg:0.42,rs:1200,lt:32,ut:'99.97% · 45d'},
+  {id:'shanyin',nm:'善因科技官网',ac:'oklch(0.76 0.17 194)',rg:0.35,rs:890,lt:28,ut:'99.99% · 62d'},
+  {id:'wangpan',nm:'自在网盘',ac:'oklch(0.68 0.18 294)',rg:0.64,rs:500,lt:18,ut:'99.95% · 128d'},
+  {id:'rpa',nm:'自在 RPA',ac:'oklch(0.78 0.22 154)',rg:0.78,rs:1800,lt:22,ut:'99.92% · 31d'},
+  {id:'shenpian',nm:'自在审片系统',ac:'oklch(0.77 0.15 74)',rg:0.72,rs:310,lt:45,ut:'99.89% · 18d'},
+  {id:'agent',nm:'自在 AI Agent',ac:'oklch(0.70 0.15 244)',rg:0.52,rs:3400,lt:16,ut:'99.96% · 7d'},
+];
+
+// Particles
+const pc=document.getElementById('p'),pctx=pc.getContext('2d');
+let pts=[];function rp(){pc.width=innerWidth;pc.height=innerHeight}rp();addEventListener('resize',rp);
+class Pt{constructor(){this.reset()}reset(){this.x=Math.random()*pc.width;this.y=Math.random()*pc.height;this.s=Math.random()*1.5+0.4;this.sx=(Math.random()-0.5)*0.22;this.sy=(Math.random()-0.5)*0.22;this.o=Math.random()*0.5+0.06;this.fs=(Math.random()-0.5)*0.004}up(){this.x+=this.sx;this.y+=this.sy;this.o+=this.fs;if(this.o<=0.04||this.o>=0.52)this.fs*=-1;if(this.x<0||this.x>pc.width||this.y<0||this.y>pc.height)this.reset()}dr(){pctx.beginPath();pctx.arc(this.x,this.y,this.s,0,Math.PI*2);pctx.fillStyle=`oklch(0.76 0.17 194 / ${this.o})`;pctx.fill()}}
+for(let i=0;i<110;i++)pts.push(new Pt());
+(function ap(){pctx.clearRect(0,0,pc.width,pc.height);pts.forEach(p=>{p.up();p.dr()});requestAnimationFrame(ap)})();
+
+// Clock
+function udt(){const d=new Date();document.getElementById('dt').textContent=d.getFullYear()+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+String(d.getDate()).padStart(2,'0')+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+':'+String(d.getSeconds()).padStart(2,'0')}udt();setInterval(udt,1000);
+
+window.btnAction=function(id,action){
+  const el=document.querySelector('.fb-'+id);if(!el)return;
+  el.textContent=action.toUpperCase();el.style.opacity='1';el.style.color='var(--tx1)';
+  setTimeout(()=>{el.style.opacity='0'},1500);
+};
+
+function bld(s){
+  const c=document.createElement('div');c.className='sc';c.style.setProperty('--ac',s.ac);
+  c.innerHTML=`
+    <div class="sc-hd"><div class="sc-nm">${s.nm}</div><div class="sc-st"><span class="fb-${s.id}" style="font-size:10px;opacity:0;transition:opacity 0.3s;margin-right:4px;"></span><div class="sd on"></div>ONLINE</div></div>
+    <div class="sc-rr"><div class="rw"><canvas width="90" height="90" class="rc-${s.id}"></canvas><div class="rp rp-${s.id}"></div></div><div class="ri"><div class="ri-l">请求吞吐</div><div class="ri-v rv-${s.id}">${s.rs>=1000?(s.rs/1000).toFixed(1)+'k':s.rs}</div><div class="ri-l" style="margin-top:4px;">响应延迟</div><div class="ri-v sm lt-${s.id}">${s.lt}ms</div></div></div>
+    <div class="cb"><canvas class="cc-${s.id}"></canvas></div>
+    <div class="act-row">
+      <button class="act-btn start" onclick="btnAction('${s.id}','start')">启 动</button>
+      <button class="act-btn deploy" onclick="btnAction('${s.id}','deploy')">部 署</button>
+      <button class="act-btn stop" onclick="btnAction('${s.id}','stop')">停 止</button>
+      <button class="act-btn reset" onclick="btnAction('${s.id}','reset')">重 置</button>
+    </div>
+    <div class="up">UPTIME: ${s.ut}</div>`;
+  return c;
+}
+const lc=document.getElementById('lc'),rc=document.getElementById('rc');
+SVCS.forEach((s,i)=>{(i<3?lc:rc).appendChild(bld(s))});
+
+// Bottom Charts - bigger
+const bcc=document.getElementById('bc');
+const BACC=['oklch(0.78 0.22 154)','oklch(0.70 0.15 244)','oklch(0.76 0.17 194)'];
+['CPU 负载','内存占用','网络流量'].forEach((l,i)=>{const d=document.createElement('div');d.className='bch';d.innerHTML=`<div class="bch-lbl">${l}</div><div class="bch-val bv-${i}">--</div><canvas class="big-${i}"></canvas>`;bcc.appendChild(d)});
+
+// Ring
+const rd={};
+function dr(cv,pct,ac,lb){const ctx=cv.getContext('2d'),w=cv.width,h=cv.height,cx=w/2,cy=h/2,r=37,lw=6;ctx.clearRect(0,0,w,h);ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle='oklch(0.26 0.03 254/0.30)';ctx.lineWidth=lw;ctx.stroke();const ea=-Math.PI/2+(Math.PI*2*pct);ctx.beginPath();ctx.arc(cx,cy,r,-Math.PI/2,ea);ctx.strokeStyle=ac;ctx.lineWidth=lw;ctx.lineCap='round';ctx.stroke();ctx.beginPath();ctx.arc(cx,cy,r,-Math.PI/2,ea);ctx.strokeStyle=ac;ctx.lineWidth=lw+9;ctx.globalAlpha=0.08;ctx.stroke();ctx.globalAlpha=1;lb.textContent=Math.round(pct*100)+'%'}
+
+// Line Chart
+const ch={};const MP=120;
+function ic(id,base,va){const a=[];for(let i=0;i<MP;i++)a.push(base+(Math.random()-0.5)*va);ch[id]=a}
+function pcv(id,v){const a=ch[id];a.push(v);if(a.length>MP)a.shift()}
+function dlc(cv,data,ac,fa=0.10){const ctx=cv.getContext('2d'),dpr=devicePixelRatio||1;const rect=cv.parentElement.getBoundingClientRect();const w=rect.width*dpr,h=rect.height*dpr;if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h}ctx.clearRect(0,0,w,h);const pad={t:12*dpr,r:4*dpr,b:12*dpr,l:4*dpr},pw=w-pad.l-pad.r,ph=h-pad.t-pad.b;if(data.length<2)return;const min=Math.min(...data)*0.80,max=Math.max(...data)*1.20,range=max-min||1;const tx=i=>pad.l+(i/(data.length-1))*pw,ty=v=>pad.t+ph-((v-min)/range)*ph;ctx.beginPath();ctx.moveTo(tx(0),h-pad.b);data.forEach((v,i)=>ctx.lineTo(tx(i),ty(v)));ctx.lineTo(tx(data.length-1),h-pad.b);ctx.closePath();const fg=ctx.createLinearGradient(0,pad.t,0,h-pad.b);fg.addColorStop(0,ac.replace(')',' / '+(fa*3)+')'));fg.addColorStop(1,ac.replace(')',' / 0.01)'));ctx.fillStyle=fg;ctx.fill();ctx.beginPath();data.forEach((v,i)=>{const x=tx(i),y=ty(v);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});ctx.strokeStyle=ac;ctx.lineWidth=2.2*dpr;ctx.lineJoin='round';ctx.stroke();ctx.strokeStyle=ac;ctx.lineWidth=7*dpr;ctx.globalAlpha=0.04;ctx.stroke();ctx.globalAlpha=1}
+
+SVCS.forEach(s=>{ic(s.id+'_c',s.rs,s.rs*0.4);rd[s.id]=s.rg});
+ic('cpu',45,28);ic('mem',62,18);ic('net',2.8,1.8);
+
+function da(){SVCS.forEach(s=>{const rc=document.querySelector('.rc-'+s.id),rp=document.querySelector('.rp-'+s.id),cc=document.querySelector('.cc-'+s.id);if(rc)dr(rc,rd[s.id],s.ac,rp);if(cc)dlc(cc,ch[s.id+'_c'],s.ac)});['cpu','mem','net'].forEach((k,i)=>{const c=document.querySelector('.big-'+i);if(c)dlc(c,ch[k],BACC[i],0.10)})}
+
+function rnd(mn,mx){return Math.floor(Math.random()*(mx-mn+1)+mn)}
+let cvCpu=45,cvMem=62,cvNet=2.8;
+function ud(){SVCS.forEach(s=>{const nr=s.rs+(Math.random()-0.5)*s.rs*0.6;pcv(s.id+'_c',Math.max(5,Math.round(nr)));rd[s.id]=Math.max(0.03,Math.min(0.98,rd[s.id]+(Math.random()-0.5)*0.08));const re=document.querySelector('.rv-'+s.id),le=document.querySelector('.lt-'+s.id);if(re)re.textContent=s.rs>=1000?(Math.round(nr/100)/10).toFixed(1)+'k':Math.round(nr);if(le)le.textContent=rnd(s.lt-8,s.lt+12)+'ms'});cvCpu=Math.max(2,Math.min(97,45+(Math.random()-0.5)*60));cvMem=Math.max(6,Math.min(97,62+(Math.random()-0.5)*35));cvNet=Math.max(0.15,Math.min(7,2.8+(Math.random()-0.5)*4));pcv('cpu',cvCpu);pcv('mem',cvMem);pcv('net',cvNet);document.getElementById('al').textContent=rnd(5,26)+'ms';document.getElementById('tp').textContent=(rnd(70,125)/10).toFixed(1)+'k';const bv0=document.querySelector('.bv-0'),bv1=document.querySelector('.bv-1'),bv2=document.querySelector('.bv-2');if(bv0)bv0.textContent=Math.round(cvCpu)+'%';if(bv1)bv1.textContent=Math.round(cvMem)+'%';if(bv2)bv2.textContent=cvNet.toFixed(1)+' Gbps'}
+ud();setTimeout(da,400);setInterval(()=>{ud();da()},2500);addEventListener('resize',da);
+</script>
+</body>
+</html>
