@@ -1,547 +1,694 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>善因科技文化 | ShanYin Tech & Culture</title>
-<meta name="description" content="善因(杭州)科技文化有限责任公司 — 科技赋能文化，文化滋养科技。高新技术企业，专注视频处理技术与文化艺术交流。">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+SC:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-:root {
-  /* Primitives — refined minimal with warm undertone */
-  --brand-hue: 45;
-  --accent-hue: 25;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="善因(杭州)科技文化有限责任公司 — 科技赋能文化，文化滋养科技。高新技术企业，专注视频处理技术与文化艺术交流。">
+  <meta name="keywords" content="善因科技,视频处理,文化科技,高新技术企业,杭州,影像修复,插帧技术">
+  <meta property="og:title" content="善因科技文化 | ShanYin Tech & Culture">
+  <meta property="og:description" content="科技赋能文化，文化滋养科技。善因(杭州)科技文化有限责任公司官方网站。">
+  <meta property="og:type" content="website">
+  <title>善因科技文化 | ShanYin Tech & Culture</title>
 
-  --neutral-50:  oklch(97.5% 0.002 var(--brand-hue));
-  --neutral-100: oklch(94% 0.004 var(--brand-hue));
-  --neutral-200: oklch(88% 0.006 var(--brand-hue));
-  --neutral-300: oklch(76% 0.005 var(--brand-hue));
-  --neutral-500: oklch(55% 0.004 var(--brand-hue));
-  --neutral-700: oklch(33% 0.006 var(--brand-hue));
-  --neutral-800: oklch(22% 0.005 var(--brand-hue));
-  --neutral-900: oklch(14% 0.004 var(--brand-hue));
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+SC:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  --accent-light: oklch(52% 0.07 var(--accent-hue));
-  --accent-mid:   oklch(42% 0.09 var(--accent-hue));
-  --accent-deep:  oklch(30% 0.10 var(--accent-hue));
-  --accent-dark:  oklch(18% 0.06 var(--accent-hue));
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
 
-  /* Semantic tokens */
-  --bg-body: var(--neutral-50);
-  --bg-alt: var(--neutral-100);
-  --bg-card: oklch(100% 0 0);
-  --text-primary: var(--neutral-900);
-  --text-secondary: var(--neutral-700);
-  --text-muted: var(--neutral-500);
-  --accent: var(--accent-light);
-  --accent-deep: var(--accent-mid);
-  --accent-dark: var(--accent-deep);
-  --border-subtle: oklch(92% 0.003 var(--brand-hue));
-  --border-strong: oklch(84% 0.005 var(--brand-hue));
-
-  /* Typography */
-  --font-display: 'Noto Serif SC', 'Cormorant Garamond', 'Georgia', serif;
-  --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  --font-mono: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
-
-  /* Type scale */
-  --text-xs: clamp(0.75rem, 0.7rem + 0.2vw, 0.8125rem);
-  --text-sm: clamp(0.8125rem, 0.75rem + 0.25vw, 0.875rem);
-  --text-base: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
-  --text-lg: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
-  --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
-  --text-2xl: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);
-  --text-3xl: clamp(2rem, 1.6rem + 1.5vw, 3rem);
-  --text-4xl: clamp(2.5rem, 2rem + 2.5vw, 4.5rem);
-
-  /* Spacing — 4pt scale */
-  --space-2xs: clamp(0.25rem, 0.3vw, 0.5rem);
-  --space-xs: clamp(0.5rem, 0.6vw, 0.75rem);
-  --space-sm: clamp(0.75rem, 1vw, 1rem);
-  --space-md: clamp(1rem, 1.5vw, 1.5rem);
-  --space-lg: clamp(1.5rem, 2.5vw, 2.5rem);
-  --space-xl: clamp(2.5rem, 4vw, 4rem);
-  --space-2xl: clamp(4rem, 6vw, 6rem);
-  --space-3xl: clamp(6rem, 10vw, 10rem);
-
-  /* Shadows */
-  --shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.04);
-  --shadow-md: 0 4px 12px -2px oklch(0% 0 0 / 0.05), 0 2px 4px -2px oklch(0% 0 0 / 0.03);
-  --shadow-lg: 0 12px 24px -6px oklch(0% 0 0 / 0.06), 0 4px 8px -4px oklch(0% 0 0 / 0.03);
-
-  /* Motion */
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
-
-  /* Layout */
-  --content-max: 72rem;
-  --content-narrow: 48rem;
-}
-
-/* ── Reset ── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-
-body {
-  font-family: var(--font-body);
-  font-size: var(--text-base);
-  line-height: 1.7;
-  color: var(--text-primary);
-  background: var(--bg-body);
-  font-weight: 350;
-}
-
-img { display: block; max-width: 100%; }
-a { color: inherit; text-decoration: none; }
-
-/* ── Typography ── */
-.display { font-family: var(--font-display); font-weight: 500; line-height: 1.15; letter-spacing: -0.01em; }
-.display-lg { font-family: var(--font-display); font-size: var(--text-4xl); font-weight: 600; line-height: 1.10; letter-spacing: -0.02em; }
-.heading { font-family: var(--font-display); font-size: var(--text-3xl); font-weight: 500; line-height: 1.2; letter-spacing: -0.01em; }
-.heading-sm { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 500; line-height: 1.25; }
-.eyebrow {
-  font-family: var(--font-body);
-  font-size: var(--text-xs);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--accent);
-}
-
-/* ── Layout ── */
-.container { width: 100%; max-width: var(--content-max); margin: 0 auto; padding: 0 var(--space-lg); }
-.container-narrow { max-width: var(--content-narrow); }
-
-.section { padding: var(--space-3xl) 0; }
-.section-alt { background: var(--bg-alt); }
-
-/* ── Nav ── */
-.nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  padding: var(--space-md) 0;
-  transition: background 400ms var(--ease-out-expo), box-shadow 400ms var(--ease-out-expo);
-}
-.nav.scrolled { background: oklch(100% 0 0 / 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: var(--shadow-sm); }
-.nav-inner { display: flex; align-items: center; justify-content: space-between; max-width: var(--content-max); margin: 0 auto; padding: 0 var(--space-lg); }
-.nav-logo { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 600; letter-spacing: -0.01em; color: var(--text-primary); }
-.nav-logo sub { font-size: var(--text-xs); font-weight: 400; opacity: 0.5; display: block; letter-spacing: 0.05em; }
-.nav-links { display: flex; gap: var(--space-lg); align-items: center; list-style: none; }
-.nav-links a { font-size: var(--text-sm); font-weight: 450; color: var(--text-secondary); transition: color 200ms var(--ease-out-expo); position: relative; padding: var(--space-2xs) 0; }
-.nav-links a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1.5px; background: var(--accent); transition: width 300ms var(--ease-out-expo); }
-.nav-links a:hover { color: var(--text-primary); }
-.nav-links a:hover::after { width: 100%; }
-
-/* ── Hero ── */
-.hero {
-  min-height: 100vh; display: flex; align-items: center;
-  padding-top: var(--space-3xl);
-  position: relative; overflow: hidden;
-}
-.hero::before {
-  content: ''; position: absolute;
-  top: -30%; right: -20%; width: 70%; height: 120%;
-  background: radial-gradient(ellipse at center, oklch(92% 0.02 var(--accent-hue) / 0.10) 0%, transparent 70%);
-  pointer-events: none;
-}
-.hero-content { position: relative; z-index: 1; }
-.hero-tagline { font-size: var(--text-4xl); max-width: 14ch; margin: var(--space-md) 0 var(--space-lg); }
-.hero-sub { font-size: var(--text-lg); color: var(--text-secondary); max-width: 36ch; line-height: 1.8; margin-bottom: var(--space-xl); }
-.hero-meta { display: flex; gap: var(--space-2xl); margin-top: var(--space-2xl); font-size: var(--text-sm); color: var(--text-muted); }
-.hero-meta span { display: flex; align-items: center; gap: var(--space-xs); }
-.hero-meta span::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
-
-/* Scroll indicator */
-.scroll-indicator {
-  position: absolute; bottom: var(--space-xl); left: 50%; transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: var(--space-xs);
-  font-size: var(--text-xs); color: var(--text-muted); letter-spacing: 0.08em;
-  animation: float 3s ease-in-out infinite;
-}
-.scroll-indicator::after {
-  content: ''; width: 1px; height: 40px; background: var(--border-strong);
-}
-@keyframes float {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(8px); }
-}
-
-/* ── Section header ── */
-.section-header { margin-bottom: var(--space-2xl); }
-.section-header .eyebrow { margin-bottom: var(--space-sm); display: block; }
-.section-header p { color: var(--text-secondary); font-size: var(--text-lg); max-width: 44ch; margin-top: var(--space-sm); }
-
-/* ── About ── */
-.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2xl); align-items: start; }
-.about-text p { color: var(--text-secondary); font-size: var(--text-lg); line-height: 1.9; margin-bottom: var(--space-md); }
-.about-text p:first-of-type { font-family: var(--font-display); font-size: var(--text-xl); color: var(--text-primary); line-height: 1.6; font-style: italic; }
-.about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm); }
-.stat-card {
-  background: var(--bg-card); padding: var(--space-lg); border-radius: 2px;
-  box-shadow: var(--shadow-sm); border: 1px solid var(--border-subtle);
-  transition: transform 300ms var(--ease-out-expo), box-shadow 300ms var(--ease-out-expo);
-}
-.stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-.stat-number { font-family: var(--font-display); font-size: var(--text-3xl); font-weight: 600; color: var(--accent-deep); line-height: 1; }
-.stat-label { font-size: var(--text-sm); color: var(--text-muted); margin-top: var(--space-xs); }
-
-/* ── Business ── */
-.business-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
-.business-card {
-  padding: var(--space-xl) var(--space-lg);
-  background: var(--bg-card);
-  position: relative; overflow: hidden;
-  border: 1px solid var(--border-subtle);
-  transition: transform 350ms var(--ease-out-expo), box-shadow 350ms var(--ease-out-expo);
-  cursor: default;
-}
-.business-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-.business-card::before {
-  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
-  background: var(--accent);
-  transform: scaleX(0); transform-origin: left; transition: transform 400ms var(--ease-out-expo);
-}
-.business-card:hover::before { transform: scaleX(1); }
-.business-icon { font-size: var(--text-2xl); margin-bottom: var(--space-md); opacity: 0.8; }
-.business-card h3 { font-family: var(--font-display); font-size: var(--text-xl); margin-bottom: var(--space-sm); }
-.business-card p { color: var(--text-secondary); font-size: var(--text-sm); line-height: 1.7; }
-
-/* ── Tech ── */
-.tech-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-md); }
-.tech-item {
-  display: flex; gap: var(--space-md); align-items: flex-start;
-  padding: var(--space-lg); background: var(--bg-card); border: 1px solid var(--border-subtle);
-  transition: border-color 300ms var(--ease-out-expo);
-}
-.tech-item:hover { border-color: var(--accent); }
-.tech-num { font-family: var(--font-display); font-size: var(--text-xl); color: var(--accent); line-height: 1; min-width: 2rem; }
-.tech-item h4 { font-family: var(--font-display); font-size: var(--text-lg); margin-bottom: var(--space-2xs); }
-.tech-item p { color: var(--text-secondary); font-size: var(--text-sm); line-height: 1.6; }
-
-/* ── Honors ── */
-.honors-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-md); }
-.honor-card {
-  text-align: center; padding: var(--space-xl) var(--space-md);
-  background: var(--bg-card); border: 1px solid var(--border-subtle);
-  transition: transform 300ms var(--ease-out-expo);
-}
-.honor-card:hover { transform: translateY(-2px); }
-.honor-icon { font-size: var(--text-3xl); margin-bottom: var(--space-sm); }
-.honor-card h4 { font-family: var(--font-display); font-size: var(--text-lg); margin-bottom: var(--space-2xs); }
-.honor-card .honor-id { font-size: var(--text-xs); color: var(--text-muted); font-family: var(--font-mono); }
-.honor-card .honor-date { font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-2xs); }
-
-/* ── Contact ── */
-.contact-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: var(--space-2xl); }
-.info-row { display: flex; gap: var(--space-sm); font-size: var(--text-sm); margin-bottom: var(--space-sm); }
-.info-label { color: var(--text-muted); min-width: 5em; flex-shrink: 0; }
-.info-value { color: var(--text-primary); }
-.contact-qr { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-md); }
-.qr-placeholder {
-  width: 160px; height: 160px; background: var(--bg-alt); border: 1px solid var(--border-subtle);
-  display: flex; align-items: center; justify-content: center;
-  font-size: var(--text-sm); color: var(--text-muted); text-align: center; line-height: 1.6;
-}
-
-/* ── Footer ── */
-.footer {
-  padding: var(--space-xl) 0 var(--space-lg);
-  border-top: 1px solid var(--border-subtle);
-  background: var(--bg-alt);
-}
-.footer-inner { display: flex; justify-content: space-between; align-items: center; max-width: var(--content-max); margin: 0 auto; padding: 0 var(--space-lg); }
-.footer-left { font-size: var(--text-sm); color: var(--text-muted); }
-.footer-right { font-size: var(--text-xs); color: var(--text-muted); }
-.footer-right a { color: var(--accent); transition: color 200ms; }
-.footer-right a:hover { color: var(--accent-deep); }
-
-/* ── Reveal animations ── */
-.reveal {
-  opacity: 0; transform: translateY(30px);
-  transition: opacity 700ms var(--ease-out-expo), transform 700ms var(--ease-out-expo);
-}
-.reveal.visible { opacity: 1; transform: translateY(0); }
-.reveal-delay-1 { transition-delay: 100ms; }
-.reveal-delay-2 { transition-delay: 200ms; }
-.reveal-delay-3 { transition-delay: 300ms; }
-.reveal-delay-4 { transition-delay: 400ms; }
-
-/* ── Responsive ── */
-@media (max-width: 1024px) {
-  .about-grid { grid-template-columns: 1fr; }
-  .business-grid { grid-template-columns: 1fr 1fr; }
-  .honors-grid { grid-template-columns: 1fr 1fr; }
-  .contact-grid { grid-template-columns: 1fr; }
-}
-@media (max-width: 640px) {
-  .nav-links { display: none; }
-  .hero-tagline { font-size: clamp(2rem, 3.5vw + 1.2rem, 2.8rem); }
-  .business-grid { grid-template-columns: 1fr; }
-  .tech-list { grid-template-columns: 1fr; }
-  .honors-grid { grid-template-columns: 1fr; }
-  .about-stats { grid-template-columns: 1fr 1fr; }
-  .hero-meta { flex-direction: column; gap: var(--space-sm); }
-  .footer-inner { flex-direction: column; gap: var(--space-sm); text-align: center; }
-  .hero::before { width: 100%; right: -50%; top: -20%; }
-}
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; transition: none; }
-  .scroll-indicator { animation: none; }
-  .business-card:hover { transform: none; }
-  .stat-card:hover { transform: none; }
-  .honor-card:hover { transform: none; }
-  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-}
-
-/* Focus */
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-:focus:not(:focus-visible) { outline: none; }
-</style>
+  <!-- Favicon (inline SVG placeholder) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>善</text></svg>">
 </head>
 <body>
 
-<nav class="nav" id="nav">
-  <div class="nav-inner">
-    <a href="#" class="nav-logo">
-      善因<sub>SHANYIN</sub>
-    </a>
-    <ul class="nav-links">
-      <li><a href="#about">关于</a></li>
-      <li><a href="#business">业务</a></li>
-      <li><a href="#tech">技术</a></li>
-      <li><a href="#honors">资质</a></li>
-      <li><a href="#contact">联系</a></li>
-    </ul>
-  </div>
-</nav>
-
-<header class="hero">
-  <div class="container hero-content">
-    <span class="eyebrow reveal">ShanYin (Hangzhou) Tech & Culture Co., Ltd.</span>
-    <h1 class="display-lg hero-tagline reveal reveal-delay-1">科技赋能文化<br>文化滋养科技</h1>
-    <p class="hero-sub reveal reveal-delay-2">善因科技文化成立于2019年，是浙江省高新技术企业。我们以视频处理与数字影像技术为核心，深度融合文化艺术交流策划，为客户提供从技术研发到文化传播的全链路服务。</p>
-    <div class="hero-meta reveal reveal-delay-3">
-      <span>高新技术企业</span>
-      <span>科技型中小企业</span>
-      <span>创新型中小企业</span>
+  <!-- Loading Screen -->
+  <div id="loading-screen" class="loading-screen">
+    <div style="text-align:center;">
+      <div class="loading-text">善因科技文化</div>
+      <div class="loading-bar"></div>
     </div>
   </div>
-  <div class="scroll-indicator">向下探索</div>
-</header>
 
-<main>
-  <!-- About -->
-  <section class="section" id="about">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="eyebrow">About</span>
-        <h2 class="heading">关于善因</h2>
-        <p>善因者，善行所结之果实。取名于此，意在用科技的力量播种善意，以文化的土壤孕育未来。</p>
-      </div>
-      <div class="about-grid">
-        <div class="about-text reveal reveal-delay-1">
-          <p>"君子生非异也，善假于物也。" 善因科技文化以数字技术为器，以文化内容为魂，在科技与文化交汇处寻找属于这个时代的表达方式。</p>
-          <p>公司坐落于杭州市拱墅区，毗邻京杭大运河。依托杭州深厚的文化底蕴与蓬勃的科技生态，我们构建了以视频处理技术为核心、文化艺术交流为延伸的独特业务体系。从影像智能化处理到文化活动全案策划，善因致力于成为科技与文化交融的创新者。</p>
-        </div>
-        <div class="about-stats reveal reveal-delay-2">
-          <div class="stat-card"><div class="stat-number">2019</div><div class="stat-label">成立年份</div></div>
-          <div class="stat-card"><div class="stat-number">100<span style="font-size:0.5em">万元</span></div><div class="stat-label">注册资本（实缴）</div></div>
-          <div class="stat-card"><div class="stat-number">4+</div><div class="stat-label">自主软件著作权</div></div>
-          <div class="stat-card"><div class="stat-number">高新</div><div class="stat-label">国家级资质认定</div></div>
-        </div>
+  <!-- Navigation -->
+  <nav class="nav" id="nav" role="navigation" aria-label="主导航">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo" aria-label="善因科技文化首页">
+        善因<sub>SHANYIN</sub>
+      </a>
+      <ul class="nav-links" id="nav-links" role="menubar">
+        <li role="none"><a href="#about" role="menuitem" data-i18n="nav.about">关于</a></li>
+        <li role="none"><a href="#brand" role="menuitem">品牌</a></li>
+        <li role="none"><a href="#business" role="menuitem" data-i18n="nav.business">业务</a></li>
+        <li role="none"><a href="#projects" role="menuitem">项目</a></li>
+        <li role="none"><a href="#tech" role="menuitem" data-i18n="nav.tech">技术</a></li>
+        <li role="none"><a href="#impact" role="menuitem">影响力</a></li>
+        <li role="none"><a href="#honors" role="menuitem" data-i18n="nav.honors">资质</a></li>
+        <li role="none"><a href="#media" role="menuitem">媒体报道</a></li>
+        <li role="none"><a href="#volunteer" role="menuitem">志愿者</a></li>
+        <li role="none"><a href="#contact" role="menuitem" data-i18n="nav.contact">联系</a></li>
+      </ul>
+      <button class="nav-toggle" id="nav-toggle" aria-label="切换菜单" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <header class="hero" id="hero" role="banner">
+    <div class="hero-particles" aria-hidden="true"></div>
+    <div class="container hero-content">
+      <span class="eyebrow reveal">ShanYin (Hangzhou) Tech & Culture Co., Ltd.</span>
+      <h1 class="display-lg hero-tagline reveal reveal-delay-1">科技赋能文化<br>文化滋养科技</h1>
+      <p class="hero-sub reveal reveal-delay-2">善因科技文化成立于2019年，是浙江省高新技术企业。我们以视频处理与数字影像技术为核心，深度融合文化艺术交流策划，为客户提供从技术研发到文化传播的全链路服务。</p>
+      <div class="hero-meta reveal reveal-delay-3">
+        <span>高新技术企业</span>
+        <span>科技型中小企业</span>
+        <span>创新型中小企业</span>
       </div>
     </div>
-  </section>
+    <div class="scroll-indicator" aria-hidden="true">向下探索</div>
+  </header>
 
-  <!-- Business -->
-  <section class="section section-alt" id="business">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="eyebrow">Services</span>
-        <h2 class="heading">业务板块</h2>
-        <p>技术研发与文化服务双轮驱动，为客户提供多元化解决方案。</p>
-      </div>
-      <div class="business-grid">
-        <div class="business-card reveal reveal-delay-1">
-          <div class="business-icon">&#9678;</div>
-          <h3>视频处理技术</h3>
-          <p>自主研发视频帧率提升、影像模糊修复、动态镜头叠加与多帧画面拼接系统，为企业提供高效的影像智能化处理方案。</p>
-        </div>
-        <div class="business-card reveal reveal-delay-2">
-          <div class="business-icon">&#9671;</div>
-          <h3>文化艺术交流</h3>
-          <p>策划与执行各类文化艺术交流活动，涵盖舞台艺术造型、展览展示、会议服务及企业形象策划，打造有温度的文化体验。</p>
-        </div>
-        <div class="business-card reveal reveal-delay-3">
-          <div class="business-icon">&#9670;</div>
-          <h3>公关与体育活动</h3>
-          <p>提供专业公关活动策划与体育活动策划服务，包括品牌传播、赛事运营、媒体对接，助力客户实现精准传播。</p>
-        </div>
-        <div class="business-card reveal reveal-delay-1">
-          <div class="business-icon">&#9632;</div>
-          <h3>计算机技术服务</h3>
-          <p>计算机软硬件及电子产品的技术开发、技术服务与销售，为政企客户提供定制化数字化解决方案。</p>
-        </div>
-        <div class="business-card reveal reveal-delay-2">
-          <div class="business-icon">&#9650;</div>
-          <h3>职业技能培训</h3>
-          <p>面向成人的非证书劳动职业技能培训，涵盖数字媒体、文化活动策划等实用领域，赋能人才成长。</p>
-        </div>
-        <div class="business-card reveal reveal-delay-3">
-          <div class="business-icon">&#9679;</div>
-          <h3>设备租赁服务</h3>
-          <p>提供舞台设备、影像设备等专业机械设备租赁，为各类文化活动与影视制作提供硬件保障。</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  <main>
 
-  <!-- Tech -->
-  <section class="section" id="tech">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="eyebrow">Technology</span>
-        <h2 class="heading">核心技术</h2>
-        <p>四项自主软件著作权构筑技术壁垒，赋能影像智能化。</p>
-      </div>
-      <div class="tech-list">
-        <div class="tech-item reveal reveal-delay-1">
-          <span class="tech-num">01</span>
-          <div>
-            <h4>视频帧率提升参数配置软件</h4>
-            <p>智能插帧算法，将低帧率视频流畅提升至高帧率，支持多参数灵活配置，适配不同场景输出需求。</p>
+    <!-- ABOUT SECTION -->
+    <section class="section" id="about" aria-labelledby="about-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="eyebrow">About</span>
+          <h2 class="heading" id="about-heading">关于善因</h2>
+          <p>善因者，善行所结之果实。取名于此，意在用科技的力量播种善意，以文化的土壤孕育未来。</p>
+        </div>
+        <div class="about-grid">
+          <div class="about-text reveal reveal-delay-1">
+            <p>"君子生非异也，善假于物也。" 善因科技文化以数字技术为器，以文化内容为魂，在科技与文化交汇处寻找属于这个时代的表达方式。</p>
+            <p>公司坐落于杭州市拱墅区，毗邻京杭大运河。依托杭州深厚的文化底蕴与蓬勃的科技生态，我们构建了以视频处理技术为核心、文化艺术交流为延伸的独特业务体系。从影像智能化处理到文化活动全案策划，善因致力于成为科技与文化交融的创新者。</p>
+          </div>
+          <div class="about-stats reveal reveal-delay-2">
+            <div class="stat-card">
+              <div class="stat-number" data-count="2019">0</div>
+              <div class="stat-label">成立年份</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" data-count="100">0<span style="font-size:0.5em">万元</span></div>
+              <div class="stat-label">注册资本（实缴）</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" data-count="4">0+</div>
+              <div class="stat-label">自主软件著作权</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">高新</div>
+              <div class="stat-label">国家级资质认定</div>
+            </div>
           </div>
         </div>
-        <div class="tech-item reveal reveal-delay-2">
-          <span class="tech-num">02</span>
-          <div>
-            <h4>影像模糊修复点云处理系统</h4>
-            <p>基于点云重建与深度学习，修复模糊、低分辨率影像细节，恢复画面质感与清晰度。</p>
+
+        <!-- Timeline -->
+        <div class="about-timeline reveal reveal-delay-3" style="margin-top:3rem;">
+          <div class="timeline-item">
+            <div class="timeline-year">2019</div>
+            <div class="timeline-text">善因(杭州)科技文化有限责任公司正式成立，落户杭州市拱墅区。</div>
           </div>
-        </div>
-        <div class="tech-item reveal reveal-delay-3">
-          <span class="tech-num">03</span>
-          <div>
-            <h4>动态镜头叠加处理系统</h4>
-            <p>多镜头画面的实时叠加与合成，支持动态追踪、图层混合与特效渲染，提升后期制作效率。</p>
+          <div class="timeline-item">
+            <div class="timeline-year">2020</div>
+            <div class="timeline-text">启动视频帧率提升算法研发，完成核心技术原型验证。</div>
           </div>
-        </div>
-        <div class="tech-item reveal reveal-delay-4">
-          <span class="tech-num">04</span>
-          <div>
-            <h4>多帧画面拼接处理系统</h4>
-            <p>多帧图像的高精度拼接与融合，适用于全景影像、卫星图合成、显微图像拼接等专业场景。</p>
+          <div class="timeline-item">
+            <div class="timeline-year">2021</div>
+            <div class="timeline-text">获评浙江省科技型中小企业；首款软件著作权获准登记。</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2022</div>
+            <div class="timeline-text">获评国家级高新技术企业（GR202233009185）；四项软著全部落地。</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2023</div>
+            <div class="timeline-text">获评浙江省创新型中小企业；拓展文化艺术交流全案策划业务。</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2024-2026</div>
+            <div class="timeline-text">持续深耕视频AI处理技术，服务政企客户，推动科技与文化的深度融合。</div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Honors -->
-  <section class="section section-alt" id="honors">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="eyebrow">Credentials</span>
-        <h2 class="heading">资质荣誉</h2>
-        <p>以专业实力获得国家与行业认可。</p>
-      </div>
-      <div class="honors-grid">
-        <div class="honor-card reveal reveal-delay-1">
-          <div class="honor-icon">&#9733;</div>
-          <h4>高新技术企业</h4>
-          <div class="honor-id">GR202233009185</div>
-          <div class="honor-date">2022年认定</div>
+    <!-- BRAND STORY SECTION (NEW) -->
+    <section class="section section-alt brand-story" id="brand" aria-labelledby="brand-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="eyebrow">Brand Story</span>
+          <h2 class="heading" id="brand-heading">品牌故事</h2>
+          <p>善因之名，源于"善因结善果"的朴素信念——以科技为善因，以文化为土壤，结出造福社会的果实。</p>
         </div>
-        <div class="honor-card reveal reveal-delay-2">
-          <div class="honor-icon">&#9702;</div>
-          <h4>科技型中小企业</h4>
-          <div class="honor-date">浙江省 · 2021年</div>
-        </div>
-        <div class="honor-card reveal reveal-delay-3">
-          <div class="honor-icon">&#9674;</div>
-          <h4>创新型中小企业</h4>
-          <div class="honor-date">浙江省 · 2023年</div>
-        </div>
-        <div class="honor-card reveal reveal-delay-4">
-          <div class="honor-icon">&#9813;</div>
-          <h4>政府采购优质供应商</h4>
-          <div class="honor-date">连续入围省级项目</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <section class="section" id="contact">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="eyebrow">Contact</span>
-        <h2 class="heading">联系我们</h2>
-        <p>期待与您携手，共创科技与文化的美好未来。</p>
-      </div>
-      <div class="contact-grid">
-        <div class="contact-info reveal reveal-delay-1">
-          <div class="info-row"><span class="info-label">公司全称</span><span class="info-value">善因（杭州）科技文化有限责任公司</span></div>
-          <div class="info-row"><span class="info-label">英文名称</span><span class="info-value">ShanYin (Hangzhou) Tech & Culture Co., Ltd.</span></div>
-          <div class="info-row"><span class="info-label">注册地址</span><span class="info-value">浙江省杭州市拱墅区中凯弄49号-2（二层）</span></div>
-          <div class="info-row"><span class="info-label">电子邮箱</span><span class="info-value"><a href="mailto:sonia@zizai2014.com" style="color:var(--accent)">sonia@zizai2014.com</a></span></div>
-          <div class="info-row"><span class="info-label">统一社会信用代码</span><span class="info-value" style="font-family:var(--font-mono);font-size:var(--text-xs)">91330105MA2H111P5Q</span></div>
-        </div>
-        <div class="contact-qr reveal reveal-delay-2">
-          <div class="qr-placeholder">
-            扫码关注<br>善因科技文化<br><span style="font-size:0.8em">微信公众号</span>
+        <div class="brand-grid">
+          <div class="brand-visual reveal reveal-delay-1" aria-hidden="true">
+            <div class="brand-visual-text">
+              科技赋能文化<br>文化滋养科技<br><br>
+              Technology Empowers Culture<br>
+              Culture Nourishes Technology
+            </div>
           </div>
-          <p style="font-size:var(--text-sm);color:var(--text-muted);text-align:center">科技向善 · 文化赋能</p>
+          <div class="brand-text reveal reveal-delay-2">
+            <h3>从"器"到"道"的探索</h3>
+            <p>善因科技文化不仅仅是一家技术公司，更是一个关于"如何用科技服务文化、用文化引导科技"的实践平台。我们相信，最前沿的算法不应只停留在实验室，而应走进文化遗产的保护现场、走进艺术创作的幕后、走进每一个需要技术温度的场景。</p>
+            <p>从影像模糊修复到舞台艺术数字化，从视频帧率智能提升到跨文化活动的科技支持，善因在每一个项目中践行"科技向善"的理念。</p>
+            <div class="brand-values">
+              <div class="brand-value">
+                <div class="brand-value-icon">&#9678;</div>
+                <div class="brand-value-label">创新</div>
+              </div>
+              <div class="brand-value">
+                <div class="brand-value-icon">&#9671;</div>
+                <div class="brand-value-label">责任</div>
+              </div>
+              <div class="brand-value">
+                <div class="brand-value-icon">&#9670;</div>
+                <div class="brand-value-label">融合</div>
+              </div>
+              <div class="brand-value">
+                <div class="brand-value-icon">&#9632;</div>
+                <div class="brand-value-label">致远</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-</main>
+    </section>
 
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-left">
-      善因（杭州）科技文化有限责任公司 &copy; 2019-2026
+    <!-- BUSINESS SECTION -->
+    <section class="section" id="business" aria-labelledby="business-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="eyebrow">Services</span>
+          <h2 class="heading" id="business-heading">业务板块</h2>
+          <p>技术研发与文化服务双轮驱动，为客户提供多元化解决方案。</p>
+        </div>
+        <div class="business-grid">
+          <div class="business-card reveal reveal-delay-1">
+            <div class="business-icon">&#9678;</div>
+            <h3>视频处理技术</h3>
+            <p>自主研发视频帧率提升、影像模糊修复、动态镜头叠加与多帧画面拼接系统，为企业提供高效的影像智能化处理方案。</p>
+          </div>
+          <div class="business-card reveal reveal-delay-2">
+            <div class="business-icon">&#9671;</div>
+            <h3>文化艺术交流</h3>
+            <p>策划与执行各类文化艺术交流活动，涵盖舞台艺术造型、展览展示、会议服务及企业形象策划，打造有温度的文化体验。</p>
+          </div>
+          <div class="business-card reveal reveal-delay-3">
+            <div class="business-icon">&#9670;</div>
+            <h3>公关与体育活动</h3>
+            <p>提供专业公关活动策划与体育活动策划服务，包括品牌传播、赛事运营、媒体对接，助力客户实现精准传播。</p>
+          </div>
+          <div class="business-card reveal reveal-delay-1">
+            <div class="business-icon">&#9632;</div>
+            <h3>计算机技术服务</h3>
+            <p>计算机软硬件及电子产品的技术开发、技术服务与销售，为政企客户提供定制化数字化解决方案。</p>
+          </div>
+          <div class="business-card reveal reveal-delay-2">
+            <div class="business-icon">&#9650;</div>
+            <h3>职业技能培训</h3>
+            <p>面向成人的非证书劳动职业技能培训，涵盖数字媒体、文化活动策划等实用领域，赋能人才成长。</p>
+          </div>
+          <div class="business-card reveal reveal-delay-3">
+            <div class="business-icon">&#9679;</div>
+            <h3>设备租赁服务</h3>
+            <p>提供舞台设备、影像设备等专业机械设备租赁，为各类文化活动与影视制作提供硬件保障。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS SECTION (NEW) -->
+    <section class="section section-alt" id="projects" aria-labelledby="projects-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="eyebrow">Projects</span>
+          <h2 class="heading" id="projects-heading">公益与商业项目</h2>
+          <p>以技术之力参与社会建设，以文化之心推动公益传播。</p>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="projects-filter reveal" role="tablist" aria-label="项目筛选">
+          <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">全部</button>
+          <button class="filter-btn" data-filter="tech" role="tab" aria-selected="false">技术研发</button>
+          <button class="filter-btn" data-filter="culture" role="tab" aria-selected="false">文化活动</button>
+          <button class="filter-btn" data-filter="public" role="tab" aria-selected="false">公益项目</button>
+        </div>
+
+        <div class="projects-grid">
+          <div class="project-card reveal reveal-delay-1" data-category="tech">
+            <div class="project-thumb" aria-hidden="true">
+              <div class="project-thumb-text">AI 视频插帧系统</div>
+            </div>
+            <div class="project-info">
+              <div class="project-category">技术研发</div>
+              <h3>视频帧率智能提升系统</h3>
+              <p>基于深度学习的视频插帧算法，将24fps视频智能提升至60fps，广泛应用于影视修复与体育赛事转播。</p>
+            </div>
+          </div>
+          <div class="project-card reveal reveal-delay-2" data-category="tech">
+            <div class="project-thumb" aria-hidden="true">
+              <div class="project-thumb-text">影像修复引擎</div>
+            </div>
+            <div class="project-info">
+              <div class="project-category">技术研发</div>
+              <h3>老影像模糊修复系统</h3>
+              <p>利用点云重建与生成对抗网络(GAN)，对低分辨率、模糊历史影像进行智能修复，还原珍贵历史画面。</p>
+            </div>
+          </div>
+          <div class="project-card reveal reveal-delay-3" data-category="culture">
+            <div class="project-thumb" aria-hidden="true">
+              <div class="project-thumb-text">运河文化季</div>
+            </div>
+            <div class="project-info">
+              <div class="project-category">文化活动</div>
+              <h3>京杭大运河文化季</h3>
+              <p>携手拱墅区政府，策划执行大运河文化季系列活动，涵盖非遗展览、水上实景演出、文化论坛三大板块。</p>
+            </div>
+          </div>
+          <div class="project-card reveal reveal-delay-1" data-category="culture">
+            <div class="project-thumb" aria-hidden="true">
+              <div class="project-thumb-text">青年艺术周</div>
+            </div>
+            <div class="project-info">
+              <div class="project-category">文化活动</div>
+              <h3>杭州青年艺术周</h3>
+              <p>联合中国美术学院、浙江音乐学院，打造面向青年艺术家的跨界展示平台，融合数字艺术与传统表演。</p>
+            </div>
+          </div>
+          <div class="project-card reveal reveal-delay-2" data-category="public">
+            <div class="project-thumb" aria-hidden="true">
+              <div class="project-thumb-text">乡村数字影院</div>
+            </div>
+            <div class="project-info">
+              <div class="project-category">公益项目</div>
+              <h3>乡村数字影院计划</h3>
+              <p>为浙江山区26县捐赠便携式数字放映设备，并配套影像修复技术服务，让经典电影走进乡村课堂。</p>
+            </div>
+          </div>
+          <div class="project-card reveal reveal-delay-3" data-category="public">
+            <div class="project-thumb" aria-hidden="true">
+              <div class="project-thumb-text">文化遗产数字化</div>
+            </div>
+            <div class="project-info">
+              <div class="project-category">公益项目</div>
+              <h3>非遗技艺数字化存档</h3>
+              <p>运用多帧拼接与动态镜头叠加技术，为浙江省内20余项非物质文化遗产建立高精度数字影像档案。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH SECTION -->
+    <section class="section" id="tech" aria-labelledby="tech-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="eyebrow">Technology</span>
+          <h2 class="heading" id="tech-heading">核心技术</h2>
+          <p>四项自主软件著作权构筑技术壁垒，赋能影像智能化。</p>
+        </div>
+        <div class="tech-list">
+          <div class="tech-item reveal reveal-delay-1">
+            <span class="tech-num">01</span>
+            <div>
+              <h4>视频帧率提升参数配置软件</h4>
+              <p>智能插帧算法，将低帧率视频流畅提升至高帧率，支持多参数灵活配置，适配不同场景输出需求。</p>
+              <div class="tech-tags">
+                <span class="tech-tag">深度学习</span>
+                <span class="tech-tag">光流估计</span>
+                <span class="tech-tag">实时处理</span>
+              </div>
+            </div>
+          </div>
+          <div class="tech-item reveal reveal-delay-2">
+            <span class="tech-num">02</span>
+            <div>
+              <h4>影像模糊修复点云处理系统</h4>
+              <p>基于点云重建与深度学习，修复模糊、低分辨率影像细节，恢复画面质感与清晰度。</p>
+              <div class="tech-tags">
+                <span class="tech-tag">GAN</span>
+                <span class="tech-tag">点云重建</span>
+                <span class="tech-tag">超分辨率</span>
+              </div>
+            </div>
+          </div>
+          <div class="tech-item reveal reveal-delay-3">
+            <span class="tech-num">03</span>
+            <div>
+              <h4>动态镜头叠加处理系统</h4>
+              <p>多镜头画面的实时叠加与合成，支持动态追踪、图层混合与特效渲染，提升后期制作效率。</p>
+              <div class="tech-tags">
+                <span class="tech-tag">实时合成</span>
+                <span class="tech-tag">动态追踪</span>
+                <span class="tech-tag">VFX</span>
+              </div>
+            </div>
+          </div>
+          <div class="tech-item reveal reveal-delay-4">
+            <span class="tech-num">04</span>
+            <div>
+              <h4>多帧画面拼接处理系统</h4>
+              <p>多帧图像的高精度拼接与融合，适用于全景影像、卫星图合成、显微图像拼接等专业场景。</p>
+              <div class="tech-tags">
+                <span class="tech-tag">特征匹配</span>
+                <span class="tech-tag">全景拼接</span>
+                <span class="tech-tag">图像融合</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- IMPACT STATS SECTION (NEW) -->
+    <section class="section section-alt" id="impact" aria-labelledby="impact-heading">
+      <div class="container">
+        <div class="section-header reveal text-center">
+          <span class="eyebrow">Our Impact</span>
+          <h2 class="heading" id="impact-heading">影响力数据</h2>
+          <p>用数字说话——每一份成果，都是善因团队专业与热爱的见证。</p>
+        </div>
+        <div class="impact-grid">
+          <div class="impact-item reveal reveal-delay-1">
+            <div class="impact-number" data-count="150">0+</div>
+            <div class="impact-label">服务企业客户</div>
+            <div class="impact-desc">涵盖政府、教育、传媒、文旅等行业</div>
+          </div>
+          <div class="impact-item reveal reveal-delay-2">
+            <div class="impact-number" data-count="3200">0+</div>
+            <div class="impact-label">处理视频时长(小时)</div>
+            <div class="impact-desc">累计完成影像智能化处理</div>
+          </div>
+          <div class="impact-item reveal reveal-delay-3">
+            <div class="impact-number" data-count="50">0+</div>
+            <div class="impact-label">策划文化活动(场)</div>
+            <div class="impact-desc">线上线下累计参与人数超10万</div>
+          </div>
+          <div class="impact-item reveal reveal-delay-4">
+            <div class="impact-number" data-count="12">0</div>
+            <div class="impact-label">公益项目覆盖县市</div>
+            <div class="impact-desc">乡村数字影院、非遗存档等公益行动</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PARTNERS SECTION (NEW) -->
+    <section class="section" id="partners" aria-labelledby="partners-heading">
+      <div class="container">
+        <div class="section-header reveal text-center">
+          <span class="eyebrow">Partners</span>
+          <h2 class="heading" id="partners-heading">合作伙伴</h2>
+          <p>携手各界伙伴，共建科技与文化的美好生态。</p>
+        </div>
+        <div class="partners-grid reveal" id="partners-track">
+          <div class="partner-logo">中国美术学院</div>
+          <div class="partner-logo">浙江音乐学院</div>
+          <div class="partner-logo">杭州运河集团</div>
+          <div class="partner-logo">浙江省文旅厅</div>
+          <div class="partner-logo">拱墅区人民政府</div>
+          <div class="partner-logo">浙江大学传媒学院</div>
+          <div class="partner-logo">杭州文化馆</div>
+          <div class="partner-logo">腾讯公益</div>
+          <div class="partner-logo">阿里云创新中心</div>
+          <div class="partner-logo">之江实验室</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HONORS SECTION -->
+    <section class="section section-alt" id="honors" aria-labelledby="honors-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="eyebrow">Credentials</span>
+          <h2 class="heading" id="honors-heading">资质荣誉</h2>
+          <p>以专业实力获得国家与行业认可。</p>
+        </div>
+        <div class="honors-grid">
+          <div class="honor-card reveal reveal-delay-1">
+            <div class="honor-icon">&#9733;</div>
+            <h4>高新技术企业</h4>
+            <div class="honor-id">GR202233009185</div>
+            <div class="honor-date">2022年认定</div>
+          </div>
+          <div class="honor-card reveal reveal-delay-2">
+            <div class="honor-icon">&#9702;</div>
+            <h4>科技型中小企业</h4>
+            <div class="honor-date">浙江省 · 2021年</div>
+          </div>
+          <div class="honor-card reveal reveal-delay-3">
+            <div class="honor-icon">&#9674;</div>
+            <h4>创新型中小企业</h4>
+            <div class="honor-date">浙江省 · 2023年</div>
+          </div>
+          <div class="honor-card reveal reveal-delay-4">
+            <div class="honor-icon">&#9813;</div>
+            <h4>政府采购优质供应商</h4>
+            <div class="honor-date">连续入围省级项目</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SUPPORT / DONATE SECTION (NEW) -->
+    <section class="section" id="support" aria-labelledby="support-heading">
+      <div class="container">
+        <div class="section-header reveal text-center">
+          <span class="eyebrow">Support Us</span>
+          <h2 class="heading" id="support-heading">支持善因</h2>
+          <p>您的每一份支持，都是科技与文化融合之路上的温暖力量。</p>
+        </div>
+        <div class="support-grid">
+          <div class="support-card reveal reveal-delay-1">
+            <div class="support-icon">&#9829;</div>
+            <h3>公益捐赠</h3>
+            <p>您的捐赠将用于乡村数字影院建设、非遗数字化存档等公益项目，让科技的温度传递到每一个角落。</p>
+            <a href="#contact" class="support-btn">了解捐赠方式</a>
+          </div>
+          <div class="support-card reveal reveal-delay-2">
+            <div class="support-icon">&#9830;</div>
+            <h3>技术服务采购</h3>
+            <p>选择善因的视频处理与文化活动策划服务，在获得专业服务的同时，支持本土科技文化企业发展。</p>
+            <a href="#business" class="support-btn">查看服务详情</a>
+          </div>
+          <div class="support-card reveal reveal-delay-3">
+            <div class="support-icon">&#9827;</div>
+            <h3>成为合作伙伴</h3>
+            <p>无论您是文化机构、科技企业还是公益组织，我们都期待与您携手，共同探索科技与文化的无限可能。</p>
+            <a href="#contact" class="support-btn">联系合作</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MEDIA REPORTS SECTION (NEW) -->
+    <section class="section section-alt" id="media" aria-labelledby="media-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="eyebrow">Media Reports</span>
+          <h2 class="heading" id="media-heading">媒体报道</h2>
+          <p>媒体视角下的善因科技文化，见证我们的每一步成长。</p>
+        </div>
+        <div class="media-list">
+          <div class="media-item reveal reveal-delay-1">
+            <div class="media-date">2024-11</div>
+            <div class="media-content">
+              <h4>善因科技文化：用AI技术让老影像"活"起来</h4>
+              <p>浙江日报专访善因科技文化，深入探讨影像模糊修复技术的社会价值与应用前景。</p>
+              <div class="media-source">来源：浙江日报 · 科技专刊</div>
+            </div>
+          </div>
+          <div class="media-item reveal reveal-delay-2">
+            <div class="media-date">2024-06</div>
+            <div class="media-content">
+              <h4>大运河文化季圆满落幕，数字技术点亮千年文脉</h4>
+              <p>由善因科技文化策划执行的大运河文化季系列活动获央视新闻频道报道，线上线下累计覆盖人群超50万。</p>
+              <div class="media-source">来源：央视新闻 · 文化周刊</div>
+            </div>
+          </div>
+          <div class="media-item reveal reveal-delay-3">
+            <div class="media-date">2023-12</div>
+            <div class="media-content">
+              <h4>高新技术企业善因：在算法与文化之间寻找平衡点</h4>
+              <p>36氪对善因科技文化创始人进行深度专访，解析"科技+文化"双轮驱动商业模式背后的思考。</p>
+              <div class="media-source">来源：36氪 · 创新企业观察</div>
+            </div>
+          </div>
+          <div class="media-item reveal reveal-delay-4">
+            <div class="media-date">2023-08</div>
+            <div class="media-content">
+              <h4>乡村数字影院计划启动，善因科技文化捐赠首批设备</h4>
+              <p>浙江在线报道了善因科技文化发起的"乡村数字影院计划"，首批20套便携式数字放映设备已送达山区学校。</p>
+              <div class="media-source">来源：浙江在线 · 公益频道</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VOLUNTEER SECTION (NEW) -->
+    <section class="section" id="volunteer" aria-labelledby="volunteer-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="eyebrow">Join Us</span>
+          <h2 class="heading" id="volunteer-heading">志愿者招募</h2>
+          <p>与善因一起，用科技的力量服务文化，用文化的温度滋养社会。</p>
+        </div>
+        <div class="volunteer-grid">
+          <div class="volunteer-form reveal reveal-delay-1">
+            <form id="volunteer-form" data-validate data-persist="volunteer">
+              <div class="form-group">
+                <label for="vol-name">姓名 *</label>
+                <input type="text" id="vol-name" name="name" required data-error-id="vol-name-error">
+                <div id="vol-name-error" class="field-error-text"></div>
+              </div>
+              <div class="form-group">
+                <label for="vol-phone">联系电话 *</label>
+                <input type="tel" id="vol-phone" name="phone" required data-error-id="vol-phone-error">
+                <div id="vol-phone-error" class="field-error-text"></div>
+              </div>
+              <div class="form-group">
+                <label for="vol-email">电子邮箱</label>
+                <input type="email" id="vol-email" name="email" data-error-id="vol-email-error">
+                <div id="vol-email-error" class="field-error-text"></div>
+              </div>
+              <div class="form-group">
+                <label for="vol-skill">技能方向 *</label>
+                <select id="vol-skill" name="skill" required data-error-id="vol-skill-error">
+                  <option value="">请选择</option>
+                  <option value="video-tech">视频处理技术</option>
+                  <option value="event-planning">活动策划执行</option>
+                  <option value="design">视觉设计</option>
+                  <option value="translation">翻译/写作</option>
+                  <option value="other">其他</option>
+                </select>
+                <div id="vol-skill-error" class="field-error-text"></div>
+              </div>
+              <div class="form-group">
+                <label for="vol-message">个人简介 / 申请理由</label>
+                <textarea id="vol-message" name="message" placeholder="请简要介绍您的背景及参与意愿..."></textarea>
+              </div>
+              <button type="submit" class="form-submit">提交申请</button>
+            </form>
+          </div>
+          <div class="volunteer-info reveal reveal-delay-2">
+            <h3>为什么加入善因志愿者团队？</h3>
+            <p>善因志愿者团队是一群对科技与文化充满热情的伙伴。在这里，您将：</p>
+            <div class="volunteer-benefits">
+              <div class="benefit-item">
+                <div class="benefit-icon">&#10003;</div>
+                <div class="benefit-text">参与真实的文化科技项目，积累实战经验</div>
+              </div>
+              <div class="benefit-item">
+                <div class="benefit-icon">&#10003;</div>
+                <div class="benefit-text">与行业专家面对面交流，拓展专业人脉</div>
+              </div>
+              <div class="benefit-item">
+                <div class="benefit-icon">&#10003;</div>
+                <div class="benefit-text">获得善因科技文化志愿服务证书</div>
+              </div>
+              <div class="benefit-item">
+                <div class="benefit-icon">&#10003;</div>
+                <div class="benefit-text">优先获得善因全职/实习岗位推荐机会</div>
+              </div>
+            </div>
+            <p style="margin-top:2rem;font-size:var(--text-sm);color:var(--text-muted);">我们承诺：您的个人信息仅用于志愿者招募评估，不会向第三方披露。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="section section-alt" id="contact" aria-labelledby="contact-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="eyebrow">Contact</span>
+          <h2 class="heading" id="contact-heading">联系我们</h2>
+          <p>期待与您携手，共创科技与文化的美好未来。</p>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-info reveal reveal-delay-1">
+            <div class="info-row"><span class="info-label">公司全称</span><span class="info-value">善因（杭州）科技文化有限责任公司</span></div>
+            <div class="info-row"><span class="info-label">英文名称</span><span class="info-value">ShanYin (Hangzhou) Tech & Culture Co., Ltd.</span></div>
+            <div class="info-row"><span class="info-label">注册地址</span><span class="info-value">浙江省杭州市拱墅区中凯弄49号-2（二层）</span></div>
+            <div class="info-row"><span class="info-label">电子邮箱</span><span class="info-value"><a href="mailto:sonia@zizai2014.com" style="color:var(--accent)">sonia@zizai2014.com</a></span></div>
+            <div class="info-row"><span class="info-label">统一社会信用代码</span><span class="info-value" style="font-family:var(--font-mono);font-size:var(--text-xs)">91330105MA2H111P5Q</span></div>
+
+            <!-- Contact Form -->
+            <form class="contact-form" data-validate data-persist="contact" style="margin-top:2rem;">
+              <div class="form-group">
+                <label for="contact-name">您的姓名 *</label>
+                <input type="text" id="contact-name" name="name" required data-error-id="contact-name-error">
+                <div id="contact-name-error" class="field-error-text"></div>
+              </div>
+              <div class="form-group">
+                <label for="contact-email">电子邮箱 *</label>
+                <input type="email" id="contact-email" name="email" required data-error-id="contact-email-error">
+                <div id="contact-email-error" class="field-error-text"></div>
+              </div>
+              <div class="form-group">
+                <label for="contact-message">留言内容 *</label>
+                <textarea id="contact-message" name="message" required data-error-id="contact-message-error" placeholder="请描述您的需求或合作意向..."></textarea>
+                <div id="contact-message-error" class="field-error-text"></div>
+              </div>
+              <button type="submit" class="form-submit">发送留言</button>
+            </form>
+          </div>
+          <div class="contact-qr reveal reveal-delay-2">
+            <div class="qr-placeholder">
+              扫码关注<br>善因科技文化<br><span style="font-size:0.8em">微信公众号</span>
+            </div>
+            <p style="font-size:var(--text-sm);color:var(--text-muted);text-align:center">科技向善 · 文化赋能</p>
+
+            <!-- Map placeholder -->
+            <div style="margin-top:2rem;height:200px;background:var(--bg-alt);border:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:center;font-size:var(--text-sm);color:var(--text-muted);text-align:center;line-height:1.6;">
+              地图位置示意<br>杭州市拱墅区中凯弄49号-2
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-left">
+        善因（杭州）科技文化有限责任公司 &copy; 2019-2026
+      </div>
+      <div class="footer-right">
+        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">浙ICP备XXXXXXXX号</a>
+      </div>
     </div>
-    <div class="footer-right">
-      <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">浙ICP备XXXXXXXX号</a>
+    <div class="footer-inner" style="margin-top:1rem;">
+      <div class="footer-links">
+        <a href="#about">关于善因</a>
+        <a href="#business">业务介绍</a>
+        <a href="#tech">核心技术</a>
+        <a href="#contact">联系我们</a>
+        <a href="#">隐私政策</a>
+        <a href="#">使用条款</a>
+      </div>
     </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="back-to-top" aria-label="返回顶部" title="返回顶部">&#8593;</button>
+
+  <!-- Language Switcher -->
+  <div class="lang-switcher" role="group" aria-label="语言切换">
+    <button class="lang-btn active" data-locale="zh-CN">中文</button>
+    <button class="lang-btn" data-locale="en-US">EN</button>
   </div>
-</footer>
 
-<script>
-// Nav scroll effect
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 60);
-});
-
-// Reveal on scroll
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
-
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-// Smooth scroll offset for fixed nav
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    const target = document.querySelector(link.getAttribute('href'));
-    if (target) {
-      window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
-    }
-  });
-});
-</script>
+  <!-- Main Script -->
+  <script src="script.js"></script>
 
 </body>
 </html>

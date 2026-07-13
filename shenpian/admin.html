@@ -1162,8 +1162,7 @@ body::after {
   window._previewProjectVideo = function(token, fileName) {
     const streamUrl = API_BASE + '/api/stream?token=' + encodeURIComponent(token) + '&file=' + encodeURIComponent(fileName);
     const w = window.open('', '_blank', 'width=960,height=600');
-    w.document.write('<!DOCTYPE html><html><head><title>' + escapeHtml(fileName) + '</title><style>body{margin:0;background:#000;display:flex;align-items:center;justify-content:center;height:100vh}video{max-width:100%;max-height:100vh}</style>  <script src="api-config.js"></script>
-</head><body><video src="' + streamUrl + '" controls autoplay></video></body></html>');
+    w.document.write('<!DOCTYPE html><html><head><title>' + escapeHtml(fileName) + '</title><style>body{margin:0;background:#000;display:flex;align-items:center;justify-content:center;height:100vh}video{max-width:100%;max-height:100vh}</style></head><body><video src="' + streamUrl + '" controls autoplay></video></body></html>');
   };
 
   window._deleteProjectVideo = async function(token, videoId, displayName) {

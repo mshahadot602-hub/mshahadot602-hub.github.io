@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>自在Fusion 16-SNS | 企业级融合基础设施</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: #05080f;
+  --bg-primary: #0a0e1a;
+  --bg-surface: rgba(12, 18, 36, 0.85);
+  --bg-glass: rgba(16, 24, 48, 0.55);
+  --accent-blue: #1a6eff;
+  --accent-cyan: #00c6ff;
+  --accent-green: #00e676;
+  --accent-purple: #7c4dff;
+  --text-primary: #e8ecf4;
+  --text-secondary: #8899b8;
+  --text-dim: #4a5678;
+  --border-glass: rgba(255, 255, 255, 0.06);
+  --glow-blue: rgba(26, 110, 255, 0.25);
+  --glow-cyan: rgba(0, 198, 255, 0.2);
+  --radius-lg: 1.5rem;
+  --radius-md: 1rem;
+  --radius-sm: 0.5rem;
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 700ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html {
+  scroll-behavior: smooth;
+  font-size: clamp(14px, 1.1vw, 18px);
+}
+
+body {
+  font-family: 'Noto Sans SC', system-ui, sans-serif;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Background ambient layers */
+.ambient-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.ambient-bg::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 50%, rgba(26,110,255,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 30%, rgba(0,198,255,0.04) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 50% 80%, rgba(124,77,255,0.04) 0%, transparent 50%);
+  animation: ambientShift 18s ease-in-out infinite alternate;
+}
+@keyframes ambientShift {
+  0% { transform: translate(0,0) rotate(0deg); }
+  100% { transform: translate(2%, -1%) rotate(0.5deg); }
+}
+
+/* Grid texture */
+.grid-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(26,110,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,110,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Main container */
+.main-wrap {
+  position: relative;
+  z-index: 1;
+}
+
+/* Navigation */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 1rem 2rem;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(5,8,15,0.75);
+  border-bottom: 1px solid var(--border-glass);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background var(--transition-smooth);
+}
+.nav-logo {
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.nav-logo span {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: color var(--transition-fast);
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent-blue);
+  transition: width var(--transition-smooth);
+}
+.nav-links a:hover {
+  color: var(--text-primary);
+}
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* Hero */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 6rem 2rem 4rem;
+  position: relative;
+}
+.hero-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  background: rgba(26,110,255,0.1);
+  border: 1px solid rgba(26,110,255,0.2);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--accent-blue);
+  letter-spacing: 0.05em;
+  width: fit-content;
+}
+.hero-badge .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-blue);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 4px var(--accent-blue); }
+  50% { opacity: 0.4; box-shadow: 0 0 12px var(--accent-blue); }
+}
+.hero-title {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.hero-title .fusion {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-title .sns {
+  display: block;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.2em;
+  margin-top: 0.25rem;
+}
+.hero-subtitle {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  max-width: 480px;
+  line-height: 1.7;
+}
+.hero-cta {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+.btn {
+  padding: 0.85rem 2rem;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all var(--transition-fast);
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-blue), #0055dd);
+  color: #fff;
+  box-shadow: 0 0 30px rgba(26,110,255,0.25), 0 4px 20px rgba(26,110,255,0.3);
+}
+.btn-primary:hover {
+  box-shadow: 0 0 50px rgba(26,110,255,0.4), 0 6px 28px rgba(26,110,255,0.4);
+  transform: translateY(-1px);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(10px);
+}
+.btn-ghost:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.2);
+}
+
+/* Hero visual */
+.hero-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 450px;
+}
+.product-float {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  perspective: 1000px;
+}
+.product-float img {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  filter: drop-shadow(0 0 60px rgba(26,110,255,0.2)) drop-shadow(0 20px 40px rgba(0,0,0,0.5));
+  animation: floatProduct 6s ease-in-out infinite;
+}
+@keyframes floatProduct {
+  0%, 100% { transform: translateY(0) rotateY(-2deg); }
+  50% { transform: translateY(-12px) rotateY(2deg); }
+}
+
+/* Spec stripe */
+.spec-stripe {
+  display: flex;
+  justify-content: center;
+  gap: clamp(2rem, 6vw, 5rem);
+  padding: 3rem 2rem;
+  border-top: 1px solid var(--border-glass);
+  border-bottom: 1px solid var(--border-glass);
+  background: var(--bg-surface);
+  backdrop-filter: blur(20px);
+  flex-wrap: wrap;
+}
+.spec-stripe-item {
+  text-align: center;
+}
+.spec-stripe-item .val {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: var(--accent-blue);
+  line-height: 1;
+}
+.spec-stripe-item .lbl {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 0.4rem;
+}
+
+/* Sections */
+.section {
+  padding: 6rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.section-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--accent-blue);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.section-title {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin-bottom: 1rem;
+  line-height: 1.15;
+}
+.section-desc {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  max-width: 560px;
+  line-height: 1.7;
+}
+
+/* Gallery */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+.gallery-item {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-glass);
+  transition: all var(--transition-smooth);
+  cursor: pointer;
+}
+.gallery-item:hover {
+  border-color: rgba(26,110,255,0.3);
+  box-shadow: 0 0 40px rgba(26,110,255,0.15);
+  transform: translateY(-4px);
+}
+.gallery-item img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 16/10;
+  object-fit: cover;
+}
+.gallery-wrap {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+.gallery-wrap .gallery-item:first-child {
+  grid-row: span 2;
+}
+.gallery-wrap .gallery-item:first-child img {
+  aspect-ratio: auto;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Specs table */
+.specs-container {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 1.5rem;
+}
+.spec-card {
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  transition: all var(--transition-smooth);
+}
+.spec-card:hover {
+  border-color: rgba(26,110,255,0.2);
+  box-shadow: 0 0 30px rgba(26,110,255,0.08);
+}
+.spec-card-icon {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  opacity: 0.8;
+}
+.spec-card h3 {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+  margin-bottom: 1.2rem;
+}
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  font-size: 0.85rem;
+}
+.spec-row:last-child { border-bottom: none; }
+.spec-row .key { color: var(--text-dim); font-size: 0.78rem; }
+.spec-row .val { color: var(--text-primary); font-weight: 500; text-align: right; }
+.spec-row .val.highlight { color: var(--accent-cyan); font-weight: 700; }
+
+/* Port visualization */
+.port-grid {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+.port-item {
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  text-align: center;
+  transition: all var(--transition-smooth);
+}
+.port-item:hover {
+  border-color: rgba(26,110,255,0.25);
+  box-shadow: 0 0 25px rgba(26,110,255,0.1);
+  transform: translateY(-2px);
+}
+.port-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(26,110,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  font-size: 1.4rem;
+}
+.port-speed {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  line-height: 1;
+}
+.port-name {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-top: 0.3rem;
+  letter-spacing: 0.03em;
+}
+.port-qty {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  margin-top: 0.2rem;
+}
+
+/* Feature highlight */
+.feature-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  margin-top: 4rem;
+}
+.feature-split.reverse { direction: rtl; }
+.feature-split.reverse > * { direction: ltr; }
+.feature-img {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-glass);
+}
+.feature-img img {
+  width: 100%;
+  display: block;
+}
+.feature-text h3 {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+.feature-text p {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+/* Use case cards */
+.use-cases-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+.use-case-card {
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  transition: all var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+.use-case-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
+  opacity: 0;
+  transition: opacity var(--transition-smooth);
+}
+.use-case-card:hover::before { opacity: 1; }
+.use-case-card:hover {
+  border-color: rgba(26,110,255,0.25);
+  transform: translateY(-2px);
+}
+.use-case-card .icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.use-case-card h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.use-case-card p {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Footer */
+.footer {
+  border-top: 1px solid var(--border-glass);
+  padding: 3rem 2rem;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+.footer .brand {
+  font-family: 'Orbitron', monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+/* Modal for full image */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0,0,0,0.92);
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-smooth);
+}
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+.modal-img {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: var(--radius-md);
+  transform: scale(0.9);
+  transition: transform var(--transition-smooth);
+}
+.modal-overlay.active .modal-img {
+  transform: scale(1);
+}
+.modal-close {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+.modal-close:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .hero-content { grid-template-columns: 1fr; text-align: center; }
+  .hero-text { align-items: center; }
+  .hero-subtitle { max-width: 100%; }
+  .hero-badge { margin: 0 auto; }
+  .hero-visual { min-height: 300px; }
+  .gallery-wrap { grid-template-columns: 1fr 1fr; }
+  .gallery-wrap .gallery-item:first-child { grid-row: auto; }
+  .feature-split { grid-template-columns: 1fr; gap: 2rem; }
+  .nav-links { display: none; }
+}
+
+@media (max-width: 600px) {
+  .hero { padding: 5rem 1rem 3rem; }
+  .section { padding: 4rem 1rem; }
+  .spec-stripe { gap: 2rem; padding: 2rem 1rem; }
+  .gallery-wrap { grid-template-columns: 1fr; }
+  .port-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<div class="ambient-bg"></div>
+<div class="grid-overlay"></div>
+
+<div class="main-wrap">
+
+<!-- Navigation -->
+<nav class="nav">
+  <a href="#" class="nav-logo">
+    <span>自在Fusion</span> 16-SNS
+  </a>
+  <ul class="nav-links">
+    <li><a href="#overview">产品概览</a></li>
+    <li><a href="#specs">技术规格</a></li>
+    <li><a href="#gallery">产品图集</a></li>
+    <li><a href="#ports">端口配置</a></li>
+    <li><a href="#use-cases">应用场景</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <div class="hero-text reveal">
+      <div class="hero-badge"><span class="dot"></span>企业级融合基础设施</div>
+      <h1 class="hero-title">
+        <span class="fusion">自在Fusion 16-SNS</span>
+        <span class="sns">S E R V E R · N A S · S W I T C H</span>
+      </h1>
+      <p class="hero-subtitle">
+        将高性能服务器、大容量网络存储与万兆交换核心深度融合于一体，
+        为企业数据中心提供前所未有的密度与效率。一台设备，三种角色，开启基础设施新范式。
+      </p>
+      <div class="hero-cta">
+        <a href="#specs" class="btn btn-primary">查看完整规格</a>
+        <a href="#gallery" class="btn btn-ghost">产品图集</a>
+      </div>
+    </div>
+    <div class="hero-visual reveal">
+      <div class="product-float">
+        <img src="img/sns.png" alt="自在Fusion 16-SNS">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Spec Stripe -->
+<div class="spec-stripe reveal">
+  <div class="spec-stripe-item">
+    <div class="val">16</div>
+    <div class="lbl">热插拔盘位</div>
+  </div>
+  <div class="spec-stripe-item">
+    <div class="val">100 GbE</div>
+    <div class="lbl">上行端口</div>
+  </div>
+  <div class="spec-stripe-item">
+    <div class="val">PCIe 5.0</div>
+    <div class="lbl">扩展总线</div>
+  </div>
+  <div class="spec-stripe-item">
+    <div class="val">NVMe</div>
+    <div class="lbl">全闪存就绪</div>
+  </div>
+  <div class="spec-stripe-item">
+    <div class="val">2U</div>
+    <div class="lbl">标准机架</div>
+  </div>
+</div>
+
+<!-- Overview -->
+<section class="section reveal" id="overview">
+  <div class="section-label">Product Overview</div>
+  <h2 class="section-title">一台设备 · 三重能力</h2>
+  <p class="section-desc">自在Fusion 16-SNS 重新定义企业基础设施边界。通过硬件级融合技术，将计算、存储与交换三大核心能力整合为一个2U节点，大幅降低部署复杂度和总体拥有成本。</p>
+
+  <div class="feature-split reveal" style="margin-top:4rem;">
+    <div class="feature-img">
+      <img src="img/sns (1).png" alt="前面板设计">
+    </div>
+    <div class="feature-text">
+      <h3>精密前面板设计</h3>
+      <p>
+        16个银色金属热插拔硬盘托架，每个配备独立绿色状态指示灯，支持实时故障定位。右侧大尺寸 LCD 触控屏实时显示数据吞吐波形与系统健康状态，底部贯穿式蓝色 LED 光带勾勒出未来主义轮廓。
+      </p>
+    </div>
+  </div>
+
+  <div class="feature-split reverse reveal" style="margin-top:4rem;">
+    <div class="feature-img">
+      <img src="img/sns (2).png" alt="侧后方端口">
+    </div>
+    <div class="feature-text">
+      <h3>模块化侧后面板</h3>
+      <p>
+        深色金属棱角分明的侧后方，蓝色氛围灯沿机身线条流动。密集的模块化插槽与连接端口阵列，支持灵活扩展——从 100GbE QSFP28 到 Thunderbolt 4，一切尽在掌控。
+      </p>
+    </div>
+  </div>
+
+  <div class="feature-split reveal" style="margin-top:4rem;">
+    <div class="feature-img">
+      <img src="img/sns (3).png" alt="俯视结构">
+    </div>
+    <div class="feature-text">
+      <h3>高密度内部架构</h3>
+      <p>
+        俯视视角揭示整齐嵌入的硬盘阵列，顶部控制面板配备绿色数字显示屏。支持 U.2/U.3 NVMe 全闪存配置，单机最高 480TB 原始容量，满足从热数据缓存到冷数据归档的全场景需求。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Specifications -->
+<section class="section reveal" id="specs">
+  <div class="section-label">Technical Specifications</div>
+  <h2 class="section-title">技术规格</h2>
+  <p class="section-desc">以最高标准定义每一个参数，从计算核心到网络交换，每项规格均对标企业级严苛要求。</p>
+
+  <div class="specs-container">
+    <div class="spec-card">
+      <div class="spec-card-icon">&#9881;</div>
+      <h3>计算平台</h3>
+      <div class="spec-row"><span class="key">处理器</span><span class="val highlight">Intel Xeon 6 / AMD EPYC 9005</span></div>
+      <div class="spec-row"><span class="key">核心数</span><span class="val">最高 128 核 / 256 线程</span></div>
+      <div class="spec-row"><span class="key">内存</span><span class="val">16× DDR5-6400 RDIMM</span></div>
+      <div class="spec-row"><span class="key">最大内存</span><span class="val">4 TB (256GB×16)</span></div>
+      <div class="spec-row"><span class="key">扩展槽</span><span class="val">4× PCIe 5.0 x16</span></div>
+      <div class="spec-row"><span class="key">GPU 支持</span><span class="val">双宽 450W GPU ×2</span></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-icon">&#9733;</div>
+      <h3>存储子系统</h3>
+      <div class="spec-row"><span class="key">盘位</span><span class="val highlight">16× 3.5"/2.5" 热插拔</span></div>
+      <div class="spec-row"><span class="key">NVMe 支持</span><span class="val">8× U.2/U.3 NVMe (Tri-Mode)</span></div>
+      <div class="spec-row"><span class="key">最大容量</span><span class="val">480 TB (30TB×16)</span></div>
+      <div class="spec-row"><span class="key">RAID</span><span class="val">0/1/5/6/10/50/60</span></div>
+      <div class="spec-row"><span class="key">缓存</span><span class="val">8 GB NV Cache (BBU)</span></div>
+      <div class="spec-row"><span class="key">内部 M.2</span><span class="val">2× NVMe M.2 2280/22110</span></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-icon">&#9776;</div>
+      <h3>网络交换</h3>
+      <div class="spec-row"><span class="key">上行</span><span class="val highlight">2× 100GbE QSFP28</span></div>
+      <div class="spec-row"><span class="key">下行</span><span class="val">4× 25GbE SFP28</span></div>
+      <div class="spec-row"><span class="key">BASE-T</span><span class="val">2× 10GbE RJ45</span></div>
+      <div class="spec-row"><span class="key">管理口</span><span class="val">1× 1GbE RJ45 (IPMI)</span></div>
+      <div class="spec-row"><span class="key">交换容量</span><span class="val">800 Gbps</span></div>
+      <div class="spec-row"><span class="key">转发率</span><span class="val">595 Mpps</span></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-icon">&#9889;</div>
+      <h3>外设接口</h3>
+      <div class="spec-row"><span class="key">Thunderbolt</span><span class="val highlight">2× Thunderbolt 4 (40Gbps)</span></div>
+      <div class="spec-row"><span class="key">USB</span><span class="val">2× USB4 40Gbps + 4× USB 3.2</span></div>
+      <div class="spec-row"><span class="key">显示输出</span><span class="val">1× HDMI 2.1 + 1× DP 2.1</span></div>
+      <div class="spec-row"><span class="key">串口</span><span class="val">1× RS-232 (RJ45 Console)</span></div>
+      <div class="spec-row"><span class="key">远程管理</span><span class="val">BMC/IPMI 2.0 + Redfish</span></div>
+      <div class="spec-row"><span class="key">安全</span><span class="val">TPM 2.0 + 硬件信任根</span></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-icon">&#9729;</div>
+      <h3>物理与环境</h3>
+      <div class="spec-row"><span class="key">形态</span><span class="val">2U 机架式</span></div>
+      <div class="spec-row"><span class="key">尺寸</span><span class="val">447×87×750 mm</span></div>
+      <div class="spec-row"><span class="key">电源</span><span class="val">双 1600W 80 Plus 钛金</span></div>
+      <div class="spec-row"><span class="key">冗余</span><span class="val">1+1 热插拔</span></div>
+      <div class="spec-row"><span class="key">工作温度</span><span class="val">5°C – 45°C</span></div>
+      <div class="spec-row"><span class="key">散热</span><span class="val">6× 60mm 热插拔风扇</span></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-icon">&#128190;</div>
+      <h3>软件生态</h3>
+      <div class="spec-row"><span class="key">操作系统</span><span class="val">自在Fusion OS (Debian 基)</span></div>
+      <div class="spec-row"><span class="key">兼容系统</span><span class="val">TrueNAS / Proxmox / ESXi</span></div>
+      <div class="spec-row"><span class="key">文件协议</span><span class="val">SMB / NFS / iSCSI / S3</span></div>
+      <div class="spec-row"><span class="key">虚拟化</span><span class="val">KVM + Docker / Podman</span></div>
+      <div class="spec-row"><span class="key">管理界面</span><span class="val">Web GUI + CLI + API</span></div>
+      <div class="spec-row"><span class="key">保修</span><span class="val">3 年标准 / 5 年可选</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section class="section reveal" id="gallery">
+  <div class="section-label">Product Gallery</div>
+  <h2 class="section-title">产品图集</h2>
+  <p class="section-desc">从多角度探索自在Fusion 16-SNS的精密工业设计。点击任意图片查看高清大图。</p>
+
+  <div class="gallery-wrap">
+    <div class="gallery-item" onclick="openModal('img/sns (4).png')">
+      <img src="img/sns (4).png" alt="等轴测视角" loading="lazy">
+    </div>
+    <div class="gallery-item" onclick="openModal('img/sns (5).png')">
+      <img src="img/sns (5).png" alt="低角度特写" loading="lazy">
+    </div>
+    <div class="gallery-item" onclick="openModal('img/sns (6).png')">
+      <img src="img/sns (6).png" alt="正面视图" loading="lazy">
+    </div>
+    <div class="gallery-item" onclick="openModal('img/sns (7).png')">
+      <img src="img/sns (7).png" alt="侧前方视角" loading="lazy">
+    </div>
+    <div class="gallery-item" onclick="openModal('img/sns (8).png')">
+      <img src="img/sns (8).png" alt="控制面板细节" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- Ports -->
+<section class="section reveal" id="ports">
+  <div class="section-label">Connectivity</div>
+  <h2 class="section-title">端口配置</h2>
+  <p class="section-desc">以最高标准配备每一路接口，确保数据在任何路径上均无瓶颈。</p>
+
+  <div class="port-grid">
+    <div class="port-item">
+      <div class="port-icon">&#8644;</div>
+      <div class="port-speed">100 GbE</div>
+      <div class="port-name">QSFP28</div>
+      <div class="port-qty">×2 端口</div>
+    </div>
+    <div class="port-item">
+      <div class="port-icon">&#8644;</div>
+      <div class="port-speed">25 GbE</div>
+      <div class="port-name">SFP28</div>
+      <div class="port-qty">×4 端口</div>
+    </div>
+    <div class="port-item">
+      <div class="port-icon">&#8644;</div>
+      <div class="port-speed">10 GbE</div>
+      <div class="port-name">RJ45 BASE-T</div>
+      <div class="port-qty">×2 端口</div>
+    </div>
+    <div class="port-item">
+      <div class="port-icon">&#9889;</div>
+      <div class="port-speed">40 Gbps</div>
+      <div class="port-name">Thunderbolt 4</div>
+      <div class="port-qty">×2 端口</div>
+    </div>
+    <div class="port-item">
+      <div class="port-icon">&#9889;</div>
+      <div class="port-speed">40 Gbps</div>
+      <div class="port-name">USB4</div>
+      <div class="port-qty">×2 端口</div>
+    </div>
+    <div class="port-item">
+      <div class="port-icon">&#9889;</div>
+      <div class="port-speed">10 Gbps</div>
+      <div class="port-name">USB 3.2 Gen 2</div>
+      <div class="port-qty">×4 端口</div>
+    </div>
+    <div class="port-item">
+      <div class="port-icon">&#9644;</div>
+      <div class="port-speed">PCIe 5.0</div>
+      <div class="port-name">x16 扩展槽</div>
+      <div class="port-qty">×4 插槽</div>
+    </div>
+    <div class="port-item">
+      <div class="port-icon">&#9635;</div>
+      <div class="port-speed">HDMI 2.1</div>
+      <div class="port-name">+ DisplayPort 2.1</div>
+      <div class="port-qty">各 ×1</div>
+    </div>
+  </div>
+</section>
+
+<!-- Use Cases -->
+<section class="section reveal" id="use-cases">
+  <div class="section-label">Use Cases</div>
+  <h2 class="section-title">应用场景</h2>
+  <p class="section-desc">从中小企业数据中心到影视后期制作，自在Fusion 16-SNS 为多种场景提供一体化的高性能基础设施。</p>
+
+  <div class="use-cases-grid">
+    <div class="use-case-card">
+      <div class="icon">&#127970;</div>
+      <h4>中小企业数据中心</h4>
+      <p>单台2U设备即完整基础设施：虚拟化计算节点 + 集中存储 + 万兆交换，省去机架空间、布线复杂度和多供应商管理成本。</p>
+    </div>
+    <div class="use-case-card">
+      <div class="icon">&#127916;</div>
+      <h4>影视后期与媒体制作</h4>
+      <p>Thunderbolt 4 直连 Mac/PC 工作站，16盘位 RAID 6 提供 400TB+ 安全存储。10GbE/25GbE 共享给整个制作团队，4K/8K 多轨实时协作无压力。</p>
+    </div>
+    <div class="use-case-card">
+      <div class="icon">&#129302;</div>
+      <h4>AI/ML 模型训练</h4>
+      <p>双宽 GPU 支持 + NVMe 全闪存配置，为分布式训练提供高吞吐数据管道。100GbE 上行无缝接入 GPU 集群，消除数据加载瓶颈。</p>
+    </div>
+    <div class="use-case-card">
+      <div class="icon">&#128300;</div>
+      <h4>边缘计算 & IIoT</h4>
+      <p>2U紧凑形态适合边缘机房部署。内置交换能力直接接入传感器网络和工业设备，本地计算+存储+交换三位一体，降低延迟和带宽成本。</p>
+    </div>
+    <div class="use-case-card">
+      <div class="icon">&#127760;</div>
+      <h4>私有云 & 虚拟化平台</h4>
+      <p>兼容 Proxmox、ESXi、TrueNAS Scale。单机运行数十个 VM/容器，配合 S3 兼容对象存储构建完整私有云，从开发测试到生产环境一步到位。</p>
+    </div>
+    <div class="use-case-card">
+      <div class="icon">&#128274;</div>
+      <h4>数据备份与灾备</h4>
+      <p>ZFS 文件系统 + 快照 + 远程复制，为关键业务数据提供多层保护。硬件信任根 + TPM 2.0 确保从启动到运行的全链路安全。</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="brand">自在Fusion 16-SNS</div>
+  <p>杭州自在空间文化艺术有限公司 &copy; 2026 &nbsp;|&nbsp; 善因（杭州）科技文化有限责任公司</p>
+  <p style="margin-top:0.3rem;">Server · NAS · Switch — 融合即未来</p>
+</footer>
+
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal" onclick="closeModal()">
+  <button class="modal-close" onclick="closeModal()">&#10005;</button>
+  <img class="modal-img" id="modalImg" src="" alt="">
+</div>
+
+<script>
+function openModal(src) {
+  document.getElementById('modalImg').src = src;
+  document.getElementById('modal').classList.add('active');
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('active');
+}
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeModal();
+});
+
+// Intersection Observer for scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, {
+  threshold: 0.1,
+  rootMargin: '0px 0px -40px 0px'
+});
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
